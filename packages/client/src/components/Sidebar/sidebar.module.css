@@ -1,0 +1,72 @@
+.sidebar {
+  position: fixed;
+  top: 50vh;
+  transform: translateY(-50%);
+  left: 25px;
+  padding: 16px 10px;
+  height: max-content;
+  transition: 0.2s;
+  user-select: none;
+  z-index: 999;
+  flex-shrink: 0;
+  background-color: var(--color-background);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 100px;
+  width: fit-content;
+  border-color: var(--color-accent-secondary);
+}
+
+.linkContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.arrow {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  color: var(--color-accent-secondary);
+  transition: 0.2s;
+}
+
+.sidebar[data-mode='return'],
+.sidebar[data-mode='hoist'] {
+  background-color: transparent;
+  cursor: pointer;
+
+  .linkContainer {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .arrow {
+    opacity: 1;
+  }
+
+  &:hover {
+    background-color: var(--color-background);
+
+    .arrow {
+      color: var(--color-accent-secondary);
+    }
+  }
+}
+
+.sidebar[data-mode='return'] {
+  .arrow {
+    height: 36px;
+    width: 50px;
+  }
+}
+
+.sidebar[data-mode='hoist'] {
+  .arrow {
+    height: 50px;
+    width: 36px;
+  }
+}

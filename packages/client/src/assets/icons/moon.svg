@@ -1,0 +1,10 @@
+<svg width="36.000000" height="36.000000" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<clipPath id="clip35_1363">
+			<rect id="moon" width="36.000000" height="36.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip35_1363)">
+		<path id="path" d="M18 17.7104C16.1127 15.8225 14.8273 13.4172 14.3064 10.799C13.7855 8.18066 14.0525 5.46667 15.0735 3C12.1624 3.57312 9.4884 5.00146 7.39343 7.10254C1.53601 12.96 1.53601 22.458 7.39343 28.3156C13.2524 34.1746 22.749 34.173 28.608 28.3156C30.7085 26.2207 32.1367 23.5475 32.7104 20.637C30.2438 21.6577 27.5299 21.9246 24.9115 21.4038C22.2933 20.8828 19.8882 19.5977 18 17.7104Z" fill="currentColor" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+</svg>
