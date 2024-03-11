@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 import './App.css'
+import { routes } from './routes'
+import { useRoutes } from 'react-router'
 
 function App() {
+  const route = useRoutes(routes)
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -12,7 +15,12 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return (
+    <>
+      {route}
+      <div className="App">Вот тут будет жить ваше приложение :)</div>
+    </>
+  )
 }
 
 export default App
