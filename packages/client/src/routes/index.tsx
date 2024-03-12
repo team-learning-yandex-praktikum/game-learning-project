@@ -1,7 +1,7 @@
 import * as Pages from '../pages'
 import { Routes } from './constants'
 
-export const routes = [
+export const routesConfig = [
   {
     path: Routes.Home,
     element: <Pages.Home />,
