@@ -1,0 +1,55 @@
+.sidebarItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  color: var(--color-side);
+  transition: color 0.2s;
+  cursor: pointer;
+
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  &.active {
+    color: var(--color-accent-secondary);
+  }
+}
+
+.prompt {
+  position: absolute;
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+  color: transparent;
+
+  background-color: var(--color-background);
+  padding: 10px 10px 10px 20px;
+  border-radius: 100px;
+  margin-left: -7px;
+  overflow: hidden;
+  transition: 0.2s;
+  z-index: 0;
+}
+
+/* При наведении */
+.promptActive {
+  position: relative;
+  color: var(--color-background);
+
+  &.active {
+    color: var(--color-background);
+  }
+
+  .prompt {
+    transform: scaleX(1);
+
+    opacity: 1;
+
+    background-color: var(--color-accent-secondary);
+    padding: 12px 16px 12px calc(36px + 6px + 10px);
+    color: var(--color-background);
+    z-index: 0;
+  }
+}

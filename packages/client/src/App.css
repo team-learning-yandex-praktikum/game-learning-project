@@ -1,0 +1,31 @@
+@import url('assets/fonts/font-faces.css');
+
+body {
+  margin: 0;
+}
+
+.app[data-theme='light'] {
+  --color-background: #fff;
+  --color-text: #1a1a1a;
+}
+
+.app[data-theme='dark'] {
+  --color-background: #1a1a1a;
+  --color-text: #fff;
+}
+
+.app {
+  --font-family: 'Montserrat Alternates', sans-serif;
+  --font-family-design: 'Mail Ray Stuff', sans-serif;
+
+  --color-side: #ccc;
+  --color-accent-main: #209b19;
+  --color-accent-main-hover: #2bcf22;
+  --color-accent-secondary: #fc7f61;
+  --color-accent-tertiary: #f8e356;
+  --color-accent-critical: #f05163;
+  --color-accent-warning: #eb7c06;
+
+  font-family: var(--font-family);
+  min-height: 100vh;
+}

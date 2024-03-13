@@ -1,0 +1,19 @@
+.sectionsContainer {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 50px);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  cursor: pointer;
+  color: var(--color-side);
+  transition: color 0.2s;
+
+  &[data-active='true'] {
+    color: var(--color-accent-secondary);
+  }
+}

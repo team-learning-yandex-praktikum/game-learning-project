@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Mail Ray Stuff';
+  src: url('Mail Ray Stuff/Mail Ray Stuff.woff2') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('Montserrat Alternates/MontserratAlternates-Regular.woff')
+    format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('Montserrat Alternates/MontserratAlternates-Regular.woff')
+    format('woff');
+  font-weight: 500;
+}
