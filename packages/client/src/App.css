@@ -18,6 +18,10 @@ body {
   --font-family: 'Montserrat Alternates', sans-serif;
   --font-family-design: 'Mail Ray Stuff', sans-serif;
 
+  --font-spacing-design: 1px;
+  --font-size-design-l: 100px;
+  --font-size-design-m: 32px;
+
   --color-side: #ccc;
   --color-accent-main: #209b19;
   --color-accent-main-hover: #2bcf22;
@@ -28,4 +32,19 @@ body {
 
   font-family: var(--font-family);
   min-height: 100vh;
+  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
+}
+
+.font-design-headline-l {
+  font-family: var(--font-family-design);
+  letter-spacing: var(--font-spacing-design);
+  font-size: var(--font-size-design-l);
+}
+
+.font-design-headline-m {
+  font-family: var(--font-family-design);
+  letter-spacing: var(--font-spacing-design);
+  font-size: var(--font-size-design-m);
 }
