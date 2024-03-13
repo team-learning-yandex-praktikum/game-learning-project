@@ -1,0 +1,28 @@
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'Mail Ray Stuff';
+  src: url('../public/fonts/Mail-Ray-Stuff-W00-Regular.woff2')
+    format('truetype');
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'MontserratAlternates-Medium';
+  src: url('../public/fonts/MontserratAlternates-Medium.woff')
+    format('truetype');
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 14px;
+  font-family: 'MontserratAlternates-Medium';
+}

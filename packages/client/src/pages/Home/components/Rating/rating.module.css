@@ -1,0 +1,63 @@
+.containerRating {
+  background-color: rgb(236, 255, 197);
+  border-radius: 40px 40px 0 0;
+  margin-top: -30px;
+  font-size: 32px;
+}
+
+.divider {
+  width: 100%;
+  border: 2px solid rgb(252, 127, 97);
+}
+
+.title {
+  font-size: 100px;
+  letter-spacing: 1px;
+  font-family: 'Mail Ray Stuff';
+  color: rgb(252, 127, 97);
+  margin-top: 80px;
+  line-height: 1;
+}
+
+.text {
+  text-align: right;
+  width: 53%;
+}
+
+.text span {
+  color: rgb(32, 155, 25);
+  text-decoration: underline;
+}
+
+.table {
+  margin: 60px auto 0;
+  border-collapse: separate;
+  width: 60%;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-radius: 10px;
+  border: 1px solid rgb(252, 127, 97);
+}
+
+.table tr {
+  border-bottom: 1px solid rgb(252, 127, 97);
+}
+
+.table td {
+  padding: 10px;
+}
+
+td.place {
+  width: 10%;
+  text-align: left;
+}
+
+td.user {
+  width: 40%;
+  text-align: center;
+}
+
+td.score {
+  width: 10%;
+  text-align: right;
+}

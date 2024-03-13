@@ -1,0 +1,42 @@
+.containerTeam {
+  background-color: rgb(252, 127, 97);
+  border-radius: 40px 40px 0 0;
+  margin-top: -30px;
+}
+
+.divider {
+  width: 100%;
+  border: 2px solid rgb(248, 227, 86);
+}
+
+.title {
+  font-size: 100px;
+  letter-spacing: 1px;
+  font-family: 'Mail Ray Stuff';
+  color: rgb(248, 227, 86);
+  margin-top: 80px;
+  width: 58%;
+}
+
+.teamContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  color: rgb(255, 255, 255);
+}
+
+.members {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.text {
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.avatar img {
+  width: 200px;
+}

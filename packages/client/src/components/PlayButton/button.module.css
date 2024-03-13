@@ -1,0 +1,30 @@
+.circle,
+.button {
+  border-radius: 50%;
+}
+
+.button {
+  border: none;
+  background-color: rgb(248, 227, 86);
+  position: relative;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+}
+
+.circle {
+  position: absolute;
+  border: 2px solid rgb(252, 127, 97);
+  top: -11px;
+  left: -1px;
+  width: 148px;
+  height: 148px;
+}
+
+.button svg {
+  fill: #fc7f61;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(56px, 48px);
+}

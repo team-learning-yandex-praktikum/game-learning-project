@@ -1,0 +1,105 @@
+.containerRules {
+  background-color: rgb(244, 234, 169);
+  border-radius: 40px 40px 0 0;
+}
+
+.dividers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shortDivider,
+.longDivider {
+  border: 2px solid rgb(32, 155, 25);
+}
+
+.shortDivider,
+.subtitle {
+  width: 22%;
+}
+
+.longDivider,
+.title,
+.startImage {
+  width: 72%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.titlesContainer {
+  display: flex;
+  margin-top: 36px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.subtitle,
+.title {
+  color: rgb(32, 155, 25);
+}
+
+.subtitle {
+  font-weight: 700;
+}
+
+.title {
+  font-size: 100px;
+  letter-spacing: 1px;
+  font-family: 'Mail Ray Stuff';
+  line-height: 0.8;
+}
+
+.imagesContainer {
+  display: flex;
+  gap: 60px;
+}
+
+.aboutImage {
+  width: 360px;
+}
+
+.aboutImage img {
+  width: 100%;
+}
+
+.image,
+.rulesText,
+.rulesSubtitle {
+  width: calc(100% / 2);
+}
+
+.rulesSubtitle {
+  text-align: right;
+}
+
+.image img {
+  width: 100%;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  font-size: 32px;
+  align-items: flex-end;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.rules {
+  display: flex;
+  gap: 60px;
+}
+
+.rulesText {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
