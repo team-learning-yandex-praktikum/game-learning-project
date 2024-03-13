@@ -1,0 +1,57 @@
+.button {
+  composes: font-design-headline-m from global;
+  min-width: 250px;
+  padding: 10px;
+  border-radius: 30px;
+  border-width: 2px;
+  border-style: solid;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.colorMain {
+  --button-color: var(--color-accent-main);
+  --button-color-hover: var(--color-accent-main-hover);
+}
+
+.colorSecondary {
+  --button-color: var(--color-accent-secondary);
+  --button-color-hover: var(--color-accent-secondary-hover);
+}
+
+.contained {
+  background-color: var(--button-color);
+  color: var(--color-background);
+  border-color: transparent;
+
+  &:hover {
+    background-color: var(--button-color-hover);
+  }
+}
+
+.outlined {
+  background: transparent;
+  border-color: var(--button-color);
+  color: var(--button-color);
+
+  &:hover {
+    border-color: var(--button-color-hover);
+    color: var(--button-color-hover);
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+
+  &.contained {
+    background-color: var(--color-side);
+  }
+  &.outlined {
+    color: var(--color-side);
+    border-color: var(--color-side);
+  }
+}
+
+:global(.app[data-theme='dark']) .disabled {
+  opacity: 0.4;
+}
