@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
-import { useRoutes } from 'react-router-dom'
-import Sidebar from '@components'
+import { useLocation, useRoutes } from 'react-router-dom'
+import Sidebar from '@components/Sidebar'
 import { ThemeMode } from '@styles'
 import './App.css'
 import { routesConfig } from '@routes'
+import { Routes } from '@routes/constants'
 
 function App() {
   const renderRouter = useRoutes(routesConfig)
   const [themeMode, setThemeMode] = useState<ThemeMode>(ThemeMode.light) // todo Вынести в стор
+
+  const { pathname } = useLocation()
+  const isAuthPage =
+    pathname.includes(Routes.Registration) || pathname.includes(Routes.Login)
 
   useEffect(() => {
     const fetchServerData = async () => {
@@ -21,13 +26,13 @@ function App() {
   }, [])
 
   return (
-    <>
-      {renderRouter}
-      <div className="app" data-theme={themeMode}>
+    <div className="app" data-theme={themeMode}>
+      {!isAuthPage && (
         <Sidebar themeMode={themeMode} setThemeMode={setThemeMode} />
-        Вот тут будет жить ваше приложение :)
-      </div>
-    </>
+      )}
+      {renderRouter}
+      Вот тут будет жить ваше приложение :)
+    </div>
   )
 }
 
