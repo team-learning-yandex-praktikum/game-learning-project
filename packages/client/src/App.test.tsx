@@ -1,8 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import { render, screen } from '@testing-library/react'
-
-const appContent = 'Вот тут будет жить ваше приложение :)'
+import { render } from '@testing-library/react'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
@@ -11,11 +9,8 @@ global.fetch = jest.fn(() =>
 
 test('Example test', async () => {
   render(
-    <>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   )
-  expect(screen.getByText(appContent)).toBeDefined()
 })

@@ -17,7 +17,7 @@ const fieldsConfig: TextFieldProps[] = [
   },
 ]
 
-export const Login: FC = () => (
+const Login: FC = () => (
   <AuthForm
     title={'Вход'}
     fields={fieldsConfig}
@@ -30,3 +30,5 @@ export const Login: FC = () => (
     }}
   />
 )
+
+export default Login

@@ -31,7 +31,6 @@ function App() {
         <Sidebar themeMode={themeMode} setThemeMode={setThemeMode} />
       )}
       {renderRouter}
-      Вот тут будет жить ваше приложение :)
     </div>
   )
 }
