@@ -12,6 +12,7 @@ export default {
     '\\.module.(css)$': 'jest-css-modules',
     '\\.(css)$': '<rootDir>/__mocks__/css.mock.js',
     '\\.(svg|svg.*)$': '<rootDir>/__mocks__/svg.mock.js',
+    '\\.(png|jpg.*)$': '<rootDir>/__mocks__/img.mock.js',
     '^@/(.*)$': '<rootDir>/src',
     '^@$': '<rootDir>/src',
     '^@assets(.*)$': '<rootDir>/src/assets$1',
