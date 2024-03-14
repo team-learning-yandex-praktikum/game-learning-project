@@ -1,16 +1,11 @@
 .containerTeam {
   composes: containerHome containerSectionHome from global;
-  background-color: var(--color-accent-secondary);
+  background-color: var(--color-background-team);
   margin-top: -30px;
 }
 
-.divider {
-  width: 100%;
-  border: 2px solid var(--color-accent-tertiary);
-}
-
 .title {
-  composes: titleHome from global;
+  composes: font-design-headline-l from global;
   color: var(--color-accent-tertiary);
   margin-top: 80px;
   width: 58%;
@@ -27,6 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  color: #fff;
 }
 
 .text {

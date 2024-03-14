@@ -7,7 +7,6 @@ import ProfileIcon from './profile.svg?react'
 import SunIcon from './sun.svg?react'
 import ArrowLeftIcon from './arrowLeft.svg?react'
 import ArrowTopIcon from './arrowTop.svg?react'
-import PlayColor from './playColor.svg?react'
 
 export {
   HomeIcon,
@@ -19,5 +18,4 @@ export {
   SunIcon,
   ArrowLeftIcon,
   ArrowTopIcon,
-  PlayColor,
 }

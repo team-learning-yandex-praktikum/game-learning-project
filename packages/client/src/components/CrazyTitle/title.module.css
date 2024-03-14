@@ -1,5 +1,4 @@
 .containerButton {
-  font-size: 150px;
   letter-spacing: 1px;
   position: relative;
 }
@@ -8,6 +7,7 @@
 .yellow,
 .transparent {
   composes: font-design-headline-l from global;
+  font-size: 150px;
 }
 
 .orange {
@@ -28,6 +28,5 @@
 .transparent {
   position: relative;
   color: transparent;
-  background-color: rgba(255, 255, 255, 0.5);
   -webkit-text-stroke: 1px var(--color-accent-main);
 }

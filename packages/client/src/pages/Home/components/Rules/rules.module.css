@@ -1,16 +1,12 @@
 .containerRules {
   composes: containerHome containerSectionHome from global;
-  background-color: rgb(244, 234, 169);
+  background-color: var(--color-background-rules);
+  color: var(--color-text);
 }
 
 .dividers {
   display: flex;
   justify-content: space-between;
-}
-
-.shortDivider,
-.longDivider {
-  border: 2px solid var(--color-accent-main);
 }
 
 .shortDivider,
@@ -47,7 +43,7 @@
 }
 
 .title {
-  composes: titleHome from global;
+  composes: font-design-headline-l from global;
   line-height: 0.8;
 }
 

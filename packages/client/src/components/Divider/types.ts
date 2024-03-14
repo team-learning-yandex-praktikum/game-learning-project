@@ -1,3 +1,3 @@
 export interface DividerProps {
-  className?: string
+  color?: 'yellow' | 'orange' | 'green'
 }

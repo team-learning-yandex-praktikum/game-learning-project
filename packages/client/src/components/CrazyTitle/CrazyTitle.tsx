@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { CrazyTitleProps } from './types'
 
 import style from './title.module.css'

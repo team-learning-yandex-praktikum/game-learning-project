@@ -1,25 +1,30 @@
 import React from 'react'
-import { Iskander, Leila, Arthur, Anastasia } from '@assets/team'
+import {
+  IskanderImage,
+  LeilaImage,
+  ArthurImage,
+  AnastasiaImage,
+} from '@assets/team'
 
 export const teamMap = [
   {
     firstName: 'Искандер',
     lastName: 'Айдынов',
-    avatar: <img src={Iskander} alt="Iskander" />,
+    avatar: <img src={IskanderImage} alt="Iskander" />,
   },
   {
     firstName: 'Лейла',
     lastName: 'Бекирова',
-    avatar: <img src={Leila} alt="Leila" />,
+    avatar: <img src={LeilaImage} alt="Leila" />,
   },
   {
     firstName: 'Артур',
     lastName: 'Сиволов',
-    avatar: <img src={Arthur} alt="Arthur" />,
+    avatar: <img src={ArthurImage} alt="Arthur" />,
   },
   {
     firstName: 'Анастасия',
     lastName: 'Курочкина',
-    avatar: <img src={Anastasia} alt="Anastasia" />,
+    avatar: <img src={AnastasiaImage} alt="Anastasia" />,
   },
 ]

@@ -3,7 +3,7 @@ import style from './home.module.css'
 import Hero from './components/Hero'
 import Rules from './components/Rules'
 import Rating from './components/Rating'
-import Team from './components/Team/Team'
+import Team from './components/Team'
 
 const Home = () => {
   return (

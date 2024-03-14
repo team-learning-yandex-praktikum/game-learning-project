@@ -1,17 +1,12 @@
 .containerRating {
   composes: containerHome containerSectionHome from global;
-  background-color: var(--color-light-yellow);
+  background-color: var(--color-background-raiting);
   margin-top: -30px;
   font-size: 32px;
 }
 
-.divider {
-  width: 100%;
-  border: 2px solid var(--color-accent-secondary);
-}
-
 .title {
-  composes: titleHome from global;
+  composes: font-design-headline-l from global;
   color: var(--color-accent-secondary);
   margin-top: 80px;
   line-height: 1;
@@ -22,9 +17,17 @@
   width: 53%;
 }
 
-.text span {
-  color: var(--color-accent-main);
+.text a {
   text-decoration: underline;
+}
+
+.score {
+  font-weight: 600;
+}
+
+.text a,
+.score {
+  color: var(--color-second-text-raiting);
 }
 
 .table {
@@ -32,6 +35,7 @@
   width: 60%;
   border-radius: 10px;
   border: 1px solid var(--color-accent-secondary);
+  color: var(--color-text);
 }
 
 .bodyTable {
@@ -44,8 +48,4 @@
 
 .bodyTable:last-child {
   border-bottom: none;
-}
-
-.table td {
-  padding: 10px;
 }

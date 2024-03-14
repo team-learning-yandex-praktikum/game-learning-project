@@ -13,17 +13,20 @@
 }
 
 .circle {
-  position: absolute;
   border: 2px solid var(--color-accent-secondary);
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
   top: -11px;
   left: -1px;
-  width: 148px;
-  height: 148px;
 }
 
-.button svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(56px, 48px);
+.circle svg {
+  color: var(--color-accent-secondary);
+  width: 70px;
+  height: 70px;
 }

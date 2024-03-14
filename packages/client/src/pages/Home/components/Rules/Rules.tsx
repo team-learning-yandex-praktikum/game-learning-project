@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import style from './rules.module.css'
 import { clsx } from 'clsx'
 import { RulesProps } from './types'
@@ -9,8 +9,12 @@ const Rules: FC<RulesProps> = ({ className }) => {
   return (
     <div className={clsx(style.containerRules, className)}>
       <div className={style.dividers}>
-        <Divider className={style.shortDivider} />
-        <Divider className={style.longDivider} />
+        <div className={style.shortDivider}>
+          <Divider color="green" />
+        </div>
+        <div className={style.longDivider}>
+          <Divider color="green" />
+        </div>
       </div>
       <div className={style.content}>
         <div className={style.titlesContainer}>
