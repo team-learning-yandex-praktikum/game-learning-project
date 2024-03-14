@@ -2,18 +2,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   margin: auto;
+  max-height: 95vh;
+  min-height: 500px;
 }
 
 .title {
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 
 .fields {
+  composes: scrollbar from global;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 40px;
+  overflow: auto;
+  min-height: 150px;
+  align-self: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .button {
