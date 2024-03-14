@@ -2,6 +2,19 @@
 
 body {
   margin: 0;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
 }
 
 .app[data-theme='light'] {
@@ -21,14 +34,21 @@ body {
   --font-spacing-design: 1px;
   --font-size-design-l: 100px;
   --font-size-design-m: 32px;
+  --font-size-m: 16px;
+  --font-size-s: 14px;
+  --font-size-xs: 12px;
+  --font-size-l: 20px;
 
   --color-side: #ccc;
   --color-accent-main: #209b19;
   --color-accent-main-hover: #2bcf22;
   --color-accent-secondary: #fc7f61;
+  --color-accent-secondary-hover: rgba(252, 127, 97, 0.8);
   --color-accent-tertiary: #f8e356;
   --color-accent-critical: #f05163;
   --color-accent-warning: #eb7c06;
+
+  --border-radius: 10px;
 
   font-family: var(--font-family);
   min-height: 100vh;
@@ -47,4 +67,24 @@ body {
   font-family: var(--font-family-design);
   letter-spacing: var(--font-spacing-design);
   font-size: var(--font-size-design-m);
+}
+
+.font-base-xs {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+}
+
+.font-base-s {
+  font-family: var(--font-family);
+  font-size: var(--font-size-s);
+}
+
+.font-base-m {
+  font-family: var(--font-family);
+  font-size: var(--font-size-m);
+}
+
+.font-base-l {
+  font-family: var(--font-family);
+  font-size: var(--font-size-l);
 }

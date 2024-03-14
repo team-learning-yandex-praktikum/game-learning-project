@@ -1,0 +1,57 @@
+.textField {
+  min-width: 450px;
+
+  &[data-error='true'] {
+    .label {
+      color: var(--color-accent-critical);
+    }
+
+    .field {
+      border-color: var(--color-accent-critical);
+    }
+  }
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--border-radius);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-accent-main);
+}
+
+.label {
+  color: var(--color-accent-main);
+  font-weight: 500;
+}
+
+.input {
+  composes: font-base-m from global;
+  background: none;
+  border: none;
+  text-align: right;
+  color: var(--color-text);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--color-side);
+  }
+}
+
+:global(.app[data-theme='dark']) .input::placeholder {
+  opacity: 0.4;
+}
+
+.errorLine {
+  padding-left: 20px;
+  margin-top: 5px;
+  color: var(--color-accent-critical);
+  font-size: var(--font-size-xs);
+  min-height: 15px;
+}

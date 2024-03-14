@@ -1,0 +1,12 @@
+.title {
+  composes: font-design-headline-l from global;
+  font-weight: unset;
+}
+
+.colorMain {
+  color: var(--color-accent-main);
+}
+
+.colorSecondary {
+  color: var(--color-accent-secondary);
+}
