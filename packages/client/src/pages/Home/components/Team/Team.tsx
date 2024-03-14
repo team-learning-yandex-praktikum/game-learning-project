@@ -14,6 +14,7 @@ const Team: FC<TeamProps> = ({ className }) => {
         {teamMap.map(it => (
           <div className={style.members}>
             <div className={style.avatar}>{it.avatar}</div>
+
             <div>
               <div className={style.text}>{it.firstName}</div>
               <div className={style.text}>{it.lastName}</div>
