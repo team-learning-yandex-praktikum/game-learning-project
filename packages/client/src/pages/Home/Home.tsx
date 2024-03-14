@@ -9,9 +9,9 @@ const Home = () => {
   return (
     <div className={style.wrapper}>
       <Hero />
-      <Rules className={style.container} />
-      <Rating className={style.container} />
-      <Team className={style.container} />
+      <Rules />
+      <Rating />
+      <Team />
     </div>
   )
 }

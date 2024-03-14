@@ -2,7 +2,8 @@ import React, { FC } from 'react'
 import style from './rules.module.css'
 import { clsx } from 'clsx'
 import { RulesProps } from './types'
-import Divider from '../../../../components/Divider/Divider'
+import Divider from '@components/Divider'
+import { FlyImage, JumpImage, StartImage } from '@assets/images'
 
 const Rules: FC<RulesProps> = ({ className }) => {
   return (
@@ -19,7 +20,7 @@ const Rules: FC<RulesProps> = ({ className }) => {
         <div className={style.about}>
           <div className={style.startImage}>
             <div className={style.aboutImage}>
-              <img src="../../../../../public/playStart.png" alt="play" />
+              <img src={StartImage} alt="play" />
             </div>
           </div>
           <div>
@@ -32,10 +33,10 @@ const Rules: FC<RulesProps> = ({ className }) => {
         </div>
         <div className={style.imagesContainer}>
           <div className={style.image}>
-            <img src="../../../../../public/playJump.png" alt="play" />
+            <img src={JumpImage} alt="play" />
           </div>
           <div className={style.image}>
-            <img src="../../../../../public/playFly.png" alt="play" />
+            <img src={FlyImage} alt="play" />
           </div>
         </div>
         <div className={style.rules}>

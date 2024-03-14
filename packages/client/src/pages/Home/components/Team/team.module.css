@@ -1,19 +1,17 @@
 .containerTeam {
-  background-color: rgb(252, 127, 97);
-  border-radius: 40px 40px 0 0;
+  composes: containerHome containerSectionHome from global;
+  background-color: var(--color-accent-secondary);
   margin-top: -30px;
 }
 
 .divider {
   width: 100%;
-  border: 2px solid rgb(248, 227, 86);
+  border: 2px solid var(--color-accent-tertiary);
 }
 
 .title {
-  font-size: 100px;
-  letter-spacing: 1px;
-  font-family: 'Mail Ray Stuff';
-  color: rgb(248, 227, 86);
+  composes: titleHome from global;
+  color: var(--color-accent-tertiary);
   margin-top: 80px;
   width: 58%;
 }
@@ -22,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 60px;
-  color: rgb(255, 255, 255);
+  color: var(--color-white);
 }
 
 .members {

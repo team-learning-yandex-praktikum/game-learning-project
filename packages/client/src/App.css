@@ -48,6 +48,9 @@ h6 {
   --color-accent-critical: #f05163;
   --color-accent-warning: #eb7c06;
 
+  --color-light-yellow: #ecffc5;
+  --color-white: #fff;
+
   --border-radius: 10px;
 
   font-family: var(--font-family);
@@ -100,4 +103,24 @@ h6 {
     border-radius: 10px;
     background-color: var(--color-side);
   }
+}
+
+.titleHome {
+  font-size: 100px;
+  letter-spacing: 1px;
+  font-family: var(--font-family-design);
+}
+
+.containerHome {
+  padding: 30px 120px 80px;
+}
+
+.containerSectionHome {
+  border-radius: 40px 40px 0 0;
+}
+
+.titleHome {
+  font-size: 100px;
+  letter-spacing: 1px;
+  font-family: var(--font-family-design);
 }

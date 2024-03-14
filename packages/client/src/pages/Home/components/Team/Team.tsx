@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { TeamProps } from './types'
 import { clsx } from 'clsx'
 import style from './team.module.css'
-import Divider from '../../../../components/Divider/Divider'
+import Divider from '@components/Divider'
 import { teamMap } from './constants'
 
 const Team: FC<TeamProps> = ({ className }) => {

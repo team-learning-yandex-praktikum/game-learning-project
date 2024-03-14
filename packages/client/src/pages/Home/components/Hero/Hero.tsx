@@ -1,7 +1,7 @@
 import React from 'react'
-import CrazyTitle from '../../../../components/CrazyTitle'
+import CrazyTitle from '@components/CrazyTitle'
 import style from './hero.module.css'
-import PlayButton from '../../../../components/PlayButton/PlayButton'
+import PlayButton from '@components/PlayButton'
 
 const Hero = () => {
   return (

@@ -1,6 +1,6 @@
 .containerRules {
+  composes: containerHome containerSectionHome from global;
   background-color: rgb(244, 234, 169);
-  border-radius: 40px 40px 0 0;
 }
 
 .dividers {
@@ -10,7 +10,7 @@
 
 .shortDivider,
 .longDivider {
-  border: 2px solid rgb(32, 155, 25);
+  border: 2px solid var(--color-accent-main);
 }
 
 .shortDivider,
@@ -39,7 +39,7 @@
 
 .subtitle,
 .title {
-  color: rgb(32, 155, 25);
+  color: var(--color-accent-main);
 }
 
 .subtitle {
@@ -47,9 +47,7 @@
 }
 
 .title {
-  font-size: 100px;
-  letter-spacing: 1px;
-  font-family: 'Mail Ray Stuff';
+  composes: titleHome from global;
   line-height: 0.8;
 }
 
