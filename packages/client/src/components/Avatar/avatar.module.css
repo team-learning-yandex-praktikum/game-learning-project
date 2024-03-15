@@ -1,0 +1,48 @@
+.avatarContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.avatarContainer::before {
+  content: '';
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  background: rgb(26, 26, 26);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.avatarContainer::after {
+  content: 'Изменить';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-family);
+  font-size: var(--font-size-s);
+  font-weight: 600;
+  color: var(--color-background);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.avatarContainer:hover::before,
+.avatarContainer:hover::after {
+  opacity: 0.7;
+  cursor: pointer;
+}
