@@ -20,8 +20,10 @@ const AuthForm: FC<AuthFormProps> = ({
           <TextField key={config.name} {...config} />
         ))}
       </form>
-      <Button {...SubmitButtonProps} className={styles.button} />
-      <NavLink {...LinkProps} className={styles.link} />
+      <div className={styles.actions}>
+        <Button {...SubmitButtonProps} className={styles.button} />
+        <NavLink {...LinkProps} className={styles.link} />
+      </div>
     </div>
   )
 }
