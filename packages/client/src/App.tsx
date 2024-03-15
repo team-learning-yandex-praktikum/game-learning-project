@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useRoutes } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import Sidebar from '@components/Sidebar'
 import { ThemeMode } from '@styles'
-import './App.css'
 import { routesConfig } from '@routes'
-import { Routes } from '@routes/constants'
+import { useCheckAuthentication, useIsAuthPage } from '@utils'
+import './App.css'
 
 function App() {
   const renderRouter = useRoutes(routesConfig)
+  const isAuthPage = useIsAuthPage()
   const [themeMode, setThemeMode] = useState<ThemeMode>(ThemeMode.light) // todo Вынести в стор
 
-  const { pathname } = useLocation()
-  const isAuthPage =
-    pathname.includes(Routes.Registration) || pathname.includes(Routes.Login)
+  useCheckAuthentication()
 
   useEffect(() => {
     const fetchServerData = async () => {

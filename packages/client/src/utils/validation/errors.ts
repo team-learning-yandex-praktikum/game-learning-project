@@ -6,6 +6,10 @@ export const ERRORS = {
   notEquals: 'Введенные поля не совпадают',
 }
 
+export const AUTH_ERRORS = {
+  authenticated: 'User already in system',
+}
+
 export const getMinLengthError = (value: number) => {
   return `${ERRORS.minLength} - ${value}`
 }
