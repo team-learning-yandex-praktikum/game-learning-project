@@ -5,7 +5,7 @@ export type ButtonColor = 'main' | 'secondary'
 
 type JsxButtonProps = Pick<
   JsxElementAttributes<'button'>,
-  'children' | 'className' | 'onClick' | 'type' | 'disabled'
+  'children' | 'className' | 'onClick' | 'type' | 'disabled' | 'form'
 >
 
 export interface ButtonProps extends JsxButtonProps {

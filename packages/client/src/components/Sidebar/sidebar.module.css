@@ -65,8 +65,12 @@
 }
 
 .sidebar[data-mode='hoist'] {
+  border-color: var(--color-text);
+  opacity: 0.4;
+
   .arrow {
     height: 50px;
     width: 36px;
+    color: var(--color-text);
   }
 }
