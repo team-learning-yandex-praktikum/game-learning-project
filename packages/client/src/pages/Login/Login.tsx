@@ -1,32 +1,24 @@
 import { FC } from 'react'
-import { TextFieldProps } from '@components/TextField/types'
 import { Routes } from '@routes/constants'
-import AuthForm from '@components/AuthForm'
-
-const fieldsConfig: TextFieldProps[] = [
-  {
-    name: 'login',
-    label: 'Логин',
-    placeholder: 'ivan_ivanov',
-  },
-  {
-    name: 'password',
-    label: 'Пароль',
-    placeholder: 'qwerty',
-    type: 'password',
-  },
-]
+import Form from '@components/Form'
+import { fieldsConfig } from '@utils/validation/fieldsConfig'
 
 const Login: FC = () => (
-  <AuthForm
+  <Form
     title={'Вход'}
-    fields={fieldsConfig}
+    fields={{
+      login: fieldsConfig.login,
+      password: fieldsConfig.password,
+    }}
     SubmitButtonProps={{
       children: 'Войти',
     }}
     LinkProps={{
       children: 'Регистрация',
       to: Routes.Registration,
+    }}
+    onSubmit={data => {
+      console.log(data)
     }}
   />
 )

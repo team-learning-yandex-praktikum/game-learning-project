@@ -1,3 +1,4 @@
+import { FieldError } from 'react-hook-form'
 import { JsxElementAttributes } from '@types'
 
 type JsxInput = JsxElementAttributes<'input'>
@@ -8,5 +9,5 @@ type JsxInputProps = Pick<
 
 export interface TextFieldProps extends JsxInputProps {
   label?: string
-  error?: string
+  error?: string | FieldError
 }
