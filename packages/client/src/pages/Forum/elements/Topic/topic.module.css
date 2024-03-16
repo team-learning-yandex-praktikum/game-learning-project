@@ -1,0 +1,40 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  color: var(--color-text);
+  composes: font-base-m from global;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  flex-grow: 1;
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--color-accent-main);
+  }
+}
+
+.title {
+  composes: font-base-l from global;
+  font-weight: 600;
+}
+
+.description {
+  margin-top: 5px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.author {
+  color: var(--color-accent-main);
+}
+
+.date {
+  color: var(--color-side);
+}

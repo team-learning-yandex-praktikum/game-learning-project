@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 24px;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--color-background);
+}
+
+.emojiButton {
+  color: var(--color-side);
+  cursor: pointer;
+}
+
+.input {
+  width: unset;
+  flex-grow: 1;
+}
+
+.send {
+  color: var(--color-accent-main);
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: max-content;
+  margin: 0;
+  transition: color 0.2s, opacity 0.2s;
+
+  &:hover {
+    color: var(--color-accent-main-hover);
+  }
+
+  &:disabled {
+    color: var(--color-side);
+    cursor: not-allowed;
+  }
+}
+
+:global(.app[data-theme='dark']) {
+  .send:disabled {
+    opacity: 0.4;
+  }
+}

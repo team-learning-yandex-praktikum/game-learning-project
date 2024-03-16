@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 44px;
+  max-width: 680px;
+  padding: 9px 15px 9px 19px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-accent-secondary);
+  border-radius: 100px;
+}
+
+.input {
+  composes: font-base-m from global;
+  padding: 0;
+  border: none;
+  background: none;
+  flex-grow: 1;
+  color: var(--color-text);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--color-side);
+  }
+}
+
+.icon {
+  color: var(--color-side);
+}
+
+:global(.app[data-theme='dark']) {
+  .input::placeholder,
+  .icon {
+    opacity: 0.6;
+  }
+}

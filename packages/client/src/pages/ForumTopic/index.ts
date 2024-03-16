@@ -1,1 +1,1 @@
-export { ForumTopic as default } from './ForumTopic'
+export { default } from './ForumTopic'
