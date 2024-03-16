@@ -1,0 +1,99 @@
+.containerRules {
+  composes: containerHome containerSectionHome from global;
+  background-color: var(--color-background-rules);
+  color: var(--color-text);
+}
+
+.dividers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shortDivider,
+.subtitle {
+  width: 22%;
+}
+
+.longDivider,
+.title,
+.startImage {
+  width: 72%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.titlesContainer {
+  display: flex;
+  margin-top: 36px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.subtitle,
+.title {
+  color: var(--color-accent-main);
+}
+
+.subtitle {
+  font-weight: 700;
+}
+
+.title {
+  composes: font-design-headline-l from global;
+  line-height: 0.8;
+}
+
+.imagesContainer {
+  display: flex;
+  gap: 60px;
+}
+
+.aboutImage {
+  width: 360px;
+}
+
+.aboutImage img {
+  width: 100%;
+}
+
+.image,
+.rulesText,
+.rulesSubtitle {
+  width: calc(100% / 2);
+}
+
+.rulesSubtitle {
+  text-align: right;
+}
+
+.image img {
+  width: 100%;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  font-size: 32px;
+  align-items: flex-end;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.rules {
+  display: flex;
+  gap: 60px;
+}
+
+.rulesText {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
