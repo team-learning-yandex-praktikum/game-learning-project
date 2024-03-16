@@ -41,6 +41,10 @@
   transition: opacity 0.3s;
 }
 
+:global(.app[data-theme='dark']) .avatarContainer::after {
+  color: var(--color-text);
+}
+
 .avatarContainer:hover::before,
 .avatarContainer:hover::after {
   opacity: 0.7;

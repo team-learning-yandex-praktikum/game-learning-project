@@ -1,38 +1,19 @@
 import { FC, useState } from 'react'
 import styles from './profileInfo.module.css'
 import Title from '@components/Title'
-import TextField from '@components/TextField'
-import { TextFieldProps } from '@components/TextField/types'
-import Button from '@components/Button'
 import Avatar from '@/components/Avatar'
+import Form from '@components/Form'
+import { fieldsConfig } from '@utils/validation/fieldsConfig'
+import { omit } from 'lodash'
+import { FIELDS } from '@/utils/validation/fields'
 
-const fieldsConfig: TextFieldProps[] = [
-  {
-    name: 'first_name',
-    label: 'Имя',
-    placeholder: 'Иван',
-  },
-  {
-    name: 'second_name',
-    label: 'Фамилия',
-    placeholder: 'Иванов',
-  },
-  {
-    name: 'email',
-    label: 'Почта',
-    placeholder: 'ivan@test.ru',
-  },
-  {
-    name: 'phone',
-    label: 'Телефон',
-    placeholder: '+7 999 999 99 99',
-  },
-  {
-    name: 'login',
-    label: 'Логин',
-    placeholder: 'ivan_ivanov',
-  },
-]
+const defaultValues: Partial<Record<FIELDS, string>> = {
+  [FIELDS.first_name]: 'Иван',
+  [FIELDS.second_name]: 'Иванов',
+  [FIELDS.email]: 'ivan@test.ru',
+  [FIELDS.phone]: '89270000000',
+  [FIELDS.login]: 'ivan_ivanov',
+}
 
 export const ProfileInfo: FC = () => {
   const [editMode, setEditMode] = useState<boolean>(false)
@@ -43,31 +24,25 @@ export const ProfileInfo: FC = () => {
     <>
       <Avatar />
       <Title className={styles.title}>ivan_ivanov</Title>
-      <form className={styles.fields}>
-        {fieldsConfig.map(config => (
-          <TextField key={config.name} {...config} readOnly={!editMode} />
-        ))}
-      </form>
-      {editMode ? (
-        <>
-          <Button className={styles.button} variant="outlined">
-            Сохранить
-          </Button>
-          <Button
-            className={styles.button}
-            variant="outlined"
-            onClick={toggleEditMode}>
-            Отменить
-          </Button>
-        </>
-      ) : (
-        <Button
-          className={styles.button}
-          variant="outlined"
-          onClick={toggleEditMode}>
-          Изменить
-        </Button>
-      )}
+      <Form
+        fields={omit(fieldsConfig, ['password', 'repeat_password'])}
+        disabled={!editMode}
+        defaultValues={defaultValues}
+        SubmitButtonProps={{
+          children: editMode ? 'Сохранить' : 'Изменить',
+          variant: 'outlined',
+        }}
+        CancelButtonProps={
+          editMode
+            ? {
+                children: 'Отменить',
+                variant: 'outlined',
+                onClick: toggleEditMode,
+              }
+            : undefined
+        }
+        onSubmit={toggleEditMode}
+      />
     </>
   )
 }

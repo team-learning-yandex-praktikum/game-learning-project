@@ -16,3 +16,20 @@ export const validateRepeatedPassword = (
     ? ERRORS.notEquals
     : undefined
 }
+export const validateNewPassword = (password: string, values: FieldValues) => {
+  return validatePassword(password)
+    ? validatePassword(password)
+    : password === values.old_password
+    ? ERRORS.equalsPassword
+    : undefined
+}
+export const validateRepeatedNewPassword = (
+  password: string,
+  values: FieldValues
+) => {
+  return validatePassword(password)
+    ? validatePassword(password)
+    : password !== values.new_password
+    ? ERRORS.notEquals
+    : undefined
+}

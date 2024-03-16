@@ -53,4 +53,25 @@ export const fieldsConfig: FieldsConfig = {
     type: 'password',
     options: validationConfig.repeat_password,
   },
+  [FIELDS.old_password]: {
+    name: FIELDS.old_password,
+    label: 'Старый пароль',
+    placeholder: 'qwerty',
+    type: 'password',
+    options: validationConfig.old_password,
+  },
+  [FIELDS.new_password]: {
+    name: FIELDS.new_password,
+    label: 'Новый пароль',
+    placeholder: 'qwerty',
+    type: 'password',
+    options: validationConfig.new_password,
+  },
+  [FIELDS.new_password_repeat]: {
+    name: FIELDS.new_password_repeat,
+    label: 'Новый пароль (еще раз)',
+    placeholder: 'qwerty',
+    type: 'password',
+    options: validationConfig.new_password_repeat,
+  },
 }

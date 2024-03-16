@@ -1,7 +1,12 @@
 import { RegisterOptions } from 'react-hook-form'
 import { FIELDS, FieldValues } from './fields'
 import { REGEXPS } from './regexps'
-import { validateRepeatedPassword, validatePassword } from './validators'
+import {
+  validateRepeatedPassword,
+  validatePassword,
+  validateNewPassword,
+  validateRepeatedNewPassword,
+} from './validators'
 import { ERRORS, getMaxLengthError, getMinLengthError } from './errors'
 
 export type FieldValidationOptions = RegisterOptions<FieldValues, FIELDS>
@@ -26,6 +31,25 @@ export const validationConfig: ValidationConfig = {
     minLength: { value: 8, message: getMinLengthError(8) },
     maxLength: { value: 40, message: getMaxLengthError(40) },
     validate: validateRepeatedPassword,
+  },
+  [FIELDS.old_password]: {
+    required: ERRORS.required,
+    minLength: { value: 8, message: getMinLengthError(8) },
+    maxLength: { value: 40, message: getMaxLengthError(40) },
+    validate: validatePassword,
+  },
+  [FIELDS.new_password]: {
+    required: ERRORS.required,
+    minLength: { value: 8, message: getMinLengthError(8) },
+    maxLength: { value: 40, message: getMaxLengthError(40) },
+    validate: validateNewPassword,
+    deps: FIELDS.new_password_repeat,
+  },
+  [FIELDS.new_password_repeat]: {
+    required: ERRORS.required,
+    minLength: { value: 8, message: getMinLengthError(8) },
+    maxLength: { value: 40, message: getMaxLengthError(40) },
+    validate: validateRepeatedNewPassword,
   },
   [FIELDS.first_name]: {
     required: ERRORS.required,
