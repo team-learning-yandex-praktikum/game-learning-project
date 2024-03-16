@@ -25,7 +25,13 @@ export const ProfileInfo: FC = () => {
       <Avatar />
       <Title className={styles.title}>ivan_ivanov</Title>
       <Form
-        fields={omit(fieldsConfig, ['password', 'repeat_password'])}
+        fields={omit(fieldsConfig, [
+          'password',
+          'repeat_password',
+          'old_password',
+          'new_password',
+          'new_password_repeat',
+        ])}
         disabled={!editMode}
         defaultValues={defaultValues}
         SubmitButtonProps={{
