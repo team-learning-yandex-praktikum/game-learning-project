@@ -4,21 +4,3 @@
   align-items: center;
   margin: auto;
 }
-
-/* .title {
-  margin: 20px 0 40px;
-  color: var(--color-accent-secondary);
-  composes: font-base-xl from global;
-  font-weight: 600;
-}
-
-.fields {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-
-.button {
-    margin-bottom: 20px;
-} */

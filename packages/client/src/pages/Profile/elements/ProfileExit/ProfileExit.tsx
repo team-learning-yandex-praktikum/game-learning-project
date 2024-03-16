@@ -1,13 +1,14 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import styles from './profileExit.module.css'
 import Title from '@components/Title'
-import TextField from '@components/TextField'
 import Button from '@components/Button'
+import { useNavigate } from 'react-router'
+import { Routes } from '@/routes/constants'
 
 export const ProfileExit: FC = () => {
-  const [editMode, setEditMode] = useState<boolean>(false)
-  const toggleEditMode = () => {
-    setEditMode(prevEditMode => !prevEditMode)
+  const navigate = useNavigate()
+  const handleClick = () => {
+    navigate(Routes.Login)
   }
   return (
     <>
@@ -15,7 +16,7 @@ export const ProfileExit: FC = () => {
       <Button
         className={styles.button}
         variant="outlined"
-        onClick={toggleEditMode}
+        onClick={handleClick}
         color="secondary">
         Да
       </Button>
