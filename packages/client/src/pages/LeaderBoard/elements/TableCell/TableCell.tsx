@@ -1,21 +1,23 @@
 import { FC } from 'react'
 import styles from './tableCell.module.css'
 import { TableCellProps } from './type'
+import clsx from 'clsx'
 
 const TableCell: FC<TableCellProps> = ({
   content,
   icon,
   align,
-  isHeader,
   isEnd,
+  onSortClick,
 }) => {
   return (
-    <div
-      className={`${styles.cell} ${isHeader ? styles.header : ''} ${
-        isEnd ? styles.end : ''
-      } ${styles[align]}`}>
-      <div className={isHeader ? styles.cellContent : ''}>
-        {icon && <div className={styles.iconCell}>{icon}</div>}
+    <div className={clsx(styles.cell, isEnd && styles.end, styles[align])}>
+      <div className={styles.cellContent}>
+        {icon && (
+          <div className={styles.iconCell} onClick={onSortClick}>
+            {icon}
+          </div>
+        )}
         {content}
       </div>
     </div>

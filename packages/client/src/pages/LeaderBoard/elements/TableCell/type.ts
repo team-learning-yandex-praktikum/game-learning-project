@@ -1,7 +1,9 @@
+import { ReactNode } from 'react'
+
 export type TableCellProps = {
-  content: React.ReactNode
+  content: ReactNode
   align: 'start' | 'center' | 'end'
-  isHeader: boolean
-  icon?: React.ReactNode
+  icon?: ReactNode
   isEnd?: boolean
+  onSortClick: () => void
 }
