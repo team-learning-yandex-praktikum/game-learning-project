@@ -1,6 +1,6 @@
-import Title from '@/components/Title'
-import styles from './leaderBoard.module.css'
 import { FC } from 'react'
+import Title from '@components/Title'
+import styles from './leaderBoard.module.css'
 import { getCorrectForm } from '@/utils/helpers/convertWord'
 import { SortAscend, SortAscendLetter, SortDescend } from '@/assets/icons'
 import { PlayerInfo } from './type'
