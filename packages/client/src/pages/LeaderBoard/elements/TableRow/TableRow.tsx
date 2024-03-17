@@ -1,13 +1,13 @@
 import { FC, useState } from 'react'
 import { TableRowProps } from './type'
 import TableCell from '../TableCell'
-import { getCorrectForm } from '@/utils/helpers/convertWord'
+import { getCorrectForm } from '@utils/helpers/convertWord'
 import {
   SortAscend,
   SortAscendLetter,
   SortDescend,
   SortDescendLetter,
-} from '@/assets/icons'
+} from '@assets/icons'
 import styles from './tableRow.module.css'
 import { SortRating } from '../../type'
 import clsx from 'clsx'
