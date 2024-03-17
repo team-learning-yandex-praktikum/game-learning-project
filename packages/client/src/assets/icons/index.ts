@@ -10,6 +10,7 @@ import ArrowTopIcon from './arrowTop.svg?react'
 import SortAscend from './sortAscend.svg?react'
 import SortDescend from './sortDescend.svg?react'
 import SortAscendLetter from './sortAscendLetter.svg?react'
+import SortDescendLetter from './sortDescendLetter.svg?react'
 
 export {
   HomeIcon,
@@ -24,4 +25,5 @@ export {
   SortAscend,
   SortDescend,
   SortAscendLetter,
+  SortDescendLetter,
 }

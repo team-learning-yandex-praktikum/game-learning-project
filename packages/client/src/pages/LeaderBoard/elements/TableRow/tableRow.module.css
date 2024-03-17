@@ -1,0 +1,21 @@
+.row {
+  display: flex;
+  color: var(--color-text);
+  padding-bottom: 20px;
+}
+
+.colorFirst {
+  color: var(--color-accent-main);
+}
+
+.colorSecond {
+  color: var(--color-accent-warning);
+}
+
+.colorThird {
+  color: var(--color-accent-secondary);
+}
+
+.countPoints {
+  font-weight: 600;
+}
