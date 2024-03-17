@@ -15,34 +15,24 @@
   height: 3px;
   border-radius: 28px;
   background: rgb(204, 204, 204);
+  border: none;
 }
 
-.tableContainer {
-  composes: scrollbar from global;
-  max-height: 65vh;
-  overflow: auto;
+:global(.app[data-theme='dark']) .line {
+  opacity: 0.4;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  background-color: var(--color-background);
+  z-index: 1;
 }
 
 .table {
-  margin: 30px 24px 0;
+  margin: 20px 24px 0;
   width: 680px;
-}
-
-.row {
-  display: flex;
-  color: var(--color-text);
-  padding-bottom: 20px;
-}
-
-.row:first-child {
-  color: var(--color-accent-main);
-}
-
-.row:nth-child(2),
-.row:nth-child(3) {
-  color: var(--color-accent-secondary);
-}
-
-.countPoints {
-  font-weight: 600;
 }

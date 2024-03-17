@@ -3,3 +3,8 @@ export interface PlayerInfo {
   ratingFieldName: string
   limit: number
 }
+
+export enum SortRating {
+  ascend = 'ascend',
+  descend = 'descend',
+}
