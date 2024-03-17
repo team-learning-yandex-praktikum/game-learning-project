@@ -7,5 +7,6 @@ export enum Routes {
   Forum = '/forum',
   ForumTopic = '/forum/:id',
   Game = '/game',
+  GameOver = '/game-over',
   NotFound = '*',
 }
