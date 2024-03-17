@@ -1,0 +1,38 @@
+.cell {
+  flex: 1;
+  padding: 10px;
+}
+
+.header:hover {
+  cursor: pointer;
+  .iconCell {
+    display: block;
+  }
+}
+.end {
+  color: var(--color-accent-main);
+}
+
+.start {
+  text-align: start;
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
+
+.iconCell {
+  display: none;
+  position: absolute;
+  left: -30px;
+  top: -2px;
+}
+
+.cellContent {
+  position: relative;
+  display: inline-block;
+}

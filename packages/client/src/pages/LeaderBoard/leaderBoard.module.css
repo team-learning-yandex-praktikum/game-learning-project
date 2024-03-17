@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--color-accent-secondary);
+  margin-top: 80px;
+}
+
+.line {
+  width: 728px;
+  height: 3px;
+  border-radius: 28px;
+  background: rgb(204, 204, 204);
+}
+
+.tableContainer {
+  composes: scrollbar from global;
+  max-height: 65vh;
+  overflow: auto;
+}
+
+.table {
+  margin: 30px 24px 0;
+  width: 680px;
+}
+
+.row {
+  display: flex;
+  color: var(--color-text);
+  padding-bottom: 20px;
+}
+
+.row:first-child {
+  color: var(--color-accent-main);
+}
+
+.row:nth-child(2),
+.row:nth-child(3) {
+  color: var(--color-accent-secondary);
+}
+
+.countPoints {
+  font-weight: 600;
+}
