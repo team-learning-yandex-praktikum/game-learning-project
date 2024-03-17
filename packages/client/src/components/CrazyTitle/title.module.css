@@ -1,0 +1,32 @@
+.containerButton {
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.orange,
+.yellow,
+.transparent {
+  composes: font-design-headline-l from global;
+  font-size: 150px;
+}
+
+.orange {
+  color: var(--color-accent-secondary);
+  position: absolute;
+  z-index: 10;
+  top: -20px;
+}
+
+.yellow {
+  color: var(--color-accent-tertiary);
+  position: absolute;
+  z-index: 5;
+  top: -3px;
+  left: -3px;
+}
+
+.transparent {
+  position: relative;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-accent-main);
+}

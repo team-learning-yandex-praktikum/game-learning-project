@@ -1,0 +1,51 @@
+.containerRating {
+  composes: containerHome containerSectionHome from global;
+  background-color: var(--color-background-raiting);
+  margin-top: -30px;
+  font-size: 32px;
+}
+
+.title {
+  composes: font-design-headline-l from global;
+  color: var(--color-accent-secondary);
+  margin-top: 80px;
+  line-height: 1;
+}
+
+.text {
+  text-align: right;
+  width: 53%;
+}
+
+.text a {
+  text-decoration: underline;
+}
+
+.score {
+  font-weight: 600;
+}
+
+.text a,
+.score {
+  color: var(--color-second-text-raiting);
+}
+
+.table {
+  margin: 60px auto 0;
+  width: 60%;
+  border-radius: 10px;
+  border: 1px solid var(--color-accent-secondary);
+  color: var(--color-text);
+}
+
+.bodyTable {
+  border-bottom: 1px solid var(--color-accent-secondary);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bodyTable:last-child {
+  border-bottom: none;
+}

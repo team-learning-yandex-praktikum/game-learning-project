@@ -20,11 +20,19 @@ h6 {
 .app[data-theme='light'] {
   --color-background: #fff;
   --color-text: #1a1a1a;
+  --color-background-rules: #f4eaa9;
+  --color-background-raiting: #ecffc5;
+  --color-background-team: var(--color-accent-secondary);
+  --color-second-text-raiting: var(--color-accent-main);
 }
 
 .app[data-theme='dark'] {
   --color-background: #1a1a1a;
   --color-text: #fff;
+  --color-background-rules: #41443c;
+  --color-background-raiting: #511928;
+  --color-background-team: #6a5428;
+  --color-second-text-raiting: var(--color-accent-tertiary);
 }
 
 .app {
@@ -100,4 +108,12 @@ h6 {
     border-radius: 10px;
     background-color: var(--color-side);
   }
+}
+
+.containerHome {
+  padding: 30px 120px 80px;
+}
+
+.containerSectionHome {
+  border-radius: 40px 40px 0 0;
 }

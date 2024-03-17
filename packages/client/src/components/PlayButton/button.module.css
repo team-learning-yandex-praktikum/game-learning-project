@@ -1,0 +1,32 @@
+.circle,
+.button {
+  border-radius: 50%;
+}
+
+.button {
+  border: none;
+  background-color: var(--color-accent-tertiary);
+  position: relative;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+}
+
+.circle {
+  border: 2px solid var(--color-accent-secondary);
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: -11px;
+  left: -1px;
+}
+
+.circle svg {
+  color: var(--color-accent-secondary);
+  width: 70px;
+  height: 70px;
+}
