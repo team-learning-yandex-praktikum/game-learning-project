@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  max-width: 728px;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  position: sticky;
+  padding-top: 30px;
+  top: 0;
+  background-color: var(--color-background);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0 24px;
+}
+
+.divider {
+  width: 100%;
+  height: 3px;
+  border-radius: 10px;
+  background-color: var(--color-side);
+}
+
+:global(.app[data-theme='dark']) {
+  .divider {
+    opacity: 0.4;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 24px;
+  width: 680px;
+}

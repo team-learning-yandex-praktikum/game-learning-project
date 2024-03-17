@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--color-text);
+}
+
+.meta {
+  display: flex;
+  gap: 40px;
+}
+
+.author {
+  color: var(--color-accent-main);
+}
+
+.date {
+  color: var(--color-side);
+}

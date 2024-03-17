@@ -1,8 +1,8 @@
-import { TextFieldProps } from '@components/TextField/types'
+import { InputProps } from '@components/TextField/types'
 import { FIELDS } from './fields'
 import { FieldValidationOptions, validationConfig } from './validationConfig'
 
-export interface FieldConfig extends Omit<TextFieldProps, 'name'> {
+export interface FieldConfig extends Omit<InputProps, 'name'> {
   name: FIELDS
   options: FieldValidationOptions
 }

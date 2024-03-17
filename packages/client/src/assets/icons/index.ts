@@ -11,6 +11,9 @@ import SortAscend from './sortAscend.svg?react'
 import SortDescend from './sortDescend.svg?react'
 import SortAscendLetter from './sortAscendLetter.svg?react'
 import SortDescendLetter from './sortDescendLetter.svg?react'
+import SearchIcon from './search.svg?react'
+import SmileIcon from './smile.svg?react'
+import SendIcon from './send.svg?react'
 
 export {
   HomeIcon,
@@ -26,4 +29,7 @@ export {
   SortDescend,
   SortAscendLetter,
   SortDescendLetter,
+  SearchIcon,
+  SmileIcon,
+  SendIcon,
 }
