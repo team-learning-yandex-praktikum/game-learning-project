@@ -35,6 +35,6 @@ export const routesConfig = [
   },
   {
     path: Routes.NotFound,
-    element: <Pages.NotFound />,
+    element: <Pages.ErrorPage code={404} />,
   },
 ]
