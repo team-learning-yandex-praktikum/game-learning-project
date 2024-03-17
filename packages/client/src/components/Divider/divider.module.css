@@ -1,0 +1,17 @@
+.divider {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-side);
+}
+
+.yellow {
+  background-color: var(--color-accent-tertiary);
+}
+
+.orange {
+  background-color: var(--color-accent-secondary);
+}
+
+.green {
+  background-color: var(--color-accent-main);
+}

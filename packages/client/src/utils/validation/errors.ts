@@ -7,6 +7,10 @@ export const ERRORS = {
   equalsPassword: 'Пароли совпадают',
 }
 
+export const AUTH_ERRORS = {
+  authenticated: 'User already in system',
+}
+
 export const getMinLengthError = (value: number) => {
   return `${ERRORS.minLength} - ${value}`
 }
