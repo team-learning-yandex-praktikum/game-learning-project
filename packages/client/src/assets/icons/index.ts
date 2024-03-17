@@ -7,6 +7,10 @@ import ProfileIcon from './profile.svg?react'
 import SunIcon from './sun.svg?react'
 import ArrowLeftIcon from './arrowLeft.svg?react'
 import ArrowTopIcon from './arrowTop.svg?react'
+import SortAscend from './sortAscend.svg?react'
+import SortDescend from './sortDescend.svg?react'
+import SortAscendLetter from './sortAscendLetter.svg?react'
+import SortDescendLetter from './sortDescendLetter.svg?react'
 
 export {
   HomeIcon,
@@ -18,4 +22,8 @@ export {
   SunIcon,
   ArrowLeftIcon,
   ArrowTopIcon,
+  SortAscend,
+  SortDescend,
+  SortAscendLetter,
+  SortDescendLetter,
 }

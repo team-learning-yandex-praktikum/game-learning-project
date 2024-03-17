@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--color-accent-secondary);
+  margin-top: 80px;
+}
+
+.line {
+  width: 728px;
+  height: 3px;
+  border-radius: 28px;
+  background: rgb(204, 204, 204);
+  border: none;
+}
+
+:global(.app[data-theme='dark']) .line {
+  opacity: 0.4;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  background-color: var(--color-background);
+  z-index: 1;
+}
+
+.table {
+  margin: 20px 24px 0;
+  width: 680px;
+}
