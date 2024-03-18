@@ -123,3 +123,10 @@ h6 {
 .containerSectionHome {
   border-radius: 40px 40px 0 0;
 }
+
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  background-color: skyblue;
+}
