@@ -1,16 +1,11 @@
-import CrazyTitle from '@components/CrazyTitle'
-import PlayButton from '@components/PlayButton'
-import React from 'react'
-
-import style from './game.module.css'
+import StartGame from './components/StartGame'
+import GameOver from './components/GameOver'
 
 const Game = () => {
-  return (
-    <div className={style.containerGame}>
-      <CrazyTitle>jump-jump</CrazyTitle>
-      <PlayButton />
-    </div>
-  )
+  // todo исправить после добавления игры
+  const isStartGame = true
+
+  return isStartGame ? <StartGame /> : <GameOver />
 }
 
 export default Game

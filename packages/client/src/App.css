@@ -23,8 +23,10 @@ h6 {
   --color-background-rules: #f4eaa9;
   --color-background-raiting: #ecffc5;
   --color-background-team: var(--color-accent-secondary);
+  --color-background-overlay-game-over: rgba(255, 255, 255, 0.6);
   --color-second-text-raiting: var(--color-accent-main);
   --color-background-game: linear-gradient(#53b4da, #ffffff33);
+  --color-text-game-over: var(--color-accent-secondary);
 }
 
 .app[data-theme='dark'] {
@@ -33,8 +35,10 @@ h6 {
   --color-background-rules: #41443c;
   --color-background-raiting: #511928;
   --color-background-team: #6a5428;
+  --color-background-overlay-game-over: rgba(26, 26, 26, 0.2);
   --color-second-text-raiting: var(--color-accent-tertiary);
   --color-background-game: linear-gradient(#010b5b, #00597c 70%);
+  --color-text-game-over: var(--color-accent-tertiary);
 }
 
 .app {

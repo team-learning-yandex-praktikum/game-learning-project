@@ -14,6 +14,7 @@ import SortDescendLetter from './sortDescendLetter.svg?react'
 import SearchIcon from './search.svg?react'
 import SmileIcon from './smile.svg?react'
 import SendIcon from './send.svg?react'
+import RestartIcon from './restart.svg?react'
 
 export {
   HomeIcon,
@@ -32,4 +33,5 @@ export {
   SearchIcon,
   SmileIcon,
   SendIcon,
+  RestartIcon,
 }
