@@ -1,9 +1,9 @@
-import { AvatarImage } from '@/assets/images'
+import { AvatarImage } from '@assets/images'
 import styles from './avatar.module.css'
 import { ChangeEvent, FC, useState } from 'react'
 import clsx from 'clsx'
-import { updateAvatar } from '@/services/profile'
 import { AvatarProps } from './type'
+import serviceProfile from '@/services/profile'
 
 export const Avatar: FC<AvatarProps> = ({ avatar }) => {
   const [avatarProfile, setAvatar] = useState<string>(avatar ? avatar : '')
@@ -13,7 +13,7 @@ export const Avatar: FC<AvatarProps> = ({ avatar }) => {
     if (file) {
       const formData = new FormData()
       formData.append('avatar', file)
-      const newAvatar = await updateAvatar(formData)
+      const newAvatar = await serviceProfile.updateAvatar(formData)
       setAvatar(newAvatar)
     }
   }
