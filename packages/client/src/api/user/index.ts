@@ -30,3 +30,5 @@ export class UserApi extends BaseApi {
     return data
   }
 }
+
+export const userApi = new UserApi()

@@ -3,6 +3,7 @@ import styles from './profilePassword.module.css'
 import Title from '@components/Title'
 import Form from '@components/Form'
 import { fieldsConfig } from '@utils/validation/fieldsConfig'
+import { updatePassword } from '@/services/profile'
 
 export const ProfilePassword: FC = () => {
   return (
@@ -18,9 +19,7 @@ export const ProfilePassword: FC = () => {
           children: 'Сохранить',
           variant: 'outlined',
         }}
-        onSubmit={data => {
-          console.log(data)
-        }}
+        onSubmit={updatePassword}
       />
     </>
   )

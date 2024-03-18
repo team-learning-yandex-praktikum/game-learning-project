@@ -61,7 +61,11 @@ const Form: FC<FormProps> = ({
               type={'submit'}
               form={FORM_ID}
               className={styles.button}
-              disabled={!isValid}
+              disabled={SubmitButtonProps.disabled ?? !isValid}
+              onClick={e => {
+                SubmitButtonProps?.onClick ? e.preventDefault() : undefined
+                SubmitButtonProps?.onClick?.(e)
+              }}
             />
           )}
           {CancelButtonProps && (

@@ -41,4 +41,6 @@ export const useCheckAuthentication = () => {
 
     fetchMe()
   }, [userData, isAuthPage, fetchMe])
+
+  return [userData, setUserData]
 }
