@@ -3,7 +3,7 @@ import styles from './avatar.module.css'
 import { ChangeEvent, FC, useState } from 'react'
 import clsx from 'clsx'
 import { AvatarProps } from './type'
-import serviceProfile from '@/services/profile'
+import { updateAvatar } from '@/services/profile'
 
 export const Avatar: FC<AvatarProps> = ({ avatar }) => {
   const [avatarProfile, setAvatar] = useState<string>(avatar ? avatar : '')
@@ -13,7 +13,7 @@ export const Avatar: FC<AvatarProps> = ({ avatar }) => {
     if (file) {
       const formData = new FormData()
       formData.append('avatar', file)
-      const newAvatar = await serviceProfile.updateAvatar(formData)
+      const newAvatar = await updateAvatar(formData)
       setAvatar(newAvatar)
     }
   }
