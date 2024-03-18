@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './profileInfo.module.css'
 import Title from '@components/Title'
-import Avatar from '@/components/Avatar'
+import Avatar from '@components/Avatar'
 import Form from '@components/Form'
 import { fieldsConfig } from '@utils/validation/fieldsConfig'
 import { omit } from 'lodash'
-import { useCheckAuthentication } from '@/utils'
-import { updateProfile } from '@/services/profile'
-import { UserDTO } from '@/api/auth/types'
-import { resourcesApi } from '@/api'
+import { useCheckAuthentication } from '@utils'
+import { UserDTO } from '@api/auth/types'
+import { resourcesApi } from '@api'
+import serviceProfile from '@/services/profile'
 
 export const ProfileInfo: FC = () => {
   const [editMode, setEditMode] = useState<boolean>(false)
@@ -22,7 +22,7 @@ export const ProfileInfo: FC = () => {
     data: Omit<UserDTO, 'id' | 'display_name' | 'avatar'>
   ) => {
     if (editMode && userData && 'display_name' in userData) {
-      const newProfileInfo = await updateProfile({
+      const newProfileInfo = await serviceProfile.updateProfile({
         ...data,
         display_name: userData?.display_name,
       })
