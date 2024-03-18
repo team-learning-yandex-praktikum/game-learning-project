@@ -8,7 +8,7 @@ import { omit } from 'lodash'
 import { useCheckAuthentication } from '@utils'
 import { UserDTO } from '@api/auth/types'
 import { resourcesApi } from '@api'
-import serviceProfile from '@/services/profile'
+import { updateProfile } from '@/services/profile'
 
 export const ProfileInfo: FC = () => {
   const [editMode, setEditMode] = useState<boolean>(false)
@@ -22,7 +22,7 @@ export const ProfileInfo: FC = () => {
     data: Omit<UserDTO, 'id' | 'display_name' | 'avatar'>
   ) => {
     if (editMode && userData && 'display_name' in userData) {
-      const newProfileInfo = await serviceProfile.updateProfile({
+      const newProfileInfo = await updateProfile({
         ...data,
         display_name: userData?.display_name,
       })
