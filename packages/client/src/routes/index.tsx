@@ -27,10 +27,6 @@ export const routesConfig = [
     element: <Pages.Game />,
   },
   {
-    path: Routes.GameOver,
-    element: <Pages.GameOver />,
-  },
-  {
     path: Routes.Forum,
     children: [
       { index: true, element: <Pages.Forum /> },

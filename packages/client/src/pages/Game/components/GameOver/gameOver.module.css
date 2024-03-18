@@ -7,7 +7,7 @@
 .container:before {
   content: '';
   display: block;
-  background: url('../../assets/backgrounds/clouds.svg') center center/contain
+  background: url('@assets/backgrounds/clouds.svg') center center/contain
     no-repeat;
   position: absolute;
   top: 5%;
