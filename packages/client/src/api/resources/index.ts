@@ -9,6 +9,11 @@ export class ResourcesApi extends BaseApi {
     const { data } = await this.client.get<string>(path, {
       responseType: 'arraybuffer',
     })
-    return data
+    const blob = new Blob([data])
+    const imageUrl = URL.createObjectURL(blob)
+
+    return imageUrl
   }
 }
+
+export const resourcesApi = new ResourcesApi()
