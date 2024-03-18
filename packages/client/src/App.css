@@ -24,6 +24,7 @@ h6 {
   --color-background-raiting: #ecffc5;
   --color-background-team: var(--color-accent-secondary);
   --color-second-text-raiting: var(--color-accent-main);
+  --color-background-game: linear-gradient(#53b4da, #ffffff33);
 }
 
 .app[data-theme='dark'] {
@@ -33,6 +34,7 @@ h6 {
   --color-background-raiting: #511928;
   --color-background-team: #6a5428;
   --color-second-text-raiting: var(--color-accent-tertiary);
+  --color-background-game: linear-gradient(#010b5b, #00597c 70%);
 }
 
 .app {
