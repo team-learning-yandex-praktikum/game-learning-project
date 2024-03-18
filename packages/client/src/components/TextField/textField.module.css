@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 14px 20px;
+  padding: 13px 19px;
   border-radius: var(--border-radius);
   border-width: 1px;
   border-style: solid;
@@ -26,14 +26,19 @@
 .label {
   color: var(--color-accent-main);
   font-weight: 500;
+
+  & + .input {
+    text-align: right;
+  }
 }
 
 .input {
   composes: font-base-m from global;
   background: none;
   border: none;
-  text-align: right;
   color: var(--color-text);
+  padding: 0;
+  flex-grow: 1;
 
   &:focus {
     outline: none;
@@ -41,6 +46,16 @@
 
   &::placeholder {
     color: var(--color-side);
+  }
+}
+
+.multiline {
+  flex-direction: column;
+  gap: 6px;
+
+  .input {
+    text-align: left;
+    resize: none;
   }
 }
 

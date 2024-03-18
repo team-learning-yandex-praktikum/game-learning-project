@@ -1,0 +1,10 @@
+<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<clipPath id="clip23_473">
+			<rect id="search" width="24.000000" height="24.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip23_473)">
+		<path id="path" d="M21 21L15 15M3.53 12.67C3.88 13.52 4.4 14.29 5.05 14.94C5.7 15.59 6.47 16.11 7.32 16.46C8.17 16.81 9.08 17 10 17C10.91 17 11.82 16.81 12.67 16.46C13.52 16.11 14.35 15.65 15 15C15.65 14.35 16.11 13.52 16.46 12.67C16.81 11.82 17 10.91 17 10C17 9.08 16.81 8.17 16.46 7.32C16.11 6.47 15.59 5.7 14.94 5.05C14.29 4.4 13.52 3.88 12.67 3.53C11.82 3.18 10.91 3 10 3C9.08 3 8.17 3.18 7.32 3.53C6.47 3.88 5.7 4.4 5.05 5.05C4.4 5.7 3.88 6.47 3.53 7.32C3.18 8.17 3 9.08 3 10C3 10.91 3.18 11.82 3.53 12.67Z" stroke="currentColor" stroke-opacity="1.000000" stroke-width="2.000000" stroke-linejoin="round"/>
+	</g>
+</svg>

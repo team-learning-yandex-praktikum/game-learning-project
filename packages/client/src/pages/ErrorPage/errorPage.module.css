@@ -1,0 +1,21 @@
+.root {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.code {
+  font-family: var(--font-family-design);
+  font-size: 144px;
+  letter-spacing: var(--font-spacing-design);
+  color: var(--color-accent-secondary);
+}
+
+.message {
+  color: var(--color-text);
+  font-size: 32px;
+  font-weight: 600;
+}

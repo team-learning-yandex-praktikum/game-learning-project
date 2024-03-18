@@ -5,6 +5,8 @@ import { ThemeMode } from '@styles'
 import { routesConfig } from '@routes'
 import { useCheckAuthentication, useIsAuthPage } from '@utils'
 import './App.css'
+import withErrorBoundary from '@utils/hocs/withErrorBoundary'
+import Fallback from '@utils/hocs/withErrorBoundary/Fallback'
 
 function App() {
   const renderRouter = useRoutes(routesConfig)
@@ -34,4 +36,4 @@ function App() {
   )
 }
 
-export default App
+export default withErrorBoundary({ fallback: <Fallback /> })(App)
