@@ -1,8 +1,8 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
-import Fallback from './components/Fallback'
 
 interface Props {
   children?: ReactNode
+  fallback: ReactNode
 }
 
 interface State {
@@ -17,18 +17,16 @@ class ErrorBoundary extends Component<Props, State> {
     }
   }
 
-  onClearError = () => {
-    this.setState({ hasError: false })
-  }
-
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error:', error, errorInfo)
     this.setState({ hasError: true })
   }
 
   render() {
+    const { fallback: Fallback } = this.props
+
     if (this.state.hasError) {
-      return <Fallback clear={this.onClearError} />
+      return Fallback
     }
 
     return this.props.children

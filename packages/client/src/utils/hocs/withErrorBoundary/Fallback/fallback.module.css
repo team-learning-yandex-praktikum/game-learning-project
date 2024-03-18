@@ -7,9 +7,15 @@
   gap: 10%;
 }
 
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
 .button {
   padding: 10px;
   border-radius: 20px;
   background: transparent;
   cursor: pointer;
+  min-width: 140px;
 }
