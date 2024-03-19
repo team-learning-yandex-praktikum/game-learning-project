@@ -5,7 +5,6 @@ import {
   validateRepeatedPassword,
   validatePassword,
   validateNewPassword,
-  validateRepeatedNewPassword,
 } from './validators'
 import { ERRORS, getMaxLengthError, getMinLengthError } from './errors'
 
@@ -55,7 +54,7 @@ export const validationConfig: ValidationConfig = {
     minLength: validationPasswordConfig.minLength,
     maxLength: validationPasswordConfig.maxLength,
     validate: (value, values) =>
-      validateRepeatedNewPassword(value, values.new_password),
+      validateRepeatedPassword(value, values.new_password),
   },
   [FIELDS.first_name]: {
     required: ERRORS.required,
