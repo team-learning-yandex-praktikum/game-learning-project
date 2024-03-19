@@ -12,8 +12,8 @@ import { updateProfile } from '@services/profile'
 import { ErrorResponse } from '@types'
 
 export const ProfileInfo: FC = () => {
-  const [editMode, setEditMode] = useState<boolean>(false)
-  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
+  const [editMode, setEditMode] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const toggleEditMode = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault()
@@ -45,8 +45,6 @@ export const ProfileInfo: FC = () => {
         if ('avatar' in userData && userData.avatar) {
           const avatar = await resourcesApi.get(userData.avatar)
           setAvatarUrl(avatar)
-        } else {
-          setAvatarUrl('')
         }
       } catch (e) {
         const error = e as ErrorResponse
