@@ -3,7 +3,7 @@ import styles from './avatar.module.css'
 import { ChangeEvent, FC, useState } from 'react'
 import clsx from 'clsx'
 import { AvatarProps } from './type'
-import { updateAvatar } from '@/services/profile'
+import { updateAvatar } from '@services/profile'
 
 export const Avatar: FC<AvatarProps> = ({ avatar }) => {
   const [avatarProfile, setAvatar] = useState<string>(avatar ? avatar : '')

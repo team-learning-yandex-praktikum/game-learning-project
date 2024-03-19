@@ -1,20 +1,22 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './profileInfo.module.css'
 import Title from '@components/Title'
-import Avatar from '@components/Avatar'
+import Avatar from '@pages/Profile/elements/Avatar'
 import Form from '@components/Form'
 import { fieldsConfig } from '@utils/validation/fieldsConfig'
 import { omit } from 'lodash'
 import { useCheckAuthentication } from '@utils'
 import { UserDTO } from '@api/auth/types'
 import { resourcesApi } from '@api'
-import { updateProfile } from '@/services/profile'
+import { updateProfile } from '@services/profile'
+import { ErrorResponse } from '@types'
 
 export const ProfileInfo: FC = () => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(true)
-  const toggleEditMode = () => {
+  const toggleEditMode = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault()
     setEditMode(prevEditMode => !prevEditMode)
   }
   const [userData, setUserData] = useCheckAuthentication()
@@ -32,21 +34,25 @@ export const ProfileInfo: FC = () => {
       }
     }
   }
-  useEffect(() => {
-    if (userData && avatarUrl !== undefined) {
-      setIsLoading(false)
-    }
-  }, [userData, avatarUrl])
 
   useEffect(() => {
     const fetchAvatar = async () => {
-      if (userData) {
+      setIsLoading(true)
+      if (!userData) {
+        return
+      }
+      try {
         if ('avatar' in userData && userData.avatar) {
           const avatar = await resourcesApi.get(userData.avatar)
           setAvatarUrl(avatar)
         } else {
           setAvatarUrl('')
         }
+      } catch (e) {
+        const error = e as ErrorResponse
+        console.error(error.response?.data.reason)
+      } finally {
+        setIsLoading(false)
       }
     }
     fetchAvatar()
@@ -71,7 +77,7 @@ export const ProfileInfo: FC = () => {
         defaultValues={omit(userData, ['id', 'display_name', 'avatar'])}
         SubmitButtonProps={{
           children: editMode ? 'Сохранить' : 'Изменить',
-          variant: 'outlined',
+          variant: editMode ? 'contained' : 'outlined',
           disabled: !editMode ? false : undefined,
           onClick: !editMode ? toggleEditMode : undefined,
         }}
