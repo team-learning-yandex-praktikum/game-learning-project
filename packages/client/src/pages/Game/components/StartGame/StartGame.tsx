@@ -3,7 +3,7 @@ import CrazyTitle from '@components/CrazyTitle'
 import style from './game.module.css'
 import RoundButton from '@components/RoundButton'
 import { PlayIcon } from '@assets/icons'
-import { GameWorld } from '@/game-core/GameWorld'
+import { GameWorld } from '@game-core/GameWorld'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 const StartGame = () => {
