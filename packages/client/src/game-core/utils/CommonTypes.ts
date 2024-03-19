@@ -2,17 +2,9 @@ export type Nullable<T> = T | null | undefined
 export type Primitive = boolean | number | bigint | string
 export type NonEmptyArr<T> = [T, ...T[]]
 
-export type Indexed<T = unknown> = {
-  [k in string]: T
-}
-
-export type NumIndexed<T = unknown> = {
-  [k in number]: T
-}
-
-export type Readonly<T extends Indexed | NumIndexed> = {
-  readonly [P in keyof T]: T[P]
-}
+export type Callback = (...args: unknown[]) => void
+export type Indexed<T = unknown> = Record<string, T>
+export type NumIndexed<T = unknown> = Record<number, T>
 
 export type DeepReadonly<T> = {
   readonly [P in keyof T]: T[P] extends (infer U)[]
@@ -21,10 +13,6 @@ export type DeepReadonly<T> = {
     ? DeepReadonly<T[P]>
     : T[P]
 }
-
-export type ReturnType<T> = T extends (...args: unknown[]) => infer R
-  ? R
-  : never
 
 export type Tuple<Elem, N extends number> = N extends N
   ? number extends N
@@ -42,3 +30,5 @@ export type Tuple1<T> = Tuple<T, 1>
 export type Tuple2<T> = Tuple<T, 2>
 export type Tuple3<T> = Tuple<T, 3>
 export type Tuple4<T> = Tuple<T, 4>
+
+export type ImgResource = Nullable<HTMLImageElement>

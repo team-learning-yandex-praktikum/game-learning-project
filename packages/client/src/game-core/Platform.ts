@@ -1,6 +1,8 @@
 import { GameObject } from './GameObject'
 import { Sprite } from './utils/Sprite'
 
+const sprite = new Sprite('platform.png')
+
 export class Platform extends GameObject {
   constructor(size: Size) {
     super(sprite)
@@ -19,5 +21,3 @@ export class Platform extends GameObject {
     ctx.fillRect(0, 0, this.width, this.height)
   }
 }
-
-const sprite = new Sprite('platform.png')

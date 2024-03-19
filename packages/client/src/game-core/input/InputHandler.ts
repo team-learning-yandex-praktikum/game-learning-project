@@ -1,5 +1,5 @@
 import { Player, State } from '../Player'
-import { Indexed } from '../utils/common-types'
+import { Indexed } from '../utils/CommonTypes'
 
 export class InputHandler {
   private player: Player
@@ -19,29 +19,7 @@ export class InputHandler {
 
   private setKey(e: KeyboardEvent, pressed: boolean) {
     const code = e.code
-    let key: string
-
-    switch (code) {
-      case 'Space':
-        key = Keys.SPACE
-        break
-      case 'ArrowLeft':
-        key = Keys.LEFT
-        break
-      case 'ArrowUp':
-        key = Keys.UP
-        break
-      case 'ArrowRight':
-        key = Keys.RIGHT
-        break
-      case 'ArrowDown':
-        key = Keys.DOWN
-        break
-
-      default:
-        key = e.key
-    }
-
+    const key = getKeyByCode(code, e.key)
     this.pressedKeys[key.toUpperCase()] = pressed
   }
 
@@ -50,7 +28,9 @@ export class InputHandler {
   }
 
   private isNothingDown() {
-    return Object.values(this.pressedKeys).every(_ => _ === false)
+    return Object.values(this.pressedKeys).every(
+      pressedKey => pressedKey === false
+    )
   }
 
   public handleInput(deltaTime: number) {
@@ -94,4 +74,22 @@ const enum Keys {
   RIGHT = 'RIGHT',
   DOWN = 'DOWN',
   UP = 'UP',
+}
+
+function getKeyByCode(code: string, defaultKey: string): string {
+  switch (code) {
+    case 'Space':
+      return Keys.SPACE
+    case 'ArrowLeft':
+      return Keys.LEFT
+    case 'ArrowUp':
+      return Keys.UP
+    case 'ArrowRight':
+      return Keys.RIGHT
+    case 'ArrowDown':
+      return Keys.DOWN
+
+    default:
+      return defaultKey
+  }
 }

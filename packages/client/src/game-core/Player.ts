@@ -1,8 +1,16 @@
 import { GameObject } from './GameObject'
 import { Platform } from './Platform'
-import { Physics } from './physics/PhysicsComponent'
+import { Gravity } from './constants'
 import { Sprite } from './utils/Sprite'
 import { Vector2d } from './utils/math'
+
+export const enum State {
+  Stand = 'Stand',
+  WalkLeft = 'WalkLeft',
+  WalkRight = 'WalkRight',
+  Jump = 'Jump',
+  Fall = 'Fall',
+}
 
 export class Player extends GameObject {
   private currState = State.Stand
@@ -13,7 +21,7 @@ export class Player extends GameObject {
   private platform: Platform
 
   constructor(plat: Platform) {
-    super(sprite)
+    super(new Sprite('player.png'))
     this.platform = plat
     this.size = [50, 120]
     this.walkSpeed = 400
@@ -207,15 +215,3 @@ export class Player extends GameObject {
     ctx.fillRect(0, 0, this.width, this.height)
   }
 }
-
-export const enum State {
-  Stand = 'Stand',
-  WalkLeft = 'WalkLeft',
-  WalkRight = 'WalkRight',
-  Jump = 'Jump',
-  Fall = 'Fall',
-}
-
-const Gravity = 10
-
-const sprite = new Sprite('player.png')

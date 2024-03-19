@@ -2,6 +2,9 @@ import { Enemy } from './Enemy'
 import { GameObject } from './GameObject'
 import { Platform } from './Platform'
 import { Player } from './Player'
+import { CanvasHeight } from './constants'
+import { CanvasWidth } from './constants'
+import { MsInSec } from './constants'
 import { InputHandler } from './input/InputHandler'
 import { Physics } from './physics/PhysicsComponent'
 import { resources } from './utils/ResourcesLoader'
@@ -23,8 +26,8 @@ export class GameWorld {
   constructor(rootElem: HTMLElement) {
     this.canvas = document.createElement('canvas')
     this.context = this.canvas.getContext('2d')!
-    this.canvas.width = 500
-    this.canvas.height = window.innerHeight - 50
+    this.canvas.width = CanvasWidth
+    this.canvas.height = CanvasHeight
     rootElem.appendChild(this.canvas)
 
     this.physics = new Physics()
@@ -52,7 +55,7 @@ export class GameWorld {
 
   private gameLoop() {
     const now = performance.now()
-    const dt = (now - this.lastLoopTime) / MS_IN_SECOND
+    const dt = (now - this.lastLoopTime) / MsInSec
 
     this.update(dt)
     this.render()
@@ -121,5 +124,3 @@ export class GameWorld {
     this.player.pos = [40, y - this.player.height]
   }
 }
-
-const MS_IN_SECOND = 1000.0

@@ -1,6 +1,7 @@
-import { Nullable } from './common-types'
-
-type Callback = (...args: unknown[]) => void
+import { ImgDir } from '../constants'
+import { LogicError } from '../errors/common'
+import { Callback } from './CommonTypes'
+import { ImgResource } from './CommonTypes'
 
 class ResourcesLoader {
   private resourceCache: Map<string, ImgResource>
@@ -11,13 +12,13 @@ class ResourcesLoader {
     this.readyCallbacks = []
   }
 
-  public load(url: string | string[]) {
-    if (url instanceof Array) {
-      url.forEach(_ => this.loadByURL(_))
+  public load(urlList: string | string[]) {
+    if (urlList instanceof Array) {
+      urlList.forEach(url => this.loadByURL(url))
       return
     }
 
-    this.loadByURL(url)
+    this.loadByURL(urlList)
   }
 
   public onReady(func: Callback) {
@@ -59,7 +60,11 @@ class ResourcesLoader {
   }
 }
 
-type ImgResource = Nullable<HTMLImageElement>
-const ImgDir = '../assets/images/'
+class ResourceGetError extends LogicError {
+  constructor(url: string) {
+    super(`ресурс не был загружен (${url})`)
+  }
+}
 
 export const resources = new ResourcesLoader()
+export { ResourceGetError }

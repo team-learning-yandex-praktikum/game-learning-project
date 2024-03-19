@@ -1,4 +1,4 @@
-import { Tuple } from './common-types'
+import { Tuple } from './CommonTypes'
 
 export class Vector<Dim extends number> {
   constructor(protected list: Tuple<number, Dim>) {}
@@ -22,7 +22,7 @@ export class Vector<Dim extends number> {
   }
 
   public mul(k: number) {
-    const elems = this.list.map(_ => _ * k)
+    const elems = this.list.map(elem => elem * k)
     return new Vector(elems as Tuple<number, Dim>)
   }
 
