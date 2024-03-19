@@ -24,5 +24,6 @@ export default {
     '^@store(.*)$': '<rootDir>/src/store$1',
     '^@styles(.*)$': '<rootDir>/src/styles$1',
     '^@api(.*)$': '<rootDir>/src/api$1',
+    '^@services(.*)$': '<rootDir>/src/services$1',
   }
 }
