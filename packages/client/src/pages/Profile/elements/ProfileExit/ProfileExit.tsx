@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import styles from './profileExit.module.css'
 import Title from '@components/Title'
 import Button from '@components/Button'
@@ -8,10 +8,10 @@ import { authApi } from '@api'
 
 export const ProfileExit: FC = () => {
   const navigate = useNavigate()
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     authApi.logout()
     navigate(Routes.Login)
-  }
+  }, [authApi, navigate])
   return (
     <>
       <Title className={styles.title}>Уходите?</Title>
