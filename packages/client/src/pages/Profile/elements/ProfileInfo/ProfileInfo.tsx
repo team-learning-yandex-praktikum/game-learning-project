@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import styles from './profileInfo.module.css'
 import Title from '@components/Title'
 import Avatar from '@pages/Profile/elements/Avatar'
@@ -12,18 +12,21 @@ import { updateProfile } from '@services/profile'
 import { ErrorResponse } from '@types'
 
 export const ProfileInfo: FC = () => {
-  const [editMode, setEditMode] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const toggleEditMode = (e?: React.MouseEvent<HTMLButtonElement>) => {
-    e?.preventDefault()
-    setEditMode(prevEditMode => !prevEditMode)
-  }
-  const [userData, setUserData] = useCheckAuthentication()
+  const toggleEditMode = useCallback(
+    (e?: React.MouseEvent<HTMLButtonElement>) => {
+      e?.preventDefault()
+      setIsEditMode(prevEditMode => !prevEditMode)
+    },
+    [setIsEditMode]
+  )
+  const { userData, setUserData } = useCheckAuthentication()
   const handleSaveProfile = async (
     data: Omit<UserDTO, 'id' | 'display_name' | 'avatar'>
   ) => {
-    if (editMode && userData && 'display_name' in userData) {
+    if (isEditMode && userData && 'display_name' in userData) {
       const newProfileInfo = await updateProfile({
         ...data,
         display_name: userData?.display_name,
@@ -42,7 +45,7 @@ export const ProfileInfo: FC = () => {
         return
       }
       try {
-        if ('avatar' in userData && userData.avatar) {
+        if (userData?.avatar) {
           const avatar = await resourcesApi.get(userData.avatar)
           setAvatarUrl(avatar)
         }
@@ -57,7 +60,7 @@ export const ProfileInfo: FC = () => {
   }, [userData])
 
   if (isLoading) {
-    return <></>
+    return <>Loading...</>
   }
   return (
     <>
@@ -71,16 +74,16 @@ export const ProfileInfo: FC = () => {
           'new_password',
           'new_password_repeat',
         ])}
-        disabled={!editMode}
+        disabled={!isEditMode}
         defaultValues={omit(userData, ['id', 'display_name', 'avatar'])}
         SubmitButtonProps={{
-          children: editMode ? 'Сохранить' : 'Изменить',
-          variant: editMode ? 'contained' : 'outlined',
-          disabled: !editMode ? false : undefined,
-          onClick: !editMode ? toggleEditMode : undefined,
+          children: isEditMode ? 'Сохранить' : 'Изменить',
+          variant: isEditMode ? 'contained' : 'outlined',
+          disabled: !isEditMode ? false : undefined,
+          onClick: !isEditMode ? toggleEditMode : undefined,
         }}
         CancelButtonProps={
-          editMode
+          isEditMode
             ? {
                 children: 'Отменить',
                 variant: 'outlined',
