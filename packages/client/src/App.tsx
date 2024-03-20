@@ -9,31 +9,31 @@ import withErrorBoundary from '@utils/hocs/withErrorBoundary'
 import Fallback from '@utils/hocs/withErrorBoundary/Fallback'
 
 function App() {
-  const renderRouter = useRoutes(routesConfig)
-  const isAuthPage = useIsAuthPage()
-  const [themeMode, setThemeMode] = useState<ThemeMode>(ThemeMode.light) // todo Вынести в стор
+    const renderRouter = useRoutes(routesConfig)
+    const isAuthPage = useIsAuthPage()
+    const [themeMode, setThemeMode] = useState<ThemeMode>(ThemeMode.light) // todo Вынести в стор
 
-  useCheckAuthentication()
+    useCheckAuthentication()
 
-  useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-    }
+    useEffect(() => {
+        const fetchServerData = async () => {
+            const url = `http://localhost:${__SERVER_PORT__}`
+            const response = await fetch(url)
+            const data = await response.json()
+            console.log(data)
+        }
 
-    fetchServerData()
-  }, [])
+        fetchServerData()
+    }, [])
 
-  return (
-    <div className="app" data-theme={themeMode}>
-      {!isAuthPage && (
-        <Sidebar themeMode={themeMode} setThemeMode={setThemeMode} />
-      )}
-      {renderRouter}
-    </div>
-  )
+    return (
+        <div className="app" data-theme={themeMode}>
+            {!isAuthPage && (
+                <Sidebar themeMode={themeMode} setThemeMode={setThemeMode} />
+            )}
+            {renderRouter}
+        </div>
+    )
 }
 
 export default withErrorBoundary({ fallback: <Fallback /> })(App)

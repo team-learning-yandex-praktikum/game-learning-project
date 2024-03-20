@@ -9,6 +9,8 @@
     "dev": "lerna run dev",
     "test": "lerna run test",
     "lint": "lerna run lint",
+    "lint:client": "lerna run lint --scope=client",
+    "lint:server": "lerna run lint --scope=server",
     "format": "lerna run format",
     "preview": "lerna run preview"
   },

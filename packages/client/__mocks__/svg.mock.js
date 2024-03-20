@@ -1,4 +1,4 @@
 module.exports = {
-  default: 'SvgrURL',
-  ReactComponent: 'div'
+    default: 'SvgrURL',
+    ReactComponent: 'div',
 }

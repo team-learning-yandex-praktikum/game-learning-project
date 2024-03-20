@@ -6,25 +6,25 @@ import { authApi } from '@api'
 import { useAuthentication } from '@utils'
 
 const Login: FC = () => {
-  const onLogin = useAuthentication(authApi.login)
+    const onLogin = useAuthentication(authApi.login)
 
-  return (
-    <Form
-      title={'Вход'}
-      fields={{
-        login: fieldsConfig.login,
-        password: fieldsConfig.password,
-      }}
-      SubmitButtonProps={{
-        children: 'Войти',
-      }}
-      LinkProps={{
-        children: 'Регистрация',
-        to: Routes.Registration,
-      }}
-      onSubmit={onLogin}
-    />
-  )
+    return (
+        <Form
+            title={'Вход'}
+            fields={{
+                login: fieldsConfig.login,
+                password: fieldsConfig.password,
+            }}
+            SubmitButtonProps={{
+                children: 'Войти',
+            }}
+            LinkProps={{
+                children: 'Регистрация',
+                to: Routes.Registration,
+            }}
+            onSubmit={onLogin}
+        />
+    )
 }
 
 export default Login

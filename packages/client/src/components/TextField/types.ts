@@ -8,20 +8,20 @@ type JsxInputProps = Pick<JsxInput, BasePropsSet | 'type'>
 type JsxTextAreaProps = Pick<JsxElementAttributes<'textarea'>, BasePropsSet>
 
 type BaseTextFieldProps = {
-  label?: string
-  error?: string | FieldError
-  className?: string
-  disableErrorText?: boolean
+    label?: string
+    error?: string | FieldError
+    className?: string
+    disableErrorText?: boolean
 }
 
 export type InputProps = JsxInputProps &
-  BaseTextFieldProps & {
-    multiline?: false
-  }
+    BaseTextFieldProps & {
+        multiline?: false
+    }
 
 export type TextAreaProps = JsxTextAreaProps &
-  BaseTextFieldProps & {
-    multiline: true
-  }
+    BaseTextFieldProps & {
+        multiline: true
+    }
 
 export type TextFieldProps = InputProps | TextAreaProps

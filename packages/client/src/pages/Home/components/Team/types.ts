@@ -1,3 +1,3 @@
 export interface TeamProps {
-  className?: string
+    className?: string
 }

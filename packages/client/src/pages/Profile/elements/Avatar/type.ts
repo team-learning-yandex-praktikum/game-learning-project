@@ -1,3 +1,3 @@
 export type AvatarProps = {
-  avatar?: string
+    avatar?: string
 }

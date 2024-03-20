@@ -1,4 +1,4 @@
 export interface ErrorPageProps {
-  code?: string | number
-  message?: string
+    code?: string | number
+    message?: string
 }

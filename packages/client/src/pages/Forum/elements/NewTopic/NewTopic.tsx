@@ -8,50 +8,55 @@ import { NewTopicFieldValues } from './types'
 import { NEW_TOPIC_FIELDS_CONFIG } from './fieldsConfig'
 
 const NewTopic: FC = () => {
-  const formId = 'newTopic'
+    const formId = 'newTopic'
 
-  const {
-    formState: { errors, isValid },
-    register,
-    handleSubmit,
-  } = useForm<NewTopicFieldValues>({ mode: 'onTouched' })
+    const {
+        formState: { errors, isValid },
+        register,
+        handleSubmit,
+    } = useForm<NewTopicFieldValues>({ mode: 'onTouched' })
 
-  const onSubmit: SubmitHandler<NewTopicFieldValues> = useCallback(data => {
-    console.log(data)
-  }, [])
+    const onSubmit: SubmitHandler<NewTopicFieldValues> = useCallback(data => {
+        console.log(data)
+    }, [])
 
-  return (
-    <div className={styles.container}>
-      <Title color={'secondary'}>Новая тема</Title>
-      <form
-        className={styles.form}
-        id={formId}
-        onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          label={'Заголовок'}
-          placeholder={'Введите название'}
-          error={errors.name?.message}
-          multiline
-          {...register('name', NEW_TOPIC_FIELDS_CONFIG.name)}
-        />
-        <TextField
-          label={'Описание'}
-          placeholder={'Добавьте описание'}
-          error={errors.description?.message}
-          multiline
-          {...register('description', NEW_TOPIC_FIELDS_CONFIG.description)}
-        />
-      </form>
-      <Button
-        variant={'outlined'}
-        color={'secondary'}
-        form={formId}
-        type={'submit'}
-        disabled={!isValid}>
-        Создать
-      </Button>
-    </div>
-  )
+    return (
+        <div className={styles.container}>
+            <Title color={'secondary'}>Новая тема</Title>
+            <form
+                className={styles.form}
+                id={formId}
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <TextField
+                    label={'Заголовок'}
+                    placeholder={'Введите название'}
+                    error={errors.name?.message}
+                    multiline
+                    {...register('name', NEW_TOPIC_FIELDS_CONFIG.name)}
+                />
+                <TextField
+                    label={'Описание'}
+                    placeholder={'Добавьте описание'}
+                    error={errors.description?.message}
+                    multiline
+                    {...register(
+                        'description',
+                        NEW_TOPIC_FIELDS_CONFIG.description
+                    )}
+                />
+            </form>
+            <Button
+                variant={'outlined'}
+                color={'secondary'}
+                form={formId}
+                type={'submit'}
+                disabled={!isValid}
+            >
+                Создать
+            </Button>
+        </div>
+    )
 }
 
 export default NewTopic

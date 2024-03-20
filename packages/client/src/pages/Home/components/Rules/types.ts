@@ -1,3 +1,3 @@
 export interface RulesProps {
-  className?: string
+    className?: string
 }
