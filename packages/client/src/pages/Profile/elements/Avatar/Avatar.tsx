@@ -25,7 +25,7 @@ export const Avatar: FC<AvatarProps> = ({ avatar }) => {
     <div
       className={clsx(
         styles.avatarContainer,
-        avatarProfile ? styles.avatarBackground : styles.avatarBackgroundDefaul
+        avatarProfile ? styles.avatarBackground : styles.avatarBackgroundDefault
       )}>
       <img
         src={avatarProfile ?? AvatarImage}
