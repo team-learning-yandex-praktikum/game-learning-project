@@ -20,7 +20,9 @@
       "@styles": ["src/styles"],
       "@styles/*": ["src/styles/*"],
       "@api": ["src/api"],
-      "@api/*": ["src/api/*"]
+      "@api/*": ["src/api/*"],
+      "@game-core": ["src/game-core"],
+      "@game-core/*": ["src/game-core/*"]
     },
   }
 }
