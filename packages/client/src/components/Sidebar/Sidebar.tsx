@@ -1,28 +1,30 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { throttle } from 'lodash'
 import { ArrowLeftIcon, ArrowTopIcon, MoonIcon, SunIcon } from '@assets/icons'
-import { ThemeMode } from '@styles'
 import { useWindowListener } from '@utils'
 import SidebarItem from './elements/SidebarItem'
 import SidebarSection from './elements/SidebarSection'
 import styles from './sidebar.module.css'
-import { SidebarMode, SidebarProps } from './types'
 import { changeVisibilityLinkContainer } from './helpers'
 import { sidebarConfig } from './config'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
+import { settingsSelectors, settingsActions } from '@store/settings'
+import { SidebarMode } from '@store/sidebar/types'
+import { sidebarSelectors } from '@store/sidebar'
 
-const Sidebar = <S extends string = string>({
-    themeMode,
-    setThemeMode,
-    mode: externalMode,
-    defaultMode = 'default',
-    onReturn,
-    SectionProps,
-}: SidebarProps<S>) => {
+const Sidebar: FC = () => {
+    const themeMode = useAppSelector(settingsSelectors.selectThemeMode)
+    const {
+        defaultMode,
+        mode: externalMode,
+        sectionOptions,
+    } = useAppSelector(sidebarSelectors.selectState)
+
+    const dispatch = useAppDispatch()
+
     const handleChangeTheme = useCallback(() => {
-        setThemeMode(prevState =>
-            prevState === ThemeMode.light ? ThemeMode.dark : ThemeMode.light
-        )
-    }, [setThemeMode])
+        dispatch(settingsActions.toggleThemeMode())
+    }, [dispatch])
 
     const [innerSidebarMode, setSidebarMode] =
         useState<SidebarMode>(defaultMode)
@@ -70,12 +72,9 @@ const Sidebar = <S extends string = string>({
     }, [])
 
     const returnHandler = useCallback(() => {
-        if (onReturn) {
-            onReturn()
-        } else {
-            history.back()
-        }
-    }, [onReturn])
+        // todo Добавить в стор инфу для данного перехода
+        history.back()
+    }, [])
 
     const clickHandler = useCallback(() => {
         switch (sidebarMode) {
@@ -105,7 +104,9 @@ const Sidebar = <S extends string = string>({
                     onClick={handleChangeTheme}
                     icon={isLightTheme ? <MoonIcon /> : <SunIcon />}
                 />
-                {SectionProps?.sections && <SidebarSection {...SectionProps} />}
+                {sectionOptions?.sections && (
+                    <SidebarSection {...sectionOptions} />
+                )}
             </div>
             <div className={styles.arrow}>
                 {isReturnMode && <ArrowLeftIcon />}
