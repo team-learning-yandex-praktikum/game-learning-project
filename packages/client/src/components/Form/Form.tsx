@@ -22,6 +22,7 @@ const Form: FC<FormProps> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid, disabled },
   } = useForm<FieldValues>({
     mode: 'onTouched',
@@ -60,15 +61,18 @@ const Form: FC<FormProps> = ({
               type={'submit'}
               form={FORM_ID}
               className={styles.button}
-              disabled={!isValid}
+              disabled={SubmitButtonProps.disabled ?? !isValid}
+              onClick={e => SubmitButtonProps?.onClick?.(e)}
             />
           )}
           {CancelButtonProps && (
             <Button
               variant={'outlined'}
               {...CancelButtonProps}
-              type={'reset'}
-              form={FORM_ID}
+              onClick={e => {
+                reset()
+                CancelButtonProps?.onClick?.(e)
+              }}
               className={styles.button}
             />
           )}

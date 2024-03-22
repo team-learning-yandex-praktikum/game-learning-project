@@ -25,5 +25,6 @@ export default {
     '^@styles(.*)$': '<rootDir>/src/styles$1',
     '^@api(.*)$': '<rootDir>/src/api$1',
     '^@game-core(.*)$': '<rootDir>/src/game-core$1',
+    '^@services(.*)$': '<rootDir>/src/services$1',
   }
 }

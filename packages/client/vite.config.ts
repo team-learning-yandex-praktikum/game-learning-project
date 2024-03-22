@@ -27,6 +27,7 @@ export default defineConfig({
       '@styles': path.resolve(__dirname, './src/styles'),
       '@api': path.resolve(__dirname, './src/api'),
       '@game-core': path.resolve(__dirname, './src/game-core'),
+      '@services': path.resolve(__dirname, './src/services'),
     },
   },
 })

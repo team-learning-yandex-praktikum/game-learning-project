@@ -4,6 +4,7 @@ export const ERRORS = {
   maxLength: 'Максимальное количество символов',
   pattern: 'Неверный формат',
   notEquals: 'Введенные поля не совпадают',
+  equalsPassword: 'Пароли совпадают',
 }
 
 export const AUTH_ERRORS = {

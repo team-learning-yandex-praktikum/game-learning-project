@@ -52,6 +52,7 @@ h6 {
   --font-size-s: 14px;
   --font-size-xs: 12px;
   --font-size-l: 20px;
+  --font-size-xl: 32px;
 
   --color-side: #ccc;
   --color-accent-main: #209b19;
@@ -101,6 +102,15 @@ h6 {
 .font-base-l {
   font-family: var(--font-family);
   font-size: var(--font-size-l);
+}
+.font-base-xl {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xl);
+}
+
+.font-base-xl {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xl);
 }
 
 .scrollbar {

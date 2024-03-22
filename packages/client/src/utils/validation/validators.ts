@@ -10,9 +10,16 @@ export const validatePassword = (value: string) =>
   checkUppercase(value) || checkForIntegers(value)
 export const validateRepeatedPassword = (
   password: string,
-  values: FieldValues
+  secondPassword: string
 ) => {
-  return validatePassword(password) ?? password !== values.password
-    ? ERRORS.notEquals
-    : undefined
+  return (
+    validatePassword(password) ??
+    (password !== secondPassword ? ERRORS.notEquals : undefined)
+  )
+}
+export const validateNewPassword = (password: string, values: FieldValues) => {
+  return (
+    validatePassword(password) ??
+    (password === values.old_password ? ERRORS.equalsPassword : undefined)
+  )
 }

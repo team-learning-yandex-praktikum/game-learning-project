@@ -22,7 +22,8 @@
       "@api": ["src/api"],
       "@api/*": ["src/api/*"],
       "@game-core": ["src/game-core"],
-      "@game-core/*": ["src/game-core/*"]
+      "@game-core/*": ["src/game-core/*"],
+      "@services/*": ["src/services/*"]
     },
   }
 }
