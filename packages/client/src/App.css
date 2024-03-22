@@ -108,6 +108,11 @@ h6 {
   font-size: var(--font-size-xl);
 }
 
+.font-base-xl {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xl);
+}
+
 .scrollbar {
   padding-right: 10px;
 
