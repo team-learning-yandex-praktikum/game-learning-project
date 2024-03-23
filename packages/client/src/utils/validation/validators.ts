@@ -1,6 +1,6 @@
 import { ERRORS } from './errors'
 import { REGEXPS } from './regexps'
-import { FieldValues } from './fields'
+import { FieldValues } from 'react-hook-form'
 
 export const checkUppercase = (value: string) =>
     value.toLowerCase() === value ? ERRORS.pattern : undefined
@@ -16,4 +16,4 @@ export const validateRepeatedPassword = (
     (password !== secondPassword ? ERRORS.notEquals : undefined)
 export const validateNewPassword = (password: string, values: FieldValues) =>
     validatePassword(password) ??
-    (password === values.old_password ? ERRORS.equalsPassword : undefined)
+    (password === values.oldPassword ? ERRORS.equalsPassword : undefined)

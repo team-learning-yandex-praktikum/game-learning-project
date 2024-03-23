@@ -1,4 +1,4 @@
-import { FieldError } from 'react-hook-form'
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
 import { JsxElementAttributes } from '@types'
 
 type BasePropsSet = 'placeholder' | 'value' | 'readOnly' | 'onChange' | 'name'
@@ -9,7 +9,7 @@ type JsxTextAreaProps = Pick<JsxElementAttributes<'textarea'>, BasePropsSet>
 
 type BaseTextFieldProps = {
     label?: string
-    error?: string | FieldError
+    error?: string | FieldError | Merge<FieldError, FieldErrorsImpl>
     className?: string
     disableErrorText?: boolean
 }

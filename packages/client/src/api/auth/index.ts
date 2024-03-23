@@ -11,7 +11,9 @@ export class AuthApi extends BaseApi {
         return data
     }
 
-    create = async (registrationData: RegistrationDTO) => {
+    create = async (
+        registrationData: RegistrationDTO
+    ): Promise<SignupResponse> => {
         const { data } = await this.client.post<SignupResponse>(
             'signup',
             registrationData

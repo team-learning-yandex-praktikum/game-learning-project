@@ -9,6 +9,7 @@ export const ERRORS = {
 
 export const AUTH_ERRORS = {
     authenticated: 'User already in system',
+    notAuthorized: 'Request failed with status code 401',
 }
 
 export const getMinLengthError = (value: number) =>

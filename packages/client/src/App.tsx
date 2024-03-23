@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import Sidebar from '@components/Sidebar'
 import { routesConfig } from '@routes'

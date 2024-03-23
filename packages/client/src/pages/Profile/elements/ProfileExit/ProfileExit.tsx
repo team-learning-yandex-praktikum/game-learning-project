@@ -4,14 +4,18 @@ import Title from '@components/Title'
 import Button from '@components/Button'
 import { useNavigate } from 'react-router'
 import { Routes } from '@routes/constants'
-import { authApi } from '@api'
+import { useAppDispatch } from '@store/hooks'
+import { logout } from '@store/user'
 
 export const ProfileExit: FC = () => {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+
     const handleClick = useCallback(() => {
-        authApi.logout()
+        dispatch(logout())
         navigate(Routes.Login)
-    }, [authApi, navigate])
+    }, [dispatch, navigate])
+
     return (
         <>
             <Title className={styles.title}>Уходите?</Title>

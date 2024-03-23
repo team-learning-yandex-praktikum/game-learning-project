@@ -9,7 +9,8 @@ const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
         { error, label, className, disableErrorText = false, ...restProps },
         ref
     ) => {
-        const errorMessage = typeof error === 'string' ? error : error?.message
+        const errorMessage =
+            typeof error === 'string' ? error : (error?.message as string)
 
         return (
             <div

@@ -10,17 +10,23 @@ export interface FieldConfig extends Omit<InputProps, 'name'> {
 export type FieldsConfig = Record<FIELDS, FieldConfig>
 
 export const fieldsConfig: FieldsConfig = {
-    [FIELDS.first_name]: {
-        name: FIELDS.first_name,
+    [FIELDS.displayName]: {
+        name: FIELDS.displayName,
+        label: 'Никнейм',
+        placeholder: 'ivan',
+        options: validationConfig.login,
+    },
+    [FIELDS.firstName]: {
+        name: FIELDS.firstName,
         label: 'Имя',
         placeholder: 'Иван',
-        options: validationConfig.first_name,
+        options: validationConfig.firstName,
     },
-    [FIELDS.second_name]: {
-        name: FIELDS.second_name,
+    [FIELDS.secondName]: {
+        name: FIELDS.secondName,
         label: 'Фамилия',
         placeholder: 'Иванов',
-        options: validationConfig.second_name,
+        options: validationConfig.secondName,
     },
     [FIELDS.email]: {
         name: FIELDS.email,
@@ -47,32 +53,32 @@ export const fieldsConfig: FieldsConfig = {
         type: 'password',
         options: validationConfig.password,
     },
-    [FIELDS.repeat_password]: {
-        name: FIELDS.repeat_password,
+    [FIELDS.repeatPassword]: {
+        name: FIELDS.repeatPassword,
         label: 'Пароль (ещё раз)',
         placeholder: 'qwerty',
         type: 'password',
-        options: validationConfig.repeat_password,
+        options: validationConfig.repeatPassword,
     },
-    [FIELDS.old_password]: {
-        name: FIELDS.old_password,
+    [FIELDS.oldPassword]: {
+        name: FIELDS.oldPassword,
         label: 'Старый пароль',
         placeholder: 'qwerty',
         type: 'password',
-        options: validationConfig.old_password,
+        options: validationConfig.oldPassword,
     },
-    [FIELDS.new_password]: {
-        name: FIELDS.new_password,
+    [FIELDS.newPassword]: {
+        name: FIELDS.newPassword,
         label: 'Новый пароль',
         placeholder: 'qwerty',
         type: 'password',
-        options: validationConfig.new_password,
+        options: validationConfig.newPassword,
     },
-    [FIELDS.new_password_repeat]: {
-        name: FIELDS.new_password_repeat,
+    [FIELDS.newPasswordRepeat]: {
+        name: FIELDS.newPasswordRepeat,
         label: 'Новый пароль (еще раз)',
         placeholder: 'qwerty',
         type: 'password',
-        options: validationConfig.new_password_repeat,
+        options: validationConfig.newPasswordRepeat,
     },
 }

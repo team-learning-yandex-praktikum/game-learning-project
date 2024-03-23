@@ -1,7 +1,7 @@
 .avatarContainer {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   overflow: hidden;
   border-radius: 50%;
   display: flex;
@@ -17,13 +17,13 @@
 }
 
 .avatarBackgroundDefault::before {
-  width: 170px;
-  height: 170px;
+  width: inherit;
+  height: inherit;
 }
 
 .avatarBackground::before {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 
 .avatarContainer::before {
