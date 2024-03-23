@@ -7,23 +7,23 @@ export type Indexed<T = unknown> = Record<string, T>
 export type NumIndexed<T = unknown> = Record<number, T>
 
 export type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends (infer U)[]
-    ? DeepReadonly<U>[]
-    : T[P] extends object
-    ? DeepReadonly<T[P]>
-    : T[P]
+    readonly [P in keyof T]: T[P] extends (infer U)[]
+        ? DeepReadonly<U>[]
+        : T[P] extends object
+        ? DeepReadonly<T[P]>
+        : T[P]
 }
 
 export type Tuple<Elem, N extends number> = N extends N
-  ? number extends N
-    ? Elem[]
-    : TupleOf<Elem, N, []>
-  : never
+    ? number extends N
+        ? Elem[]
+        : TupleOf<Elem, N, []>
+    : never
 
 type TupleOf<
-  Elem,
-  N extends number,
-  Arr extends readonly unknown[]
+    Elem,
+    N extends number,
+    Arr extends readonly unknown[]
 > = Arr['length'] extends N ? Arr : TupleOf<Elem, N, readonly [Elem, ...Arr]>
 
 export type Tuple1<T> = Tuple<T, 1>

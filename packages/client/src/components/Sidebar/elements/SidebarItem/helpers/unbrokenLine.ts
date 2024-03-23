@@ -1,3 +1,1 @@
-export const unbrokenLine = (value: string) => {
-  return value.split(' ').join('\u00A0')
-}
+export const unbrokenLine = (value: string) => value.split(' ').join('\u00A0')

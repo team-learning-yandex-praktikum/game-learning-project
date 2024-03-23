@@ -1,0 +1,16 @@
+# Logs
+logs
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules
+
+# Optional eslint cache
+.eslintcache
+
+dist
+
+jest.config.js
+__mocks__

@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
       "@components": ["src/components"],
       "@components/*": ["src/components/*"],
       "@assets": ["src/assets"],
@@ -24,6 +23,6 @@
       "@game-core": ["src/game-core"],
       "@game-core/*": ["src/game-core/*"],
       "@services/*": ["src/services/*"]
-    },
+    }
   }
 }

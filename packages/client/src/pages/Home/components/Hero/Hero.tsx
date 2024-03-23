@@ -6,15 +6,13 @@ import { Routes } from '@routes/constants'
 import RoundButton from '@components/RoundButton'
 import { PlayIcon } from '@assets/icons'
 
-const Hero = () => {
-  return (
+const Hero = () => (
     <div className={style.containerHero}>
-      <CrazyTitle>jump-jump</CrazyTitle>
-      <Link to={Routes.Game}>
-        <RoundButton icon={<PlayIcon />} />
-      </Link>
+        <CrazyTitle>jump-jump</CrazyTitle>
+        <Link to={Routes.Game}>
+            <RoundButton icon={<PlayIcon />} />
+        </Link>
     </div>
-  )
-}
+)
 
 export default Hero

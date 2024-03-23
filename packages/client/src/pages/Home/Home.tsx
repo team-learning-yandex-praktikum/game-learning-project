@@ -5,15 +5,13 @@ import Rules from './components/Rules'
 import Rating from './components/Rating'
 import Team from './components/Team'
 
-const Home = () => {
-  return (
+const Home = () => (
     <div className={style.wrapper}>
-      <Hero />
-      <Rules />
-      <Rating />
-      <Team />
+        <Hero />
+        <Rules />
+        <Rating />
+        <Team />
     </div>
-  )
-}
+)
 
 export default Home

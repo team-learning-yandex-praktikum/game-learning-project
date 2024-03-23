@@ -1,9 +1,14 @@
 pre-commit:
   parallel: true
   commands:
-    lint:
+    lint-client:
       glob: '*.{ts,tsx}'
       run: yarn eslint {staged_files}
+      root: 'packages/client/'
+    lint-server:
+      glob: '*.{ts}'
+      run: yarn eslint {staged_files}
+      root: 'packages/server/'
     prettier:
       glob: '*.{ts,tsx,css}'
       run: yarn prettier -w {staged_files}

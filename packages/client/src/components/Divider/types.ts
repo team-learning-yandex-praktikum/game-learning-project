@@ -1,3 +1,3 @@
 export interface DividerProps {
-  color?: 'yellow' | 'orange' | 'green'
+    color?: 'yellow' | 'orange' | 'green'
 }
