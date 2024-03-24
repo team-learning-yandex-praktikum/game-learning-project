@@ -1,5 +1,5 @@
-import { RegisterOptions } from 'react-hook-form'
-import { FIELDS, FieldValues } from './fields'
+import { FieldValues, RegisterOptions } from 'react-hook-form'
+import { FIELDS } from './fields'
 import { REGEXPS } from './regexps'
 import {
     validateRepeatedPassword,
@@ -24,43 +24,41 @@ export const validationConfig: ValidationConfig = {
     },
     [FIELDS.password]: {
         required: ERRORS.required,
-        minLength: validationPasswordConfig.minLength,
-        maxLength: validationPasswordConfig.maxLength,
+        ...validationPasswordConfig,
         validate: validatePassword,
-        deps: FIELDS.repeat_password,
+        deps: FIELDS.repeatPassword,
     },
-    [FIELDS.repeat_password]: {
+    [FIELDS.repeatPassword]: {
         required: ERRORS.required,
-        minLength: validationPasswordConfig.minLength,
-        maxLength: validationPasswordConfig.maxLength,
+        ...validationPasswordConfig,
         validate: (value, values) =>
             validateRepeatedPassword(value, values.password),
     },
-    [FIELDS.old_password]: {
+    [FIELDS.oldPassword]: {
         required: ERRORS.required,
-        minLength: validationPasswordConfig.minLength,
-        maxLength: validationPasswordConfig.maxLength,
+        ...validationPasswordConfig,
         validate: validatePassword,
     },
-    [FIELDS.new_password]: {
+    [FIELDS.newPassword]: {
         required: ERRORS.required,
-        minLength: validationPasswordConfig.minLength,
-        maxLength: validationPasswordConfig.maxLength,
+        ...validationPasswordConfig,
         validate: validateNewPassword,
-        deps: FIELDS.new_password_repeat,
+        deps: FIELDS.newPasswordRepeat,
     },
-    [FIELDS.new_password_repeat]: {
+    [FIELDS.newPasswordRepeat]: {
         required: ERRORS.required,
-        minLength: validationPasswordConfig.minLength,
-        maxLength: validationPasswordConfig.maxLength,
+        ...validationPasswordConfig,
         validate: (value, values) =>
-            validateRepeatedPassword(value, values.new_password),
+            validateRepeatedPassword(value, values.newPassword),
     },
-    [FIELDS.first_name]: {
+    [FIELDS.displayName]: {
+        pattern: { value: REGEXPS.name, message: ERRORS.pattern },
+    },
+    [FIELDS.firstName]: {
         required: ERRORS.required,
         pattern: { value: REGEXPS.name, message: ERRORS.pattern },
     },
-    [FIELDS.second_name]: {
+    [FIELDS.secondName]: {
         required: ERRORS.required,
         pattern: { value: REGEXPS.name, message: ERRORS.pattern },
     },

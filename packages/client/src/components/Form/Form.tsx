@@ -1,14 +1,13 @@
-import { FC, useId } from 'react'
+import { useId } from 'react'
 import { NavLink } from 'react-router-dom'
 import Title from '@components/Title'
 import TextField from '@components/TextField'
 import Button from '@components/Button'
 import styles from './form.module.css'
 import { FormProps } from './types'
-import { useForm } from 'react-hook-form'
-import { FieldValues } from '@utils/validation/fields'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
-const Form: FC<FormProps> = ({
+const Form = <Values extends FieldValues = FieldValues>({
     title,
     fields,
     onSubmit,
@@ -18,16 +17,16 @@ const Form: FC<FormProps> = ({
     SubmitButtonProps,
     CancelButtonProps,
     LinkProps,
-}) => {
+}: FormProps<Values>) => {
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors, isValid, disabled },
-    } = useForm<FieldValues>({
+    } = useForm({
         mode: 'onTouched',
         disabled: externalDisabled,
-        defaultValues,
+        values: defaultValues,
     })
 
     const FORM_ID = useId()
@@ -42,7 +41,7 @@ const Form: FC<FormProps> = ({
             <form
                 id={FORM_ID}
                 className={styles.fields}
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}
             >
                 {Object.values(fields).map(({ options, ...config }) => (
                     <TextField

@@ -2,20 +2,28 @@ import { FC } from 'react'
 import { Routes } from '@routes/constants'
 import Form from '@components/Form'
 import { fieldsConfig } from '@utils/validation/fieldsConfig'
-import { authApi } from '@api'
 import { useAuthentication } from '@utils'
 import { omit } from 'lodash'
+import { useAppDispatch } from '@store/hooks'
+import { registration } from '@store/user'
+import { RequestRegistrationData } from '@store/user/types'
 
 const Registration: FC = () => {
-    const onRegistration = useAuthentication(authApi.create)
+    const dispatch = useAppDispatch()
+    const onRegistration = useAuthentication(
+        async (data: RequestRegistrationData) => {
+            await dispatch(registration(data)).unwrap()
+        }
+    )
 
     return (
         <Form
             title={'Регистрация'}
             fields={omit(fieldsConfig, [
-                'old_password',
-                'new_password',
-                'new_password_repeat',
+                'displayName',
+                'oldPassword',
+                'newPassword',
+                'newPasswordRepeat',
             ])}
             SubmitButtonProps={{
                 children: 'Сохранить',

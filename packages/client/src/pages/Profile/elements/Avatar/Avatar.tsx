@@ -1,37 +1,35 @@
 import { AvatarImage } from '@assets/images'
 import styles from './avatar.module.css'
-import { ChangeEvent, FC, useCallback, useState } from 'react'
-import clsx from 'clsx'
+import { ChangeEvent, ChangeEventHandler, FC, useCallback } from 'react'
+import { clsx } from 'clsx'
 import { AvatarProps } from './type'
-import { updateAvatar } from '@services/profile'
+import { useAppDispatch } from '@store/hooks'
+import { updateUserAvatar } from '@store/user'
 
 export const Avatar: FC<AvatarProps> = ({ avatar }) => {
-    const [avatarProfile, setAvatar] = useState<string>(avatar ?? '')
+    const dispatch = useAppDispatch()
 
-    const handleFileChange = useCallback(
-        async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+        async e => {
             const file = e.target.files?.[0]
             if (file) {
-                const formData = new FormData()
-                formData.append('avatar', file)
-                const newAvatar = await updateAvatar(formData)
-                setAvatar(newAvatar)
+                dispatch(updateUserAvatar(file))
             }
         },
-        [setAvatar]
+        [dispatch]
     )
 
     return (
         <div
             className={clsx(
                 styles.avatarContainer,
-                avatarProfile
+                avatar
                     ? styles.avatarBackground
                     : styles.avatarBackgroundDefault
             )}
         >
             <img
-                src={avatarProfile ?? AvatarImage}
+                src={avatar || AvatarImage}
                 alt="Avatar"
                 className={styles.avatarImage}
             />

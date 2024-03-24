@@ -1,15 +1,16 @@
-import { SubmitHandler } from 'react-hook-form'
-import { FieldValues } from '@utils/validation/fields'
+import { FieldValues, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 import { useCallback } from 'react'
 import { Routes } from '@routes/constants'
 import { ErrorResponse } from '@types'
 import { AUTH_ERRORS } from '@utils/validation/errors'
 
-export const useAuthentication = (callback: SubmitHandler<FieldValues>) => {
+export const useAuthentication = <Values extends FieldValues = FieldValues>(
+    callback: SubmitHandler<Values>
+) => {
     const navigate = useNavigate()
 
-    const authFn: SubmitHandler<FieldValues> = useCallback(
+    const authFn: SubmitHandler<Values> = useCallback(
         async data => {
             try {
                 await callback(data)

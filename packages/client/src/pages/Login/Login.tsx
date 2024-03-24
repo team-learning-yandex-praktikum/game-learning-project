@@ -2,11 +2,16 @@ import { FC } from 'react'
 import { Routes } from '@routes/constants'
 import Form from '@components/Form'
 import { fieldsConfig } from '@utils/validation/fieldsConfig'
-import { authApi } from '@api'
 import { useAuthentication } from '@utils'
+import { LoginDTO } from '@api/auth/types'
+import { useAppDispatch } from '@store/hooks'
+import { login } from '@store/user'
 
 const Login: FC = () => {
-    const onLogin = useAuthentication(authApi.login)
+    const dispatch = useAppDispatch()
+    const onLogin = useAuthentication(async (data: LoginDTO) => {
+        await dispatch(login(data)).unwrap()
+    })
 
     return (
         <Form

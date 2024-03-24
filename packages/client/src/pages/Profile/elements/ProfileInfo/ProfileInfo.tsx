@@ -1,81 +1,66 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, MouseEvent, useCallback, useMemo, useState } from 'react'
 import styles from './profileInfo.module.css'
 import Title from '@components/Title'
 import Avatar from '@pages/Profile/elements/Avatar'
 import Form from '@components/Form'
 import { fieldsConfig } from '@utils/validation/fieldsConfig'
-import { omit } from 'lodash'
-import { useCheckAuthentication } from '@utils'
-import { UserDTO } from '@api/auth/types'
-import { resourcesApi } from '@api'
-import { updateProfile } from '@services/profile'
-import { ErrorResponse } from '@types'
+import { omit, pick } from 'lodash'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
+import { updateUserData, userSelectors } from '@store/user'
+import { User } from '@store/user/types'
+
+const updatingFieldsConfig = pick(fieldsConfig, [
+    'login',
+    'displayName',
+    'firstName',
+    'secondName',
+    'email',
+    'phone',
+])
 
 export const ProfileInfo: FC = () => {
     const [isEditMode, setIsEditMode] = useState(false)
-    const [avatarUrl, setAvatarUrl] = useState('')
-    const [isLoading, setIsLoading] = useState(true)
-    const toggleEditMode = useCallback(
-        (e?: React.MouseEvent<HTMLButtonElement>) => {
-            e?.preventDefault()
-            setIsEditMode(prevEditMode => !prevEditMode)
-        },
-        [setIsEditMode]
-    )
-    const { userData, setUserData } = useCheckAuthentication()
-    const handleSaveProfile = async (
-        data: Omit<UserDTO, 'id' | 'display_name' | 'avatar'>
-    ) => {
-        if (isEditMode && userData && 'display_name' in userData) {
-            const newProfileInfo = await updateProfile({
-                ...data,
-                display_name: userData?.display_name,
-            })
-            if (typeof setUserData === 'function') {
-                setUserData(newProfileInfo || null)
-                toggleEditMode()
-            }
-        }
-    }
+    const userData = useAppSelector(userSelectors.selectData)
+    const loadStatus = useAppSelector(userSelectors.selectStatus)
+    const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        const fetchAvatar = async () => {
-            setIsLoading(true)
-            if (!userData) {
+    const isLoading = loadStatus === 'loading'
+
+    const toggleEditMode = useCallback((e?: MouseEvent<HTMLButtonElement>) => {
+        e?.preventDefault()
+        setIsEditMode(prevEditMode => !prevEditMode)
+    }, [])
+
+    const handleSaveProfile = useCallback(
+        async (data: Omit<Partial<User>, 'id' | 'avatar'>) => {
+            if (!isEditMode) {
                 return
             }
-            try {
-                if (userData?.avatar) {
-                    const avatar = await resourcesApi.get(userData.avatar)
-                    setAvatarUrl(avatar)
-                }
-            } catch (e) {
-                const error = e as ErrorResponse
-                console.error(error.response?.data.reason)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        fetchAvatar()
-    }, [userData])
+
+            await dispatch(updateUserData(data))
+
+            toggleEditMode()
+        },
+        [isEditMode, dispatch, toggleEditMode]
+    )
+
+    const defaultValues = useMemo(
+        () => omit(userData, ['id', 'avatar']),
+        [userData]
+    )
 
     if (isLoading) {
         return <>Loading...</>
     }
+
     return (
         <>
-            <Avatar avatar={avatarUrl} />
-            <Title className={styles.title}>ivan_ivanov</Title>
+            <Avatar avatar={userData?.avatarImage} />
+            <Title className={styles.title}>{userData?.login ?? ''}</Title>
             <Form
-                fields={omit(fieldsConfig, [
-                    'password',
-                    'repeat_password',
-                    'old_password',
-                    'new_password',
-                    'new_password_repeat',
-                ])}
+                fields={updatingFieldsConfig}
                 disabled={!isEditMode}
-                defaultValues={omit(userData, ['id', 'display_name', 'avatar'])}
+                defaultValues={defaultValues}
                 SubmitButtonProps={{
                     children: isEditMode ? 'Сохранить' : 'Изменить',
                     variant: isEditMode ? 'contained' : 'outlined',

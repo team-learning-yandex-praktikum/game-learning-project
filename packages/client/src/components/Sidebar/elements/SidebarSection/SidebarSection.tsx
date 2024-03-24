@@ -8,6 +8,7 @@ const SidebarSection = <S extends string = string>({
     sections,
     selected,
     onSelect,
+    mapKeysToSections,
 }: SidebarSectionProps<S>) => {
     const dispatch = useAppDispatch()
 
@@ -25,7 +26,7 @@ const SidebarSection = <S extends string = string>({
                         onSelect?.(section, e)
                     }}
                 >
-                    {unbrokenLine(section)}
+                    {unbrokenLine(mapKeysToSections?.[section] ?? section)}
                 </div>
             ))}
         </div>

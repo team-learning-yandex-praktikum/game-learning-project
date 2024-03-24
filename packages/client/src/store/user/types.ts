@@ -7,6 +7,7 @@ export interface User extends Omit<UserDTO, SnakeCaseUserKeys> {
     displayName: UserDTO['display_name']
     firstName: UserDTO['first_name']
     secondName: UserDTO['second_name']
+    avatarImage?: string
 }
 
 export interface UserState {
@@ -14,3 +15,5 @@ export interface UserState {
     status: LoadStatus
     error?: string | null
 }
+
+export type RequestRegistrationData = Omit<User, 'avatarImage' | 'avatar'>

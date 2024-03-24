@@ -1,15 +1,18 @@
 import { useNavigate } from 'react-router'
 import { useIsAuthPage } from '@utils'
-import { useCallback, useEffect, useState } from 'react'
-import { UserDTO } from '@api/auth/types'
+import { useCallback, useEffect } from 'react'
 import { Routes } from '@routes/constants'
-import { authApi } from '@api'
 import { ErrorResponse } from '@types'
+import { fetchUserData, userSelectors } from '@store/user'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
+import { LoadStatus } from '@store/enums'
+import { AUTH_ERRORS } from '@utils/validation/errors'
 
 export const useCheckAuthentication = () => {
     const navigate = useNavigate()
     const isAuthPage = useIsAuthPage()
-    const [userData, setUserData] = useState<UserDTO | null>(null)
+    const dispatch = useAppDispatch()
+    const status = useAppSelector(userSelectors.selectStatus)
 
     const redirectToLogin = useCallback(() => {
         if (isAuthPage) {
@@ -21,26 +24,20 @@ export const useCheckAuthentication = () => {
 
     const fetchMe = useCallback(async () => {
         try {
-            const response = await authApi.me()
-            setUserData(response)
+            await dispatch(fetchUserData()).unwrap()
         } catch (e) {
-            setUserData(null)
             const error = e as ErrorResponse
-            console.error(error.response?.data.reason)
-
-            if (error.response?.status === 401) {
+            if (error.message === AUTH_ERRORS.notAuthorized) {
                 redirectToLogin()
             }
         }
-    }, [redirectToLogin])
+    }, [dispatch, redirectToLogin])
 
     useEffect(() => {
-        if (userData || isAuthPage) {
+        if (status !== LoadStatus.idle || isAuthPage) {
             return
         }
 
         fetchMe()
-    }, [userData, isAuthPage, fetchMe])
-
-    return { userData, setUserData }
+    }, [status, isAuthPage, fetchMe])
 }

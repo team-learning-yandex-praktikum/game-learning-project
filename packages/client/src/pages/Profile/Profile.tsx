@@ -1,21 +1,32 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode } from 'react'
 import styles from './profile.module.css'
 import ProfileInfo from './elements/ProfileInfo'
 import ProfilePassword from './elements/ProfilePassword'
-import { TabProfile } from './type'
 import ProfileExit from './elements/ProfileExit'
+import { useSidebarSections } from '@utils/hooks/useSidebarSections'
+import { TabProfile } from '@pages/Profile/type'
 
-const tabContent: Record<TabProfile, ReactNode> = {
+const profileSections: Record<TabProfile, string> = {
+    [TabProfile.ProfileInfo]: 'Основная информация',
+    [TabProfile.ProfilePassword]: 'Пароль',
+    [TabProfile.ProfileExit]: 'Выход',
+}
+
+const tabContent: Record<string, ReactNode> = {
     [TabProfile.ProfileInfo]: <ProfileInfo />,
     [TabProfile.ProfilePassword]: <ProfilePassword />,
     [TabProfile.ProfileExit]: <ProfileExit />,
 }
 
 export const Profile: FC = () => {
-    const [currentTab, setCurrentTab] = useState<TabProfile>(
-        TabProfile.ProfileInfo
-    ) // todo: переключение между вкладками будет работать после подключения store
-    return <div className={styles.container}>{tabContent[currentTab]}</div>
+    const currentSection =
+        useSidebarSections({
+            sections: Object.keys(profileSections),
+            selected: TabProfile.ProfileInfo,
+            mapKeysToSections: profileSections,
+        }) ?? TabProfile.ProfileInfo
+
+    return <div className={styles.container}>{tabContent[currentSection]}</div>
 }
 
 export default Profile
