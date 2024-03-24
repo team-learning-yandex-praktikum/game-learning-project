@@ -1,4 +1,4 @@
-import { SidebarMode } from '@components/Sidebar/types'
+import { SidebarMode } from '@store/sidebar/types'
 
 export const hideLinkContainer = (node: HTMLDivElement | null) => {
     if (!node) {

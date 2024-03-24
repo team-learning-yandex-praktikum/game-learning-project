@@ -1,3 +1,4 @@
+import { useSidebarMode } from '@utils'
 import Comment from './elements/Comment'
 import InputLine from './elements/InputLine'
 import styles from './forumTopic.module.css'
@@ -5,6 +6,8 @@ import { FORUM_TOPIC_COMMENT_STUB, FORUM_TOPIC_STUB } from './stub'
 
 const ForumTopic = () => {
     const { title, description, author, date } = FORUM_TOPIC_STUB
+
+    useSidebarMode('return')
 
     return (
         <div className={styles.root}>

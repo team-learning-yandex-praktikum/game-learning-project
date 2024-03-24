@@ -5,6 +5,9 @@ import { ErrorResponse } from '@types'
 const updateAvatar = async (file: FormData) => {
     try {
         const updateProfile = await userApi.updateAvatar(file)
+        if (!updateProfile.avatar) {
+            return ''
+        }
         const avatar = await resourcesApi.get(updateProfile.avatar)
         return avatar
     } catch (e) {
