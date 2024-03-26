@@ -2,9 +2,9 @@ const CACHE_NAME = 'my-site-cache-v1'
 
 self.addEventListener('message', event => {
     if (event.data && event.data.type === 'CACHE_URLS') {
-        const urlsToCache = event.data.payload.filter(function (item, pos) {
-            return event.data.payload.indexOf(item) == pos
-        })
+        const urlsToCache = event.data.payload.filter(
+            (item, pos) => event.data.payload.indexOf(item) === pos
+        )
         event.waitUntil(
             caches
                 .open(CACHE_NAME)
@@ -20,7 +20,7 @@ self.addEventListener('message', event => {
     }
 })
 
-self.addEventListener('activate', function (event) {
+self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -28,6 +28,7 @@ self.addEventListener('activate', function (event) {
                     if (key !== CACHE_NAME) {
                         return caches.delete(key)
                     }
+                    return null // Добавляем возврат значения для всех путей выполнения
                 })
             )
         })
