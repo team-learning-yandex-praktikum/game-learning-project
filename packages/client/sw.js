@@ -21,36 +21,34 @@ self.addEventListener('message', event => {
 
 self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(key => {
-                    if (key !== CACHE_NAME) {
-                        return caches.delete(key)
-                    }
-                    return null
-                })
-            )
-        })
+        caches.keys().then(cacheNames => Promise.all(
+            cacheNames.map(key => {
+                if (key !== CACHE_NAME) {
+                    return caches.delete(key)
+                }
+                return null
+            })
+        ))
     )
 })
 
-const tryNetwork = (req, timeout) => {
-    return new Promise((resolve, reject) => {
-        const timeoutId = setTimeout(reject, timeout)
 
-        fetch(req)
-            .then(res => {
-                clearTimeout(timeoutId)
-                const responseClone = res.clone()
-                if (req.url.startsWith('http')) {
-                    caches.open(CACHE_NAME)
-                        .then(cache => cache.put(req, responseClone))
-                }
-                resolve(res)
-            })
-            .catch(reject)
-    })
-}
+const tryNetwork = (req, timeout) => new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(reject, timeout)
+
+    fetch(req)
+        .then(res => {
+            clearTimeout(timeoutId)
+            const responseClone = res.clone()
+            if (req.url.startsWith('http')) {
+                caches.open(CACHE_NAME)
+                    .then(cache => cache.put(req, responseClone))
+            }
+            resolve(res)
+        })
+        .catch(reject)
+});
+
 
 const getFromCache = req => {
     console.log('Network is off so getting from cache...')
