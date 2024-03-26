@@ -1,76 +1,68 @@
 const CACHE_NAME = 'my-site-cache-v1'
-const URLS = [
-    '/',
-    '/index.html',
-    // '/src/main.tsx',
-    // '/src/components',
-    // '/src/pages',
-    // '/src/game-core',
-]
 
-this.addEventListener('install', event => {
-    event.waitUntil(
-        caches
-            .open(CACHE_NAME)
-            .then(cache => {
-                console.log('Opened cache')
-                return cache.addAll(URLS)
-            })
-            .catch(err => {
-                console.log(err)
-                throw err
-            })
-    )
+self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'CACHE_URLS') {
+        const urlsToCache = event.data.payload.filter(function (item, pos) {
+            return event.data.payload.indexOf(item) == pos
+        })
+        event.waitUntil(
+            caches
+                .open(CACHE_NAME)
+                .then(cache => {
+                    console.log('Opened cache')
+                    return cache.addAll(urlsToCache)
+                })
+                .catch(err => {
+                    console.error(err)
+                    throw err
+                })
+        )
+    }
 })
 
-this.addEventListener('activate', function (event) {
+self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
-                cacheNames
-                    .filter(name => {
-                        /* Нужно вернуть true, если хотите удалить этот файл из кеша совсем */
-                    })
-                    .map(name => caches.delete(name))
+                cacheNames.map(key => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key)
+                    }
+                })
             )
         })
     )
 })
 
-this.addEventListener('fetch', event => {
-    event.respondWith(
-        // Пытаемся найти ответ на такой запрос в кеше
-        caches.match(event.request).then(response => {
-            // Если ответ найден, выдаём его
-            if (response) {
-                return response
-            }
+const tryNetwork = (req, timeout) => {
+    return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(reject, timeout)
 
-            const fetchRequest = event.request.clone()
-            // В противном случае делаем запрос на сервер
-            return (
-                fetch(fetchRequest)
-                    // Можно задавать дополнительные параметры запроса, если ответ вернулся некорректный.
-                    .then(response => {
-                        // Если что-то пошло не так, выдаём в основной поток результат, но не кладём его в кеш
-                        if (
-                            !response ||
-                            response.status !== 200 ||
-                            response.type !== 'basic'
-                        ) {
-                            return response
-                        }
+        fetch(req)
+            .then(res => {
+                clearTimeout(timeoutId)
+                const responseClone = res.clone()
+                if (req.url.startsWith('http')) {
+                    caches
+                        .open(CACHE_NAME)
+                        .then(cache => cache.put(req, responseClone))
+                }
+                resolve(res)
+            })
+            .catch(reject)
+    })
+}
 
-                        const responseToCache = response.clone()
-                        // Получаем доступ к кешу по CACHE_NAME
-                        caches.open(CACHE_NAME).then(cache => {
-                            // Записываем в кеш ответ, используя в качестве ключа запрос
-                            cache.put(event.request, responseToCache)
-                        })
-                        // Отдаём в основной поток ответ
-                        return response
-                    })
-            )
-        })
+const getFromCache = req => {
+    console.log('Network is off so getting from cache...')
+    return caches
+        .open(CACHE_NAME)
+        .then(cache => cache.match(req))
+        .then(result => result || Promise.reject('no-match'))
+}
+
+self.addEventListener('fetch', e => {
+    e.respondWith(
+        tryNetwork(e.request, 400).catch(() => getFromCache(e.request))
     )
 })

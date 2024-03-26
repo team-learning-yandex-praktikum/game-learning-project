@@ -8,8 +8,18 @@ import { store } from '@store'
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-            .register('/sw.js')
+            .register('/sw.js', { scope: '/' })
             .then(registration => {
+                const data = {
+                    type: 'CACHE_URLS',
+                    payload: [
+                        location.href,
+                        ...performance
+                            .getEntriesByType('resource')
+                            .map(r => r.name),
+                    ],
+                }
+                registration?.installing?.postMessage(data)
                 console.log('Service worker registered: ', registration)
             })
             .catch(error => {
