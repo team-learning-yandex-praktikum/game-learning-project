@@ -40,7 +40,7 @@ export class GameWorld {
         this.platforms = [new Platform([this.canvas.width / 2, 30])]
         this.platformGround = new Platform([this.canvas.width, 20])
 
-        this.player = new Player(this.platformGround)
+        this.player = new Player(this.platforms[0])
         this.input = new InputHandler(this.player)
 
         // resources.load('player.png');
@@ -125,7 +125,11 @@ export class GameWorld {
 
         const y = this.canvas.height - this.platformGround.height
         this.platformGround.pos = [0, y]
-        this.platforms[0].pos = [200, y - this.player.height * 1.5]
-        this.player.pos = [40, y - this.player.height]
+        const yPlat = y - this.player.height - 100
+        this.platforms[0].pos = [200, yPlat]
+        this.player.pos = [
+            200 + this.platforms[0].width / 2,
+            yPlat - this.player.height,
+        ]
     }
 }

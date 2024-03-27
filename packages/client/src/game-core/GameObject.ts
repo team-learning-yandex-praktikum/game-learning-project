@@ -19,11 +19,12 @@ export abstract class GameObject {
 
         const url = sprite.getUrl()
         const img = resources.get(url)
-        if (!exists(img)) {
-            throw new ResourceGetError(url)
-        }
+        // if (!exists(img)) {
+        //     throw new ResourceGetError(url)
+        // }
 
-        this.spriteImage = img
+        // this.spriteImage = img
+        this.spriteImage = new HTMLImageElement()
     }
 
     get pos() {
