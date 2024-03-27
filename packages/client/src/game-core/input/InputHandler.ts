@@ -59,13 +59,14 @@ export class InputHandler {
         )
     }
 
-    public handleInput(deltaTime: number) {
-        if (this.isNothingDown()) {
-            this.player.inputState(State.Stand)
-        }
+    private isSeveralDown(...k: Keys[]) {
+        return k.every(key => this.pressedKeys[key])
+    }
 
-        if (this.isLeft && this.isRight) {
+    public handleInput(deltaTime: number) {
+        if (this.isNothingDown() || this.isSeveralDown(Keys.LEFT, Keys.RIGHT)) {
             this.player.inputState(State.Stand)
+            return
         }
 
         if (this.isLeft) {
