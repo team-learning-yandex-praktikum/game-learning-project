@@ -56,6 +56,7 @@ export class Player extends GameObject {
                 break
 
             case State.Jump:
+                this.canDoubleJump = true
                 this.onGround = false
                 this.updateJump(deltaTime)
                 break
@@ -153,7 +154,6 @@ export class Player extends GameObject {
     }
 
     stand() {
-        this.canDoubleJump = true
         this.speed.x = 0
         this.speed.y = 0
     }
