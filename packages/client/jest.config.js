@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+const setupDir = '<rootDir>/jest'
+
 export default {
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
@@ -9,11 +11,15 @@ export default {
     globals: {
         __SERVER_PORT__: process.env.SERVER_PORT,
     },
+    setupFiles: [`${setupDir}/jest.polyfills.js`, `${setupDir}/jest.setup.js`],
+    testEnvironmentOptions: {
+        customExportConditions: [''],
+    },
     moduleNameMapper: {
         '\\.module.(css)$': 'jest-css-modules',
-        '\\.(css)$': '<rootDir>/__mocks__/css.mock.js',
-        '\\.(svg|svg.*)$': '<rootDir>/__mocks__/svg.mock.js',
-        '\\.(png|jpg.*)$': '<rootDir>/__mocks__/img.mock.js',
+        '\\.(css)$': `${setupDir}/__mocks__/css.mock.js`,
+        '\\.(svg|svg.*)$': `${setupDir}/__mocks__/svg.mock.js`,
+        '\\.(png|jpg.*)$': `${setupDir}/__mocks__/img.mock.js`,
         '^@assets(.*)$': '<rootDir>/src/assets$1',
         '^@components(.*)$': '<rootDir>/src/components$1',
         '^@pages(.*)$': '<rootDir>/src/pages$1',

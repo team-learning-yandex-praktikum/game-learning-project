@@ -1,11 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { userInitialState } from './initialState'
 import { getExtraReducers } from '@store/user/extraReducers'
+import { User } from '@store/user/types'
 
 export const userSlice = createSlice({
     name: 'user',
     initialState: userInitialState,
-    reducers: {},
+    reducers: {
+        setData: (state, action: PayloadAction<User>) => {
+            state.data = action.payload
+        },
+    },
     selectors: {
         selectStatus: state => state.status,
         selectData: state => state.data,

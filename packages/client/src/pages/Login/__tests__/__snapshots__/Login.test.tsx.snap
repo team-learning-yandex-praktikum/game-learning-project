@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login correctly rendered 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class=""
+    >
+      Вход
+    </h2>
+    <form
+      id="r:id"
+    >
+      <div
+        class=""
+        data-error="false"
+      >
+        <div
+          class=""
+        >
+          <label
+            for="login"
+          >
+            Логин
+          </label>
+          <input
+            id="login"
+            name="login"
+            placeholder="ivan_ivanov"
+          />
+        </div>
+        <div />
+      </div>
+      <div
+        class=""
+        data-error="false"
+      >
+        <div
+          class=""
+        >
+          <label
+            for="password"
+          >
+            Пароль
+          </label>
+          <input
+            id="password"
+            name="password"
+            placeholder="qwerty"
+            type="password"
+          />
+        </div>
+        <div />
+      </div>
+    </form>
+    <div>
+      <button
+        class=""
+        disabled=""
+        form="r:id"
+        type="submit"
+      >
+        Войти
+      </button>
+      <a
+        href="/registration"
+      >
+        Регистрация
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

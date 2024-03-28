@@ -12,4 +12,6 @@ node_modules/
 
 vite.config.ts
 jest.config.js
+jest.polyfills.js
+jest.setup.js
 __mocks__
