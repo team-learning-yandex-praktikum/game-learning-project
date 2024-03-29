@@ -1,42 +1,17 @@
-import { Player, State } from '../Player'
 import { Indexed } from '../utils/CommonTypes'
-
-const enum Keys {
-    SPACE = 'SPACE',
-    LEFT = 'LEFT',
-    RIGHT = 'RIGHT',
-    DOWN = 'DOWN',
-    UP = 'UP',
-}
-
-function getKeyByCode(code: string, defaultKey: string): string {
-    switch (code) {
-        case 'Space':
-            return Keys.SPACE
-        case 'ArrowLeft':
-            return Keys.LEFT
-        case 'ArrowUp':
-            return Keys.UP
-        case 'ArrowRight':
-            return Keys.RIGHT
-        case 'ArrowDown':
-            return Keys.DOWN
-
-        default:
-            return defaultKey
-    }
-}
+import { Keys, getKeyByCode } from './utils'
 
 export class InputHandler {
-    private player: Player
     private pressedKeys: Indexed<boolean> = {}
 
-    constructor(obj: Player) {
-        this.player = obj
+    constructor() {
+        document.addEventListener('keydown', e => {
+            this.setKey(e, true)
+        })
 
-        document.addEventListener('keydown', e => this.setKey(e, true))
-
-        document.addEventListener('keyup', e => this.setKey(e, false))
+        document.addEventListener('keyup', e => {
+            this.setKey(e, false)
+        })
 
         window.addEventListener('blur', e => {
             this.pressedKeys = {}
@@ -49,48 +24,41 @@ export class InputHandler {
         this.pressedKeys[key.toUpperCase()] = pressed
     }
 
-    private isDown(key: string) {
-        return this.pressedKeys[key.toUpperCase()]
+    isDown(key: string) {
+        return this.pressedKeys[key.toUpperCase()] === true
     }
 
-    private isNothingDown() {
+    isUp(key: string) {
+        return this.pressedKeys[key.toUpperCase()] === false
+    }
+
+    isSeveralDown(...k: Keys[]) {
+        return k.every(key => this.pressedKeys[key] === true)
+    }
+
+    releasedAll() {
         return Object.values(this.pressedKeys).every(
             pressedKey => pressedKey === false
         )
     }
 
-    private isSeveralDown(...k: Keys[]) {
-        return k.every(key => this.pressedKeys[key])
-    }
-
-    public handleInput(deltaTime: number) {
-        if (this.isNothingDown() || this.isSeveralDown(Keys.LEFT, Keys.RIGHT)) {
-            this.player.inputState(State.Stand)
-            return
-        }
-
-        if (this.isLeft) {
-            this.player.inputState(State.WalkLeft)
-        }
-
-        if (this.isRight) {
-            this.player.inputState(State.WalkRight)
-        }
-
-        if (this.isJump) {
-            this.player.inputState(State.Jump)
-        }
-    }
-
-    private get isRight() {
+    get pressedRight() {
         return this.isDown(Keys.RIGHT)
     }
 
-    private get isLeft() {
+    get pressedLeft() {
         return this.isDown(Keys.LEFT)
     }
 
-    private get isJump() {
+    get pressedLeftRight() {
+        return this.pressedLeft && this.pressedRight
+    }
+
+    get releasedLeftRight() {
+        return !this.pressedLeft && !this.pressedRight
+    }
+
+    get pressedSpace() {
         return this.isDown(Keys.SPACE)
     }
 }
