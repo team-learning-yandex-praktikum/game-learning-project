@@ -1,6 +1,7 @@
 import { GameState } from '@store/game/types'
+import { STATUSES } from '@store/constants'
 
 export const gameInitialState: GameState = {
-    status: 'start',
+    status: STATUSES.START,
     score: 0,
 }

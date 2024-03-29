@@ -14,10 +14,6 @@ type World = GameWorld
 
 export class Player extends GameObject {
     private currState: State<Player> = new Standing()
-    private nextState = State.Stand
-    private walkSpeed: number
-    private jumpSpeed: number
-    private moveInJumpSpeed: number
     private platform: Platform
     private input: InputHandler
     private world: World
@@ -30,14 +26,7 @@ export class Player extends GameObject {
         this.size = [50, 120]
         this.input = new InputHandler()
         this.world = world
-        this.walkSpeed = 400
-        this.jumpSpeed = 800
-        this.moveInJumpSpeed = 150
         this.fallPosition = null
-    }
-
-    public inputState(s: State) {
-        this.nextState = s
     }
 
     public update(deltaTime: number): void {
@@ -76,18 +65,17 @@ export class Player extends GameObject {
         return this.speed.y > 0
     }
 
-
     getDistance() {
         return this.distanceTraveled
     }
 
-    standOnPlatform(p: Platform) {
-        if (this.currState !== State.Jump && this.currState !== State.Fall) {
-            return
-        }
+    isEnoughJumpHigh() {
+        const bottomY = this.pos[1] + this.height
+        const jumpHeight = this.platform.pos[1] - bottomY
+        return jumpHeight > this.height / 2
+    }
 
-
-    private onPlatform() {
+    onPlatform() {
         const left = this.pos[0]
         const right = this.pos[0] + this.width
         const pleft = this.platform.pos[0]
@@ -120,7 +108,7 @@ export class Player extends GameObject {
         }
     }
 
-    private standOnPlatform(platform: Platform) {
+    standOnPlatform(platform: Platform) {
         const bottomY = this.pos[1] + this.height
         const diffY = Math.abs(bottomY - platform.pos[1])
         const h = platform.height
@@ -195,10 +183,9 @@ export class Player extends GameObject {
     }
 
     public calculateJumpDistance(deltaTime: number): number {
-        const initialVelocityY = this.jumpSpeed
         const time = deltaTime
 
-        const distance = initialVelocityY * time
+        const distance = time
 
         return Math.round(distance)
     }

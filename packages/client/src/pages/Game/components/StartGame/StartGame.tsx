@@ -2,15 +2,12 @@ import CrazyTitle from '@components/CrazyTitle'
 import style from './game.module.css'
 import RoundButton from '@components/RoundButton'
 import { PlayIcon } from '@assets/icons'
-import { FC } from 'react'
 import { gameActions } from '@store/game'
-import { Dispatch } from '@reduxjs/toolkit'
+import { useAppDispatch } from '@store/hooks'
 
-interface StartGameProps {
-    dispatch: Dispatch
-}
+const StartGame = () => {
+    const dispatch = useAppDispatch()
 
-const StartGame: FC<StartGameProps> = ({ dispatch }) => {
     const handleChangeStartGame = () => {
         dispatch(gameActions.startGame())
     }

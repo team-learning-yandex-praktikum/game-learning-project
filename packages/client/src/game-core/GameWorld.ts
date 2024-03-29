@@ -2,12 +2,19 @@ import { Enemy } from './Enemy'
 import { GameObject } from './GameObject'
 import { Platform } from './Platform'
 import { Player } from './Player'
-import { CanvasHeight, CanvasWidth, MsInSec } from './constants'
+import {
+    CanvasHeight,
+    CanvasWidth,
+    MsInSec,
+    limitsOfLoss,
+    whiteColor,
+} from './constants'
+
+import { InputHandler } from './input/InputHandler'
 import { Physics } from './physics/PhysicsComponent'
 import { resources } from './utils/ResourcesLoader'
 import { LogicError } from '@game-core/errors/common'
-import { gameActions } from '@store/game'
-import { Dispatch } from '@reduxjs/toolkit'
+import { FinishGameHandler } from '@game-core/utils/CommonTypes'
 
 export class GameWorld {
     private lastLoopTime = 0
@@ -21,17 +28,16 @@ export class GameWorld {
     private physics = new Physics()
     private canvas: HTMLCanvasElement
     private context: CanvasRenderingContext2D
-    private dispatch: Dispatch
+    private finishGameHandler: FinishGameHandler
     private jumpDistanceTraveled = 0
     private halfCanvasHeight = CanvasHeight / 2
     private scorePositionX = 10
     private scorePositionY = 30
-
     private animationFrameId: number | null = null
 
-    constructor(rootElem: HTMLElement, dispatch: Dispatch) {
+    constructor(rootElem: HTMLElement, finishGameHandler: FinishGameHandler) {
         this.canvas = document.createElement('canvas')
-        this.dispatch = dispatch
+        this.finishGameHandler = finishGameHandler
         const ctx = this.canvas.getContext('2d')
 
         if (!ctx) {
@@ -86,11 +92,8 @@ export class GameWorld {
 
         this.halfCanvasHeight = CanvasHeight / 2
         if (this.player.pos[1] < this.halfCanvasHeight) {
-            if (this.player.currState === 'Jump') {
-                this.jumpDistanceTraveled +=
-                    this.player.calculateJumpDistance(dt)
-                this.scorePositionY -= this.player.calculateJumpDistance(dt)
-            }
+            this.jumpDistanceTraveled += this.player.calculateJumpDistance(dt)
+            this.scorePositionY -= this.player.calculateJumpDistance(dt)
         }
     }
 
@@ -108,8 +111,8 @@ export class GameWorld {
 
         const lossLine =
             this.player.fallPosition &&
-            this.player.fallPosition > 450 &&
-            this.player.fallPosition < 500
+            this.player.fallPosition > limitsOfLoss.top &&
+            this.player.fallPosition < limitsOfLoss.bottom
 
         if (lossLine && !this.player.onPlatform()) {
             this.stopGameLoop()
@@ -177,8 +180,6 @@ export class GameWorld {
         ]
 
         this.fillPlatforms()
-
-        this.player.pos = [40, y - this.player.height]
     }
 
     private fillPlatforms() {
@@ -188,12 +189,16 @@ export class GameWorld {
 
         const verticalGap = this.player.height + 30
 
-        for (let i = 0; i < numberOfPlatforms; i++) {
+        for (
+            let currentPlatform = 0;
+            currentPlatform < numberOfPlatforms;
+            currentPlatform++
+        ) {
             const platform = new Platform([platformWidth, platformHeight])
             const randomX = Math.random() * (this.canvas.width / 2)
-            const randomY = CanvasHeight - verticalGap * (i + 1)
+            const randomY = CanvasHeight - verticalGap * (currentPlatform + 1)
 
-            if (i === 0) {
+            if (currentPlatform === 0) {
                 platform.pos = [randomX, CanvasHeight - verticalGap]
             } else {
                 platform.pos = [randomX, randomY]
@@ -203,7 +208,7 @@ export class GameWorld {
     }
 
     private renderScore() {
-        this.context.fillStyle = 'white'
+        this.context.fillStyle = whiteColor
         this.context.font = '20px Arial'
 
         this.context.fillText(
@@ -214,6 +219,6 @@ export class GameWorld {
     }
 
     private finishGame() {
-        this.dispatch(gameActions.finishGame(this.score))
+        this.finishGameHandler(this.score)
     }
 }

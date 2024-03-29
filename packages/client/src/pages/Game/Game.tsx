@@ -5,6 +5,7 @@ import { gameActions, gameSelectors } from '@store/game'
 import { useAppDispatch } from '@store/hooks'
 import { useEffect } from 'react'
 import PlayGame from '@pages/Game/components/PlayGame'
+import { STATUSES } from '@store/constants'
 
 const Game = () => {
     const status = useSelector(gameSelectors.selectStatus)
@@ -18,17 +19,15 @@ const Game = () => {
         []
     )
 
-    console.log(status)
-
-    if (status === 'finish') {
-        return <GameOver dispatch={dispatch} />
+    if (status === STATUSES.FINISH) {
+        return <GameOver />
     }
 
-    if (status === 'game') {
-        return <PlayGame dispatch={dispatch} />
+    if (status === STATUSES.GAME) {
+        return <PlayGame />
     }
 
-    return <StartGame dispatch={dispatch} />
+    return <StartGame />
 }
 
 export default Game

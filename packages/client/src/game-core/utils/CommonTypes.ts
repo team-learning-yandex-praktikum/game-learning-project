@@ -32,3 +32,5 @@ export type Tuple3<T> = Tuple<T, 3>
 export type Tuple4<T> = Tuple<T, 4>
 
 export type ImgResource = Nullable<HTMLImageElement>
+
+export type FinishGameHandler = (score: number) => void

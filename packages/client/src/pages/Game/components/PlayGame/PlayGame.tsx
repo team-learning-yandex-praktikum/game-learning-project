@@ -1,14 +1,20 @@
 import { useSelector } from 'react-redux'
-import { gameSelectors } from '@store/game'
-import { FC, useEffect, useRef } from 'react'
+import { gameActions, gameSelectors } from '@store/game'
+import { useCallback, useEffect, useRef } from 'react'
 import { GameWorld } from '@game-core/GameWorld'
-import { Dispatch } from '@reduxjs/toolkit'
+import { useAppDispatch } from '@store/hooks'
+import { STATUSES } from '@store/constants'
 
-interface PlayGameProps {
-    dispatch: Dispatch
-}
+const PlayGame = () => {
+    const dispatch = useAppDispatch()
 
-const PlayGame: FC<PlayGameProps> = ({ dispatch }) => {
+    const finishGameHandler = useCallback(
+        (score: number) => {
+            dispatch(gameActions.finishGame(score))
+        },
+        [dispatch]
+    )
+
     const status = useSelector(gameSelectors.selectStatus)
 
     const worldRef = useRef<GameWorld | null>(null)
@@ -18,12 +24,12 @@ const PlayGame: FC<PlayGameProps> = ({ dispatch }) => {
         const root = containerRef.current
 
         if (!worldRef.current && root && root.childElementCount === 0) {
-            worldRef.current = new GameWorld(root, dispatch)
+            worldRef.current = new GameWorld(root, finishGameHandler)
         }
     }
 
     useEffect(() => {
-        if (status === 'game') {
+        if (status === STATUSES.GAME) {
             initWorld()
         }
 

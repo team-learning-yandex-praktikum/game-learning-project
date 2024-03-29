@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { gameInitialState } from './initialState'
+import { STATUSES } from '@store/constants'
 
 export const gameSlice = createSlice({
     name: 'game',
     initialState: gameInitialState,
     reducers: {
         startGame: state => {
-            state.status = 'game'
+            state.status = STATUSES.GAME
             state.score = 0
         },
         finishGame: (state, action: PayloadAction<number>) => {
-            state.status = 'finish'
+            state.status = STATUSES.FINISH
             state.score = action.payload
         },
         resetGame: () => gameInitialState,
