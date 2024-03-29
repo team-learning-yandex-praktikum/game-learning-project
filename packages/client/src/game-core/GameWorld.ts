@@ -6,6 +6,8 @@ import { CanvasHeight, CanvasWidth, MsInSec } from './constants'
 import { Physics } from './physics/PhysicsComponent'
 import { resources } from './utils/ResourcesLoader'
 import { LogicError } from '@game-core/errors/common'
+import { gameActions } from '@store/game'
+import { Dispatch } from '@reduxjs/toolkit'
 
 export class GameWorld {
     private lastLoopTime = 0
@@ -13,21 +15,29 @@ export class GameWorld {
     private gameTime = 0
     private score = 0
     private enemies: Enemy[] = []
-    private platforms: Platform[]
+    private platforms: Platform[] = []
     private platformGround: Platform
     private player: Player
     private physics = new Physics()
     private canvas: HTMLCanvasElement
     private context: CanvasRenderingContext2D
+    private dispatch: Dispatch
+    private jumpDistanceTraveled = 0
+    private halfCanvasHeight = CanvasHeight / 2
+    private scorePositionX = 10
+    private scorePositionY = 30
 
-    constructor(rootElem: HTMLElement) {
+    private animationFrameId: number | null = null
+
+    constructor(rootElem: HTMLElement, dispatch: Dispatch) {
         this.canvas = document.createElement('canvas')
+        this.dispatch = dispatch
         const ctx = this.canvas.getContext('2d')
 
         if (!ctx) {
             throw new LogicError('Canvas Context не найден')
         }
-
+        this.score = 0
         this.context = ctx
         this.canvas.width = CanvasWidth
         this.canvas.height = CanvasHeight
@@ -40,6 +50,7 @@ export class GameWorld {
 
         // resources.load('player.png');
         // resources.onReady(this.init.bind(this));
+        this.fillPlatforms()
         this.init()
     }
 
@@ -65,19 +76,46 @@ export class GameWorld {
         this.update(dt)
         this.render()
         this.lastLoopTime = now
-
-        requestAnimationFrame(this.gameLoop.bind(this))
+        this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this))
     }
 
     private update(dt: number) {
         this.gameTime += dt
 
         this.updateObjects(dt)
+
+        this.halfCanvasHeight = CanvasHeight / 2
+        if (this.player.pos[1] < this.halfCanvasHeight) {
+            if (this.player.currState === 'Jump') {
+                this.jumpDistanceTraveled +=
+                    this.player.calculateJumpDistance(dt)
+                this.scorePositionY -= this.player.calculateJumpDistance(dt)
+            }
+        }
     }
 
     private updateObjects(dt: number) {
         this.player.update(dt)
         this.player.checkBounds(this.canvas)
+
+        this.score = this.player.getDistance()
+
+        this.physics.checkCollisions(
+            this.player,
+            [this.platformGround, ...this.platforms],
+            (p: Platform) => this.player.standOnPlatform(p)
+        )
+
+        const lossLine =
+            this.player.fallPosition &&
+            this.player.fallPosition > 450 &&
+            this.player.fallPosition < 500
+
+        if (lossLine && !this.player.onPlatform()) {
+            this.stopGameLoop()
+            this.reset()
+            this.finishGame()
+        }
 
         this.enemies.forEach(x => x.update(dt))
     }
@@ -85,10 +123,19 @@ export class GameWorld {
     private render() {
         this.clear()
 
+        this.context.save()
+
+        if (this.player.pos[1] < this.halfCanvasHeight) {
+            this.context.translate(0, this.jumpDistanceTraveled)
+        }
+
         this.renderObject(this.platformGround)
         this.renderObjects(this.platforms)
         this.renderObject(this.player)
         this.renderObjects(this.enemies)
+        this.renderScore()
+
+        this.context.restore()
     }
 
     private clear() {
@@ -108,10 +155,15 @@ export class GameWorld {
         this.context.restore()
     }
 
+    private stopGameLoop() {
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId)
+        }
+    }
+
     private reset() {
         this.isGameOver = false
         this.gameTime = 0
-        this.score = 0
 
         this.enemies = []
 
@@ -123,5 +175,45 @@ export class GameWorld {
             200 + this.platforms[0].width / 2,
             yPlat - this.player.height,
         ]
+
+        this.fillPlatforms()
+
+        this.player.pos = [40, y - this.player.height]
+    }
+
+    private fillPlatforms() {
+        const numberOfPlatforms = 100
+        const platformWidth = this.canvas.width / 4
+        const platformHeight = 30
+
+        const verticalGap = this.player.height + 30
+
+        for (let i = 0; i < numberOfPlatforms; i++) {
+            const platform = new Platform([platformWidth, platformHeight])
+            const randomX = Math.random() * (this.canvas.width / 2)
+            const randomY = CanvasHeight - verticalGap * (i + 1)
+
+            if (i === 0) {
+                platform.pos = [randomX, CanvasHeight - verticalGap]
+            } else {
+                platform.pos = [randomX, randomY]
+            }
+            this.platforms.push(platform)
+        }
+    }
+
+    private renderScore() {
+        this.context.fillStyle = 'white'
+        this.context.font = '20px Arial'
+
+        this.context.fillText(
+            `Score: ${this.score}`,
+            this.scorePositionX,
+            this.scorePositionY
+        )
+    }
+
+    private finishGame() {
+        this.dispatch(gameActions.finishGame(this.score))
     }
 }

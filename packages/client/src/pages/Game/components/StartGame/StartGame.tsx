@@ -2,29 +2,24 @@ import CrazyTitle from '@components/CrazyTitle'
 import style from './game.module.css'
 import RoundButton from '@components/RoundButton'
 import { PlayIcon } from '@assets/icons'
-import { GameWorld } from '@game-core/GameWorld'
-import { useEffect, useRef } from 'react'
-import { Nullable } from '@game-core/utils/CommonTypes'
+import { FC } from 'react'
+import { gameActions } from '@store/game'
+import { Dispatch } from '@reduxjs/toolkit'
 
-const StartGame = () => {
-    let world: Nullable<GameWorld> = null
-    const ref = useRef<HTMLDivElement>(null)
+interface StartGameProps {
+    dispatch: Dispatch
+}
 
-    useEffect(() => {
-        const root = ref.current
-        if (world === null && root !== null) {
-            world = new GameWorld(root)
-        }
-    }, [world, ref])
+const StartGame: FC<StartGameProps> = ({ dispatch }) => {
+    const handleChangeStartGame = () => {
+        dispatch(gameActions.startGame())
+    }
 
     return (
-        <>
-            <div className={style.containerGame}>
-                <CrazyTitle>jump-jump</CrazyTitle>
-                <RoundButton icon={<PlayIcon />} />
-                <div ref={ref} />
-            </div>
-        </>
+        <div className={style.containerGame}>
+            <CrazyTitle>start game</CrazyTitle>
+            <RoundButton icon={<PlayIcon />} onClick={handleChangeStartGame} />
+        </div>
     )
 }
 

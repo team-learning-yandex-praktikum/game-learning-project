@@ -1,3 +1,3 @@
 export interface CrazyTitleProps {
-    children: string
+    children: string | number
 }
