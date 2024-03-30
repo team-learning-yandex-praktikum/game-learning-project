@@ -4,8 +4,8 @@ import { Walking } from './Walking'
 import { InputHandler } from '../input/InputHandler'
 import {
     PlayerState,
-    pressJump,
-    pressJumpWithMoving,
+    pressedJump,
+    pressedJumpWithMoving,
     releasedJump,
 } from './commonUtils'
 
@@ -25,7 +25,7 @@ export class Jumping implements PlayerState {
         if (releasedJump(input)) {
             this.wasReleasedJump = true
         }
-        if (pressJump(input) || pressJumpWithMoving(input)) {
+        if (pressedJump(input) || pressedJumpWithMoving(input)) {
             this.doubleJump(p)
         }
         if (input.releasedLeftRight || input.pressedLeftRight) {

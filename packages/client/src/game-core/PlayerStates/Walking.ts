@@ -1,9 +1,10 @@
 import { Player } from '../Player'
 import { Standing } from './Standing'
 import { InputHandler } from '../input/InputHandler'
-import { PlayerState, pressJump } from './commonUtils'
+import { PlayerState, pressedJump } from './commonUtils'
 import { Falling } from '@game-core/PlayerStates/Falling'
 import { Jumping } from '@game-core/PlayerStates/Jumping'
+import { LeftDirection, RightDirection } from '@game-core/constants'
 
 export type Direction = 'LeftDirection' | 'RightDirection'
 
@@ -16,13 +17,13 @@ export class Walking implements PlayerState {
         if (input.releasedLeftRight || input.pressedLeftRight) {
             return new Standing()
         }
-        if (pressJump(input)) {
+        if (pressedJump(input)) {
             return new Jumping()
         }
         if (input.pressedLeft) {
-            this.dir = 'LeftDirection'
+            this.dir = LeftDirection
         } else if (input.pressedRight) {
-            this.dir = 'RightDirection'
+            this.dir = RightDirection
         }
         return null
     }
@@ -37,11 +38,11 @@ export class Walking implements PlayerState {
     }
 
     private walk(dt: number, p: Player) {
-        if (this.dir === 'RightDirection') {
+        if (this.dir === RightDirection) {
             p.walkRight(dt, Walking.speed)
             return
         }
-        if (this.dir === 'LeftDirection') {
+        if (this.dir === LeftDirection) {
             p.walkLeft(dt, Walking.speed)
             return
         }
