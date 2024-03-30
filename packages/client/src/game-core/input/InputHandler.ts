@@ -61,4 +61,8 @@ export class InputHandler {
     get pressedSpace() {
         return this.isDown(Keys.SPACE)
     }
+
+    get releasedSpace() {
+        return this.isUp(Keys.SPACE)
+    }
 }

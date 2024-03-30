@@ -58,8 +58,14 @@ export class Player extends GameObject {
         }
     }
 
-    private isFalling() {
+    isFalling() {
         return this.speed.y > 0
+    }
+
+    isEnoughJumpHigh() {
+        const bottomY = this.pos[1] + this.height
+        const jumpHeight = this.platform.pos[1] - bottomY
+        return jumpHeight > this.height / 2
     }
 
     private onPlatform() {
