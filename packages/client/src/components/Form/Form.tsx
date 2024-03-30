@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Title from '@components/Title'
 import TextField from '@components/TextField'
 import Button from '@components/Button'
@@ -77,7 +77,7 @@ const Form = <Values extends FieldValues = FieldValues>({
                         />
                     )}
                     {LinkProps && (
-                        <NavLink {...LinkProps} className={styles.link} />
+                        <Link {...LinkProps} className={styles.link} />
                     )}
                 </div>
             )}

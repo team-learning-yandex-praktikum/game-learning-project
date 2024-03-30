@@ -1,6 +1,6 @@
 import { AvatarImage } from '@assets/images'
 import styles from './avatar.module.css'
-import { ChangeEvent, ChangeEventHandler, FC, useCallback } from 'react'
+import { ChangeEventHandler, FC, useCallback } from 'react'
 import { clsx } from 'clsx'
 import { AvatarProps } from './type'
 import { useAppDispatch } from '@store/hooks'

@@ -11,9 +11,13 @@ export const ProfileExit: FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    const handleClick = useCallback(() => {
-        dispatch(logout())
-        navigate(Routes.Login)
+    const handleClick = useCallback(async () => {
+        try {
+            await dispatch(logout()).unwrap()
+            navigate(Routes.Login)
+        } catch (e) {
+            console.error(e)
+        }
     }, [dispatch, navigate])
 
     return (

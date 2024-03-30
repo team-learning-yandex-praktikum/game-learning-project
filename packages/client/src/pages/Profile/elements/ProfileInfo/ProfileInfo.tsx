@@ -37,9 +37,12 @@ export const ProfileInfo: FC = () => {
                 return
             }
 
-            await dispatch(updateUserData(data))
-
-            toggleEditMode()
+            try {
+                await dispatch(updateUserData(data)).unwrap()
+                toggleEditMode()
+            } catch (e) {
+                console.error(e)
+            }
         },
         [isEditMode, dispatch, toggleEditMode]
     )

@@ -21,7 +21,7 @@ export class UserApi extends BaseApi {
     }
 
     updatePassword = async (passwordData: UpdatingPasswordDTO) => {
-        const { data } = await this.client.put('password', passwordData)
+        const { data } = await this.client.put<string>('password', passwordData)
         return data
     }
 
