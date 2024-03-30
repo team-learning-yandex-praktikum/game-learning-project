@@ -3,20 +3,19 @@ import style from './game.module.css'
 import RoundButton from '@components/RoundButton'
 import { PlayIcon } from '@assets/icons'
 import { GameWorld } from '@game-core/GameWorld'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { Nullable } from '@game-core/utils/CommonTypes'
 
 const StartGame = () => {
-    let world: GameWorld
+    let world: Nullable<GameWorld> = null
     const ref = useRef<HTMLDivElement>(null)
 
-    const init = useCallback(() => {
+    useEffect(() => {
         const root = ref.current
-        if (!world && root !== null) {
+        if (world === null && root !== null) {
             world = new GameWorld(root)
         }
-    }, [])
-
-    useEffect(() => init(), [])
+    }, [world, ref])
 
     return (
         <>

@@ -1,126 +1,74 @@
 import { GameObject } from './GameObject'
+import { GameWorld } from './GameWorld'
 import { Platform } from './Platform'
+import { Falling } from './PlayerStates/Falling'
+import { Standing } from './PlayerStates/Standing'
+import { State } from './State'
 import { Gravity } from './constants'
+import { InputHandler } from './input/InputHandler'
+import { exists } from './utils/CommonFunc'
 import { Sprite } from './utils/Sprite'
 import { Vector2d } from './utils/math'
 
-export const enum State {
-    Stand = 'Stand',
-    WalkLeft = 'WalkLeft',
-    WalkRight = 'WalkRight',
-    Jump = 'Jump',
-    Fall = 'Fall',
-}
+type World = GameWorld
 
 export class Player extends GameObject {
-    private currState = State.Stand
-    private nextState = State.Stand
-    private walkSpeed: number
-    private jumpSpeed: number
-    private moveInJumpSpeed: number
+    private currState: State<Player> = new Standing()
     private platform: Platform
+    private input: InputHandler
+    private world: World
 
-    constructor(plat: Platform) {
+    constructor(plat: Platform, world: World) {
         super(new Sprite('player.png'))
         this.platform = plat
         this.size = [50, 120]
-        this.walkSpeed = 400
-        this.jumpSpeed = 800
-        this.moveInJumpSpeed = 150
-    }
-
-    public inputState(s: State) {
-        this.nextState = s
+        this.input = new InputHandler()
+        this.world = world
     }
 
     public update(deltaTime: number): void {
-        switch (this.currState) {
-            case State.Stand:
-                if (
-                    this.nextState === State.WalkLeft ||
-                    this.nextState === State.WalkRight
-                ) {
-                    this.currState = this.nextState
-                    this.walk(deltaTime)
-                    break
-                }
-                if (this.nextState === State.Jump) {
-                    this.currState = State.Jump
-                    this.speed.x = 0
-                    this.speed.y = -this.jumpSpeed
-                    this.jump(deltaTime)
-                    break
-                }
-                break
-
-            case State.WalkLeft:
-            case State.WalkRight:
-                if (!this.onPlatform()) {
-                    this.currState = State.Fall
-                    this.speed.x = 0
-                    this.speed.y = Gravity
-                    break
-                }
-                if (this.nextState === State.Stand) {
-                    this.currState = State.Stand
-                    this.stand()
-                    break
-                }
-                if (this.nextState === State.Jump) {
-                    this.currState = State.Jump
-                    this.speed.y = -this.jumpSpeed
-                    this.jump(deltaTime)
-                    break
-                }
-                if (
-                    this.nextState === State.WalkLeft ||
-                    this.nextState === State.WalkRight
-                ) {
-                    this.currState = this.nextState
-                    this.walk(deltaTime)
-                    break
-                }
-                break
-
-            case State.Jump:
-                if (
-                    this.nextState === State.WalkLeft ||
-                    this.nextState === State.WalkRight
-                ) {
-                    this.moveInJump(this.nextState, deltaTime)
-                }
-                this.jump(deltaTime)
-                break
-
-            case State.Fall:
-                this.fall(deltaTime)
-
-                if (
-                    this.nextState === State.WalkLeft ||
-                    this.nextState === State.WalkRight
-                ) {
-                    this.moveInJump(this.nextState, deltaTime)
-                }
-
-                break
+        const next = this.currState.handleInput(this.input, this)
+        if (exists(next)) {
+            this.currState = next
+            if (this.currState.enterAction) {
+                this.currState.enterAction(this)
+            }
         }
+
+        this.currState.update(deltaTime, this)
     }
 
-    standOnPlatform(p: Platform) {
-        if (this.currState !== State.Jump && this.currState !== State.Fall) {
+    public checkLandingOnPlatform(newState: () => Standing) {
+        if (!this.isFalling()) {
             return
         }
 
-        const bottomY = this.pos[1] + this.height
+        this.world.resolvePlatformCollision(this, (p: Platform) => {
+            const done = this.standOnPlatform(p)
+            if (done) {
+                this.currState = newState()
+            }
+        })
+    }
 
-        if (this.speed.y > 0 && bottomY >= p.pos[1]) {
-            this.pos[1] = p.pos[1] - this.height
-            this.stand()
-            this.platform = p
+    public checkFallingFromPlatform(newState: () => Falling) {
+        if (!this.onPlatform()) {
+            this.currState = newState()
+            this.speed.y = Gravity
         }
     }
 
-    onPlatform() {
+    isFalling() {
+        return this.speed.y > 0
+    }
+
+    isEnoughJumpHigh() {
+        const bottomY = this.pos[1] + this.height
+        const jumpHeight = this.platform.pos[1] - bottomY
+        return jumpHeight > this.height / 2
+    }
+
+    private onPlatform() {
         const left = this.pos[0]
         const right = this.pos[0] + this.width
         const pleft = this.platform.pos[0]
@@ -129,12 +77,50 @@ export class Player extends GameObject {
         return left < pright && right > pleft
     }
 
-    stand() {
-        this.speed = Vector2d.zero
-        this.currState = State.Stand
+    setSpeedX(s: number) {
+        this.speed.x = s
     }
 
-    jump(dt: number) {
+    setSpeedUp(s: number) {
+        this.speed.y = -s
+    }
+
+    setSpeedDown(s: number) {
+        this.speed.y = s
+    }
+
+    decreaseSpeedX(s: number) {
+        if (Math.abs(this.speed.x) < s) {
+            return
+        }
+
+        if (this.speed.x > 0) {
+            this.speed.x -= s
+        } else {
+            this.speed.x += s
+        }
+    }
+
+    private standOnPlatform(platform: Platform) {
+        const bottomY = this.pos[1] + this.height
+        const diffY = Math.abs(bottomY - platform.pos[1])
+        const h = platform.height
+        const intersectY = this.speed.y < h * 4 ? h / 4 : h * 0.8
+        if (diffY < intersectY) {
+            this.pos[1] = platform.pos[1] - this.height
+            this.platform = platform
+            return true
+        }
+        return false
+    }
+
+    stand(dt: number) {
+        this.speed.x = 0
+        this.speed.y = 0
+        this.move(dt)
+    }
+
+    jump(dt: number, speedStartJump: number) {
         this.speed.y += Gravity
 
         if (this.speed.y > 0) {
@@ -143,53 +129,40 @@ export class Player extends GameObject {
             this.speed.y *= 0.95
         }
 
-        if (this.speed.y >= this.jumpSpeed) {
-            this.speed.y = this.jumpSpeed
+        if (this.speed.y > speedStartJump) {
+            this.speed.y = speedStartJump
         }
 
         this.move(dt)
     }
 
-    fall(dt: number) {
+    fall(dt: number, speedFalling: number) {
         this.speed.y += Gravity
         this.speed.y *= 1.25
-        if (this.speed.y >= this.jumpSpeed) {
-            this.speed.y = this.jumpSpeed
+        if (this.speed.y > speedFalling) {
+            this.speed.y = speedFalling
         }
 
         this.move(dt)
     }
 
-    walk(dt: number) {
+    walkRight(dt: number, walkSpeed: number) {
+        this.speed.x = walkSpeed
         this.speed.y = 0
-
-        if (this.currState === State.WalkRight) {
-            this.speed.x = this.walkSpeed
-        }
-
-        if (this.currState === State.WalkLeft) {
-            this.speed.x = -this.walkSpeed
-        }
-
         this.move(dt)
     }
 
-    moveInJump(nextState: State, dt: number) {
-        if (nextState === State.WalkRight) {
-            this.speed.x = this.moveInJumpSpeed
-        }
-
-        if (nextState === State.WalkLeft) {
-            this.speed.x = -this.moveInJumpSpeed
-        }
-
+    walkLeft(dt: number, walkSpeed: number) {
+        this.speed.x = -walkSpeed
+        this.speed.y = 0
         this.move(dt)
     }
 
     move(dt: number) {
         const vec = new Vector2d(this.pos)
         const pos = vec.addScaled(this.speed, dt)
-        this.pos = [pos.getElem(0), pos.getElem(1)]
+        this.pos[0] = pos.getElem(0)
+        this.pos[1] = pos.getElem(1)
     }
 
     checkBounds(canvas: HTMLCanvasElement) {
@@ -200,12 +173,6 @@ export class Player extends GameObject {
             this.pos[0] = right
         }
     }
-
-    // jumpDown() {
-    // }
-
-    // jumpUpDouble() {
-    // }
 
     public render(ctx: CanvasRenderingContext2D) {
         const x = this.pos[0]

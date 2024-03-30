@@ -3,7 +3,6 @@ import { GameObject } from './GameObject'
 import { Platform } from './Platform'
 import { Player } from './Player'
 import { CanvasHeight, CanvasWidth, MsInSec } from './constants'
-import { InputHandler } from './input/InputHandler'
 import { Physics } from './physics/PhysicsComponent'
 import { resources } from './utils/ResourcesLoader'
 import { LogicError } from '@game-core/errors/common'
@@ -17,8 +16,7 @@ export class GameWorld {
     private platforms: Platform[]
     private platformGround: Platform
     private player: Player
-    private input: InputHandler
-    private physics: Physics
+    private physics = new Physics()
     private canvas: HTMLCanvasElement
     private context: CanvasRenderingContext2D
 
@@ -35,13 +33,10 @@ export class GameWorld {
         this.canvas.height = CanvasHeight
         rootElem.appendChild(this.canvas)
 
-        this.physics = new Physics()
-
         this.platforms = [new Platform([this.canvas.width / 2, 30])]
         this.platformGround = new Platform([this.canvas.width, 20])
 
-        this.player = new Player(this.platformGround)
-        this.input = new InputHandler(this.player)
+        this.player = new Player(this.platforms[0], this)
 
         // resources.load('player.png');
         // resources.onReady(this.init.bind(this));
@@ -51,6 +46,11 @@ export class GameWorld {
     private init() {
         this.reset()
         this.start()
+    }
+
+    resolvePlatformCollision(p: Player, callback: (p: Platform) => void) {
+        const allPlatforms = [this.platformGround, ...this.platforms]
+        this.physics.checkCollisions(p, allPlatforms, callback)
     }
 
     private start() {
@@ -72,20 +72,12 @@ export class GameWorld {
     private update(dt: number) {
         this.gameTime += dt
 
-        this.input.handleInput(dt)
         this.updateObjects(dt)
     }
 
     private updateObjects(dt: number) {
         this.player.update(dt)
-
         this.player.checkBounds(this.canvas)
-
-        this.physics.checkCollisions(
-            this.player,
-            [this.platformGround, ...this.platforms],
-            (p: Platform) => this.player.standOnPlatform(p)
-        )
 
         this.enemies.forEach(x => x.update(dt))
     }
@@ -125,7 +117,11 @@ export class GameWorld {
 
         const y = this.canvas.height - this.platformGround.height
         this.platformGround.pos = [0, y]
-        this.platforms[0].pos = [200, y - this.player.height * 1.5]
-        this.player.pos = [40, y - this.player.height]
+        const yPlat = y - this.player.height - 100
+        this.platforms[0].pos = [200, yPlat]
+        this.player.pos = [
+            200 + this.platforms[0].width / 2,
+            yPlat - this.player.height,
+        ]
     }
 }
