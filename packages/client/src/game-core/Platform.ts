@@ -1,12 +1,17 @@
 import { GameObject } from './GameObject'
 import { Sprite } from './utils/Sprite'
+import { CloudImg } from '@assets/images/game'
 
-const sprite = new Sprite('platform.png')
+type PlatformType = 'ground' | 'cloud'
 
 export class Platform extends GameObject {
-    constructor(size: Size) {
-        super(sprite)
+    private type: PlatformType
+
+    constructor(size: Size, type: PlatformType = 'cloud') {
+        super()
+        this.setSprite(new Sprite(CloudImg))
         this.size = size
+        this.type = type
     }
 
     public update(deltaTime: number): void {
@@ -14,8 +19,10 @@ export class Platform extends GameObject {
     }
 
     public render(ctx: CanvasRenderingContext2D) {
-        const x = this.pos[0]
-        const y = this.pos[1]
+        if (this.type === 'cloud') {
+            super.render(ctx)
+            return
+        }
 
         ctx.fillStyle = 'grey'
         ctx.fillRect(0, 0, this.width, this.height)

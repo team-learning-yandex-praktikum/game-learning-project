@@ -9,8 +9,35 @@ import { InputHandler } from './input/InputHandler'
 import { exists } from './utils/CommonFunc'
 import { Sprite } from './utils/Sprite'
 import { Vector2d } from './utils/math'
+import {
+    PersonIdleImg,
+    PersonJumpImg,
+    PersonRunLeftImg,
+    PersonRunRightImg,
+} from '@assets/images/game'
 
 type World = GameWorld
+
+enum PlayerState {
+    idle = 'idle',
+    walkLeft = 'walkLeft',
+    walkRight = 'walkRight',
+    jump = 'jump',
+    fall = 'fall',
+}
+
+const stateSprites = {
+    [PlayerState.idle]: new Sprite(PersonIdleImg, {
+        frames: 5,
+        ticksPerFrame: 10,
+    }),
+    [PlayerState.jump]: new Sprite(PersonJumpImg, {
+        frames: 3,
+        ticksPerFrame: 20,
+    }),
+    [PlayerState.walkLeft]: new Sprite(PersonRunLeftImg, { frames: 7 }),
+    [PlayerState.walkRight]: new Sprite(PersonRunRightImg, { frames: 7 }),
+}
 
 export class Player extends GameObject {
     private currState: State<Player> = new Standing()
@@ -21,9 +48,25 @@ export class Player extends GameObject {
     private distanceTraveled = 0
 
     constructor(plat: Platform, world: World) {
-        super(new Sprite('player.png'))
+        super()
         this.platform = plat
-        this.size = [50, 120]
+
+        this.spriteMap.set(PlayerState.idle, stateSprites[PlayerState.idle])
+        this.spriteMap.set(PlayerState.fall, stateSprites[PlayerState.idle])
+        this.spriteMap.set(PlayerState.jump, stateSprites[PlayerState.jump])
+        this.spriteMap.set(
+            PlayerState.walkRight,
+            stateSprites[PlayerState.walkRight]
+        )
+        this.spriteMap.set(
+            PlayerState.walkLeft,
+            stateSprites[PlayerState.walkLeft]
+        )
+
+        this.size = [
+            this.getSprite()?.width ?? 0,
+            this.getSprite()?.height ?? 0,
+        ]
         this.input = new InputHandler()
         this.world = world
         this.fallPosition = null
@@ -125,6 +168,7 @@ export class Player extends GameObject {
         this.speed.x = 0
         this.speed.y = 0
         this.move(dt)
+        this.state = PlayerState.idle
     }
 
     jump(dt: number, speedStartJump: number) {
@@ -141,6 +185,7 @@ export class Player extends GameObject {
         }
         this.distanceTraveled += this.calculateJumpDistance(dt)
         this.move(dt)
+        this.state = PlayerState.jump
     }
 
     fall(dt: number, speedFalling: number) {
@@ -152,18 +197,21 @@ export class Player extends GameObject {
 
         this.fallPosition = this.pos[1]
         this.move(dt)
+        this.state = PlayerState.fall
     }
 
     walkRight(dt: number, walkSpeed: number) {
         this.speed.x = walkSpeed
         this.speed.y = 0
         this.move(dt)
+        this.state = PlayerState.walkRight
     }
 
     walkLeft(dt: number, walkSpeed: number) {
         this.speed.x = -walkSpeed
         this.speed.y = 0
         this.move(dt)
+        this.state = PlayerState.walkLeft
     }
 
     move(dt: number) {
@@ -183,18 +231,6 @@ export class Player extends GameObject {
     }
 
     public calculateJumpDistance(deltaTime: number): number {
-        const time = deltaTime
-
-        const distance = time
-
-        return Math.round(distance)
-    }
-
-    public render(ctx: CanvasRenderingContext2D) {
-        const x = this.pos[0]
-        const y = this.pos[1]
-
-        ctx.fillStyle = 'darkgreen'
-        ctx.fillRect(0, 0, this.width, this.height)
+        return Math.round(deltaTime)
     }
 }
