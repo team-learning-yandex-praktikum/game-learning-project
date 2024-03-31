@@ -17,6 +17,8 @@ export class Player extends GameObject {
     private platform: Platform
     private input: InputHandler
     private world: World
+    public fallPosition: number | null
+    private distanceTraveled = 0
 
     constructor(plat: Platform, world: World) {
         super(new Sprite('player.png'))
@@ -24,6 +26,7 @@ export class Player extends GameObject {
         this.size = [50, 120]
         this.input = new InputHandler()
         this.world = world
+        this.fallPosition = null
     }
 
     public update(deltaTime: number): void {
@@ -62,13 +65,17 @@ export class Player extends GameObject {
         return this.speed.y > 0
     }
 
+    getDistance() {
+        return this.distanceTraveled
+    }
+
     isEnoughJumpHigh() {
         const bottomY = this.pos[1] + this.height
         const jumpHeight = this.platform.pos[1] - bottomY
         return jumpHeight > this.height / 2
     }
 
-    private onPlatform() {
+    onPlatform() {
         const left = this.pos[0]
         const right = this.pos[0] + this.width
         const pleft = this.platform.pos[0]
@@ -101,7 +108,7 @@ export class Player extends GameObject {
         }
     }
 
-    private standOnPlatform(platform: Platform) {
+    standOnPlatform(platform: Platform) {
         const bottomY = this.pos[1] + this.height
         const diffY = Math.abs(bottomY - platform.pos[1])
         const h = platform.height
@@ -132,7 +139,7 @@ export class Player extends GameObject {
         if (this.speed.y > speedStartJump) {
             this.speed.y = speedStartJump
         }
-
+        this.distanceTraveled += this.calculateJumpDistance(dt)
         this.move(dt)
     }
 
@@ -143,6 +150,7 @@ export class Player extends GameObject {
             this.speed.y = speedFalling
         }
 
+        this.fallPosition = this.pos[1]
         this.move(dt)
     }
 
@@ -172,6 +180,14 @@ export class Player extends GameObject {
         } else if (this.pos[0] > right) {
             this.pos[0] = right
         }
+    }
+
+    public calculateJumpDistance(deltaTime: number): number {
+        const time = deltaTime
+
+        const distance = time
+
+        return Math.round(distance)
     }
 
     public render(ctx: CanvasRenderingContext2D) {

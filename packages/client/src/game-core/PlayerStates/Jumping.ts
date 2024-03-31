@@ -12,7 +12,7 @@ import {
 export class Jumping implements PlayerState {
     private canDoubleJump = true
     private wasReleasedJump = false
-    private static speedStartJump = 800
+    private static speedStartJump = 900
     static speedXinJump = 250
 
     enterAction(p: Player) {

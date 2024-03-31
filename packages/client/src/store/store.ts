@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './user/userSlice'
 import { settingsReducer } from './settings/settingsSlice'
 import { sidebarReducer } from './sidebar/sidebarSlice'
+import { gameReducer } from '@store/game/gameSlice'
 
 const rootReducer = combineReducers({
     user: userReducer,
     settings: settingsReducer,
     sidebar: sidebarReducer,
+    game: gameReducer,
 })
 
 export const store = configureStore({
