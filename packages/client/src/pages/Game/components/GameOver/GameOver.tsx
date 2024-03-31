@@ -3,6 +3,7 @@ import { RestartIcon } from '@assets/icons'
 
 import style from './gameOver.module.css'
 import RoundButton from '@components/RoundButton'
+import Fullscreen from '@components/Fullscreen'
 
 const GameOver = () => (
     <div className={style.container}>
@@ -16,6 +17,7 @@ const GameOver = () => (
             </div>
             <RoundButton icon={<RestartIcon />} />
         </div>
+        <Fullscreen />
     </div>
 )
 

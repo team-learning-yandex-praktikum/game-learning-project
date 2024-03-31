@@ -5,6 +5,7 @@ import { PlayIcon } from '@assets/icons'
 import { GameWorld } from '@game-core/GameWorld'
 import { useEffect, useRef } from 'react'
 import { Nullable } from '@game-core/utils/CommonTypes'
+import Fullscreen from '@components/Fullscreen'
 
 const StartGame = () => {
     let world: Nullable<GameWorld> = null
@@ -23,6 +24,7 @@ const StartGame = () => {
                 <CrazyTitle>jump-jump</CrazyTitle>
                 <RoundButton icon={<PlayIcon />} />
                 <div ref={ref} />
+                <Fullscreen />
             </div>
         </>
     )
