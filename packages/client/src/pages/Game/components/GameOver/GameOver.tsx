@@ -5,6 +5,7 @@ import { gameActions, gameSelectors } from '@store/game'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '@store/hooks'
 import style from './gameOver.module.css'
+import Fullscreen from '@components/Fullscreen'
 
 const GameOver = () => {
     const dispatch = useAppDispatch()
@@ -30,6 +31,7 @@ const GameOver = () => {
                     onClick={handleChangeStartGame}
                 />
             </div>
+            <Fullscreen />
         </div>
     )
 }

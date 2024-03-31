@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import { GameWorld } from '@game-core/GameWorld'
 import { useAppDispatch } from '@store/hooks'
 import { STATUSES } from '@store/constants'
+import Fullscreen from '@components/Fullscreen'
 
 const PlayGame = () => {
     const dispatch = useAppDispatch()
@@ -40,7 +41,7 @@ const PlayGame = () => {
         }
     }, [status])
 
-    return <div ref={containerRef} />
+    return <><div ref={containerRef} /><Fullscreen /></>
 }
 
 export default PlayGame
