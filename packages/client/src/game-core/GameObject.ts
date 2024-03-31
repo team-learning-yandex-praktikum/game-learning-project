@@ -1,28 +1,14 @@
-import { Physics } from './physics/PhysicsComponent'
-import { exists } from './utils/CommonFunc'
-import { ResourceGetError, resources } from './utils/ResourcesLoader'
 import { Sprite } from './utils/Sprite'
-import { Nullable } from './utils/CommonTypes'
 import { Vector2d } from './utils/math'
+
+type SpriteMap = Map<string, Sprite>
 
 export abstract class GameObject {
     protected position: Position = [0, 0]
     protected size: Size = [0, 0]
-    protected sprite: Sprite
+    protected spriteMap: SpriteMap = new Map()
     protected speed = Vector2d.zero
-    // protected spriteImage: HTMLImageElement
-
-    constructor(sprite: Sprite) {
-        this.sprite = sprite
-
-        const url = sprite.getUrl()
-        const img = resources.get(url)
-        // if (!exists(img)) {
-        //     throw new ResourceGetError(url)
-        // }
-
-        // this.spriteImage = img
-    }
+    protected state = 'idle'
 
     get pos() {
         return this.position
@@ -40,26 +26,17 @@ export abstract class GameObject {
         return this.size[1]
     }
 
-    // get image() {
-    //     return this.spriteImage
-    // }
+    getSprite(state = 'idle') {
+        return this.spriteMap.get(state)
+    }
+
+    setSprite(sprite: Sprite) {
+        this.spriteMap.set('idle', sprite)
+    }
 
     public abstract update(deltaTime: number): void
 
     public render(ctx: CanvasRenderingContext2D) {
-        // const img = this.image
-        // const x = this.pos[0]
-        // const y = this.pos[1]
-        // ctx.drawImage(
-        //     img,
-        //     x,
-        //     y,
-        //     this.width,
-        //     this.height,
-        //     0,
-        //     0,
-        //     this.width,
-        //     this.height
-        // )
+        this.spriteMap.get(this.state)?.render(ctx)
     }
 }

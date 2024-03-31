@@ -14,10 +14,10 @@ function collides(
 }
 
 class PhysicsComponent {
-    public checkCollisions(
+    public checkCollisions<O extends GameObject = GameObject>(
         targetObj: GameObject,
-        objects: GameObject[],
-        collisionFunc: (o: GameObject) => void
+        objects: O[],
+        collisionFunc: (o: O) => void
     ) {
         for (const obj of objects) {
             if (this.boxCollides(targetObj, obj)) {

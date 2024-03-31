@@ -1,4 +1,3 @@
-import { ImgDir } from '../constants'
 import { LogicError } from '../errors/common'
 import { Callback, ImgResource } from './CommonTypes'
 
@@ -11,13 +10,13 @@ class ResourcesLoader {
         this.readyCallbacks = []
     }
 
-    public load(urlList: string | string[]) {
+    public async load(urlList: string | string[]) {
         if (urlList instanceof Array) {
-            urlList.forEach(url => this.loadByURL(url))
-            return
+            const loadPromises = urlList.map(url => this.loadByURL(url))
+            return await Promise.all(loadPromises)
         }
 
-        this.loadByURL(urlList)
+        return await this.loadByURL(urlList)
     }
 
     public onReady(func: Callback) {
@@ -28,26 +27,24 @@ class ResourcesLoader {
         return this.resourceCache.get(url)
     }
 
-    private loadByURL(url: string) {
-        if (this.resourceCache.has(url)) {
-            return this.resourceCache.get(url)
-        }
-
-        const img = new Image()
-
-        const onload = () => {
-            this.resourceCache.set(url, img)
-            if (this.isReady()) {
-                this.readyCallbacks.forEach(f => f())
+    private loadByURL(url: string): Promise<ImgResource> {
+        return new Promise((resolve, reject) => {
+            if (this.resourceCache.has(url)) {
+                resolve(this.resourceCache.get(url))
             }
-        }
 
-        this.resourceCache.set(url, null)
+            const img = new Image()
 
-        img.onload = onload
-        img.src = `${ImgDir}${url}`
-
-        return this.resourceCache.get(url)
+            img.onload = () => {
+                this.resourceCache.set(url, img)
+                resolve(img)
+                if (this.isReady()) {
+                    this.readyCallbacks.forEach(f => f())
+                }
+            }
+            img.onerror = reject
+            img.src = url
+        })
     }
 
     private isReady() {

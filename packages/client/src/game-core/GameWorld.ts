@@ -5,14 +5,11 @@ import { Player } from './Player'
 import {
     CanvasHeight,
     CanvasWidth,
-    MsInSec,
     limitsOfLoss,
+    MsInSec,
     whiteColor,
 } from './constants'
-
-import { InputHandler } from './input/InputHandler'
 import { Physics } from './physics/PhysicsComponent'
-import { resources } from './utils/ResourcesLoader'
 import { LogicError } from '@game-core/errors/common'
 import { FinishGameHandler } from '@game-core/utils/CommonTypes'
 
@@ -49,13 +46,11 @@ export class GameWorld {
         this.canvas.height = CanvasHeight
         rootElem.appendChild(this.canvas)
 
-        this.platforms = [new Platform([this.canvas.width / 2, 30])]
-        this.platformGround = new Platform([this.canvas.width, 20])
+        this.platforms = [new Platform([100, 20])]
+        this.platformGround = new Platform([this.canvas.width, 20], 'ground')
 
         this.player = new Player(this.platforms[0], this)
 
-        // resources.load('player.png');
-        // resources.onReady(this.init.bind(this));
         this.fillPlatforms()
         this.init()
     }
@@ -184,8 +179,8 @@ export class GameWorld {
 
     private fillPlatforms() {
         const numberOfPlatforms = 100
-        const platformWidth = this.canvas.width / 4
-        const platformHeight = 30
+        const platformWidth = 100
+        const platformHeight = 20
 
         const verticalGap = this.player.height + 30
 
@@ -195,7 +190,7 @@ export class GameWorld {
             currentPlatform++
         ) {
             const platform = new Platform([platformWidth, platformHeight])
-            const randomX = Math.random() * (this.canvas.width / 2)
+            const randomX = Math.random() * (this.canvas.width - platformWidth)
             const randomY = CanvasHeight - verticalGap * (currentPlatform + 1)
 
             if (currentPlatform === 0) {
