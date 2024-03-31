@@ -10,6 +10,10 @@ export abstract class GameObject {
     protected speed = Vector2d.zero
     protected state = 'idle'
 
+    getState() {
+        return this.state
+    }
+
     get pos() {
         return this.position
     }
