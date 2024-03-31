@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import style from './fullscreen.module.css'
-import { OffFullscreen, OnFullscreen } from '@assets/icons'
+import { OffFullscreenIcon, OnFullscreenIcon } from '@assets/icons'
 
 const Fullscreen: FC = () => {
     const [isFullscreen, setIsFullscreen] = useState(false)
@@ -38,7 +38,7 @@ const Fullscreen: FC = () => {
 
     return (
         <div className={style.iconContainer} onClick={toggleFullscreen}>
-            {isFullscreen ? <OffFullscreen /> : <OnFullscreen />}
+            {isFullscreen ? <OffFullscreenIcon /> : <OnFullscreenIcon />}
         </div>
     )
 }

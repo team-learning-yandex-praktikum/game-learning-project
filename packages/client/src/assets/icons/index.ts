@@ -15,8 +15,8 @@ import SearchIcon from './search.svg?react'
 import SmileIcon from './smile.svg?react'
 import SendIcon from './send.svg?react'
 import RestartIcon from './restart.svg?react'
-import OnFullscreen from './onFullscreen.svg?react'
-import OffFullscreen from './offFullscreen.svg?react'
+import OnFullscreenIcon from './onFullscreen.svg?react'
+import OffFullscreenIcon from './offFullscreen.svg?react'
 
 export {
     HomeIcon,
@@ -36,6 +36,6 @@ export {
     SmileIcon,
     SendIcon,
     RestartIcon,
-    OnFullscreen,
-    OffFullscreen,
+    OnFullscreenIcon,
+    OffFullscreenIcon,
 }
