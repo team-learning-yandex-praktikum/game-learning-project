@@ -1,7 +1,7 @@
 import { Enemy } from './Enemy'
 import { GameObject } from './GameObject'
 import { Platform } from './Platform'
-import { Player } from './Player'
+import { Player, PlayerState } from './Player'
 import {
     CanvasHeight,
     CanvasWidth,
@@ -86,7 +86,9 @@ export class GameWorld {
         this.updateObjects(dt)
 
         this.halfCanvasHeight = CanvasHeight / 2
-        if (this.player.pos[1] < this.halfCanvasHeight) {
+        const playerOnHalfOfScreen = this.player.pos[1] < this.halfCanvasHeight
+        const isJump = this.player.getState() === PlayerState.jump
+        if (playerOnHalfOfScreen && isJump) {
             this.jumpDistanceTraveled += this.player.calculateJumpDistance(dt)
             this.scorePositionY -= this.player.calculateJumpDistance(dt)
         }
@@ -106,8 +108,7 @@ export class GameWorld {
 
         const lossLine =
             this.player.fallPosition &&
-            this.player.fallPosition > limitsOfLoss.top &&
-            this.player.fallPosition < limitsOfLoss.bottom
+            this.jumpDistanceTraveled + this.player.fallPosition > CanvasHeight
 
         if (lossLine && !this.player.onPlatform()) {
             this.stopGameLoop()

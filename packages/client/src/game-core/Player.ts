@@ -4,7 +4,7 @@ import { Platform } from './Platform'
 import { Falling } from './PlayerStates/Falling'
 import { Standing } from './PlayerStates/Standing'
 import { State } from './State'
-import { Gravity } from './constants'
+import { CanvasHeight, Gravity } from './constants'
 import { InputHandler } from './input/InputHandler'
 import { exists } from './utils/CommonFunc'
 import { Sprite } from './utils/Sprite'
@@ -18,7 +18,7 @@ import {
 
 type World = GameWorld
 
-enum PlayerState {
+export enum PlayerState {
     idle = 'idle',
     walkLeft = 'walkLeft',
     walkRight = 'walkRight',
@@ -46,6 +46,7 @@ export class Player extends GameObject {
     private world: World
     public fallPosition: number | null
     private distanceTraveled = 0
+    public posYOfHighestPlatform = CanvasHeight
 
     constructor(plat: Platform, world: World) {
         super()
@@ -91,8 +92,14 @@ export class Player extends GameObject {
 
         this.world.resolvePlatformCollision(this, (p: Platform) => {
             const done = this.standOnPlatform(p)
-            if (done) {
-                this.currState = newState()
+            if (!done) {
+                return
+            }
+
+            this.currState = newState()
+
+            if (this.posYOfHighestPlatform > p.pos[1]) {
+                this.posYOfHighestPlatform = p.pos[1]
             }
         })
     }
@@ -231,6 +238,12 @@ export class Player extends GameObject {
     }
 
     public calculateJumpDistance(deltaTime: number): number {
-        return Math.round(deltaTime)
+        const platformNotReached =
+            this.pos[1] > this.posYOfHighestPlatform - this.height
+        if (platformNotReached) {
+            return 0
+        }
+        const distance = this.speed.y * deltaTime * -1
+        return Math.round(distance)
     }
 }
