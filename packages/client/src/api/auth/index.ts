@@ -7,27 +7,28 @@ export class AuthApi extends BaseApi {
     }
 
     me = async () => {
-        const { data } = await this.client.get<UserDTO>('user')
+        const { data } = await this.client.get<UserDTO>(this.withUrl('user'))
         return data
     }
 
-    create = async (
-        registrationData: RegistrationDTO
-    ): Promise<SignupResponse> => {
+    create = async (registrationData: RegistrationDTO) => {
         const { data } = await this.client.post<SignupResponse>(
-            'signup',
+            this.withUrl('signup'),
             registrationData
         )
         return data
     }
 
-    login = async (loginData: LoginDTO): Promise<string> => {
-        const { data } = await this.client.post<string>('signin', loginData)
+    login = async (loginData: LoginDTO) => {
+        const { data } = await this.client.post<string>(
+            this.withUrl('signin'),
+            loginData
+        )
         return data
     }
 
-    logout = async (): Promise<string> => {
-        const { data } = await this.client.post<string>('logout')
+    logout = async () => {
+        const { data } = await this.client.post<string>(this.withUrl('logout'))
         return data
     }
 }

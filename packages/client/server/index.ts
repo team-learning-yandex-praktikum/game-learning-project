@@ -1,19 +1,30 @@
 import dotenv from 'dotenv'
-
-dotenv.config()
-
-import express, { Request, Response, NextFunction } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import path from 'path'
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
+import serialize from 'serialize-javascript'
+import cookieParser from 'cookie-parser'
 
-const port = process.env.PORT || 3001
+dotenv.config()
+
+const port = process.env.PORT || 3000
 const clientPath = path.join(__dirname, '..')
 const isDev = process.env.NODE_ENV === 'development'
 
+type RenderResult = {
+    html: string
+    initialState: unknown
+}
+type RenderFn = (req: Request) => Promise<RenderResult>
+
 async function createServer() {
     const app = express()
+
+    app.use(cookieParser())
+
     let vite: ViteDevServer | undefined
+
     if (isDev) {
         vite = await createViteServer({
             server: { middlewareMode: true },
@@ -34,8 +45,9 @@ async function createServer() {
         const url = req.originalUrl
 
         try {
-            let render: (url: string) => Promise<string>
+            let render: RenderFn
             let template: string
+
             if (vite) {
                 template = await fs.readFile(
                     path.resolve(clientPath, 'index.html'),
@@ -63,9 +75,14 @@ async function createServer() {
                 render = (await import(pathToServer)).render
             }
 
-            const appHtml = await render(url)
+            const { html: appHtml, initialState } = await render(req)
 
-            const html = template.replace('<!--ssr-outlet-->', appHtml)
+            const html = template.replace('<!--ssr-outlet-->', appHtml).replace(
+                '<!--ssr-initial-state-->',
+                `<script>window.initialState = ${serialize(initialState, {
+                    isJSON: true,
+                })}</script>`
+            )
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {

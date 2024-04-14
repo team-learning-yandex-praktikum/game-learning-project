@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { getWindow } from '../document'
 
 export const useWindowListener = <K extends keyof WindowEventMap>(
     event: K,
@@ -6,9 +7,10 @@ export const useWindowListener = <K extends keyof WindowEventMap>(
     deps: unknown[] = []
 ) => {
     useEffect(() => {
-        if (typeof window === 'undefined') {
+        if (!getWindow()) {
             return undefined
         }
+
         window.addEventListener(event, listener)
 
         return () => {

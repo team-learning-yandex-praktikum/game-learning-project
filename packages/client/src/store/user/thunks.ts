@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authApi, resourcesApi, userApi } from '@api'
-import { RequestRegistrationData, User } from '@store/user/types'
 import { transformData } from '@utils/data'
 import { LoginDTO, RegistrationDTO, UserDTO } from '@api/auth/types'
+import { RequestRegistrationData, User } from './types'
 
 export const fetchUserAvatar = createAsyncThunk(
     'user/fetchAvatar',
