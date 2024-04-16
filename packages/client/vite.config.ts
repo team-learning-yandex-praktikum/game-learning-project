@@ -30,4 +30,10 @@ export default defineConfig({
             '@services': path.resolve(__dirname, './src/services'),
         },
     },
+    build: {
+        outDir: path.join(__dirname, 'dist/client'),
+    },
+    ssr: {
+        format: 'cjs',
+    },
 })

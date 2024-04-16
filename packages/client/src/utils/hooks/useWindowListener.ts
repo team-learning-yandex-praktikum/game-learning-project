@@ -6,6 +6,9 @@ export const useWindowListener = <K extends keyof WindowEventMap>(
     deps: unknown[] = []
 ) => {
     useEffect(() => {
+        if (typeof window === 'undefined') {
+            return undefined
+        }
         window.addEventListener(event, listener)
 
         return () => {

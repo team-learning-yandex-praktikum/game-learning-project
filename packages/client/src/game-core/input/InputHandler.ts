@@ -13,9 +13,11 @@ export class InputHandler {
             this.setKey(e, false)
         })
 
-        window.addEventListener('blur', e => {
-            this.pressedKeys = {}
-        })
+        if (typeof window !== 'undefined') {
+            window.addEventListener('blur', e => {
+                this.pressedKeys = {}
+            })
+        }
     }
 
     private setKey(e: KeyboardEvent, pressed: boolean) {

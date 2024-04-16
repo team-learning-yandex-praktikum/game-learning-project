@@ -68,7 +68,9 @@ const Sidebar: FC = () => {
     useWindowListener('scroll', scrollHandler, [scrollHandler])
 
     const hoistHandler = useCallback(() => {
-        window.scrollTo({ behavior: 'smooth', top: 0 })
+        if (typeof window !== 'undefined') {
+            window.scrollTo({ behavior: 'smooth', top: 0 })
+        }
     }, [])
 
     const returnHandler = useCallback(() => {
