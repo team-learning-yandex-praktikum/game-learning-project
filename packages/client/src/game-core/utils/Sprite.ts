@@ -1,5 +1,6 @@
 import { resources } from '@game-core/utils/ResourcesLoader'
 import { ImgResource } from '@game-core/utils/CommonTypes'
+import { Position, Size } from './GameTypes'
 
 interface SpriteOptions {
     frames?: number

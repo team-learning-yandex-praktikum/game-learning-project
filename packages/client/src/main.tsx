@@ -30,9 +30,12 @@ const initServiceWorkers = () => {
     }
 }
 
-initServiceWorkers()
+if (typeof window !== 'undefined') {
+    initServiceWorkers()
+}
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+    document.getElementById('root') as HTMLElement,
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>

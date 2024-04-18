@@ -1,6 +1,7 @@
 import { GameObject } from './GameObject'
 import { Sprite } from './utils/Sprite'
 import { CloudImg } from '@assets/images/game'
+import { Size } from './utils/GameTypes'
 
 type PlatformType = 'ground' | 'cloud'
 

@@ -1,11 +1,15 @@
 import style from './fallback.module.css'
 
 const reload = () => {
-    window.location.reload()
+    if (typeof window !== 'undefined') {
+        window.location.reload()
+    }
 }
 
 const toMainPage = () => {
-    window.location.pathname = '/'
+    if (typeof window !== 'undefined') {
+        window.location.pathname = '/'
+    }
 }
 
 const Fallback = () => (

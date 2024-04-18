@@ -1,5 +1,6 @@
 export const CanvasWidth = 500
-export const CanvasHeight = window.innerHeight - 150
+export const CanvasHeight =
+    typeof window !== 'undefined' ? window.innerHeight - 150 : CanvasWidth
 
 export const MsInSec = 1000
 export const ImgDir = '../assets/images/'

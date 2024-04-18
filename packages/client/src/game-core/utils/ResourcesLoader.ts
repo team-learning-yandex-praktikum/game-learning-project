@@ -33,6 +33,9 @@ class ResourcesLoader {
                 resolve(this.resourceCache.get(url))
             }
 
+            if (typeof Image === 'undefined') {
+                return
+            }
             const img = new Image()
 
             img.onload = () => {

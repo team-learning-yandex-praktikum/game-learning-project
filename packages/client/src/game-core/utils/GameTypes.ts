@@ -1,6 +1,6 @@
-type Position = [number, number]
+export type Position = [number, number]
 
-type Width = number
-type Height = number
+export type Width = number
+export type Height = number
 
-type Size = [Width, Height]
+export type Size = [Width, Height]

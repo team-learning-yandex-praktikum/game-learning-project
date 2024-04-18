@@ -1,5 +1,6 @@
 import { Sprite } from './utils/Sprite'
 import { Vector2d } from './utils/math'
+import { Position, Size } from './utils/GameTypes'
 
 type SpriteMap = Map<string, Sprite>
 
