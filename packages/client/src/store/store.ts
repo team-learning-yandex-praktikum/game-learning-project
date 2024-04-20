@@ -2,19 +2,36 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './user/userSlice'
 import { settingsReducer } from './settings/settingsSlice'
 import { sidebarReducer } from './sidebar/sidebarSlice'
-import { gameReducer } from '@store/game/gameSlice'
+import { gameReducer } from './game'
+import { getWindow } from '@utils/document'
+import { ssrReducer } from './ssr/ssrSlice'
 
-const rootReducer = combineReducers({
+declare global {
+    interface Window {
+        initialState?: RootState
+    }
+}
+
+export const reducer = combineReducers({
     user: userReducer,
     settings: settingsReducer,
     sidebar: sidebarReducer,
     game: gameReducer,
+    ssr: ssrReducer,
 })
 
-export const store = configureStore({
-    reducer: rootReducer,
-})
+export const createStore = () => {
+    const initialState = getWindow()?.initialState
+    delete getWindow()?.initialState
 
-export type RootState = ReturnType<typeof rootReducer>
+    return configureStore({
+        reducer: reducer,
+        preloadedState: initialState,
+    })
+}
+
+export const store = createStore()
+
+export type RootState = ReturnType<typeof reducer>
 export type AppDispatch = typeof store.dispatch
 export type AppStore = typeof store

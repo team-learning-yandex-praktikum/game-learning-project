@@ -6,7 +6,7 @@ export class ResourcesApi extends BaseApi {
     }
 
     get = async (path: string) => {
-        const { data } = await this.client.get<string>(path, {
+        const { data } = await this.client.get<string>(this.withUrl(path), {
             responseType: 'arraybuffer',
         })
         const blob = new Blob([data])

@@ -1,7 +1,8 @@
 import * as Pages from '../pages'
 import { Routes } from './constants'
+import { RouteObject } from 'react-router'
 
-export const routesConfig = [
+export const routesConfig: RouteObject[] = [
     {
         path: Routes.Home,
         element: <Pages.Home />,
@@ -38,3 +39,5 @@ export const routesConfig = [
         element: <Pages.ErrorPage code={404} />,
     },
 ]
+
+export * from './types'

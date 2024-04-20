@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
-import { UserState } from '@store/user/types'
 import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
 import { LoadStatus } from '@store/enums'
+import { UserState } from './types'
 import {
     fetchUserAvatar,
     fetchUserData,
@@ -11,7 +11,7 @@ import {
     updatePassword,
     updateUserAvatar,
     updateUserData,
-} from '@store/user/thunks'
+} from './thunks'
 
 class UserAsyncCases {
     readonly builder: ActionReducerMapBuilder<UserState>
