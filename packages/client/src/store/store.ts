@@ -3,12 +3,14 @@ import { userReducer } from './user/userSlice'
 import { settingsReducer } from './settings/settingsSlice'
 import { sidebarReducer } from './sidebar/sidebarSlice'
 import { gameReducer } from '@store/game/gameSlice'
+import { leaderboardReducer } from './leaderboard/leaderboardSlice'
 
 const rootReducer = combineReducers({
     user: userReducer,
     settings: settingsReducer,
     sidebar: sidebarReducer,
     game: gameReducer,
+    leaderboard: leaderboardReducer,
 })
 
 export const store = configureStore({
