@@ -5,6 +5,7 @@ import { sidebarReducer } from './sidebar/sidebarSlice'
 import { gameReducer } from './game'
 import { getWindow } from '@utils/document'
 import { ssrReducer } from './ssr/ssrSlice'
+import { leaderboardReducer } from './leaderboard/leaderboardSlice'
 
 declare global {
     interface Window {
@@ -18,6 +19,7 @@ export const reducer = combineReducers({
     sidebar: sidebarReducer,
     game: gameReducer,
     ssr: ssrReducer,
+    leaderboard: leaderboardReducer,
 })
 
 export const createStore = () => {
