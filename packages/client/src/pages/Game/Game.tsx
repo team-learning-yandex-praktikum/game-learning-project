@@ -1,14 +1,13 @@
 import StartGame from './components/StartGame'
 import GameOver from './components/GameOver'
-import { useSelector } from 'react-redux'
 import { gameActions, gameSelectors } from '@store/game'
-import { useAppDispatch } from '@store/hooks'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
 import { useEffect } from 'react'
 import PlayGame from '@pages/Game/components/PlayGame'
 import { STATUSES } from '@store/constants'
 
 const Game = () => {
-    const status = useSelector(gameSelectors.selectStatus)
+    const status = useAppSelector(gameSelectors.selectStatus)
 
     const dispatch = useAppDispatch()
 
@@ -16,7 +15,7 @@ const Game = () => {
         () => () => {
             dispatch(gameActions.resetGame())
         },
-        []
+        [dispatch]
     )
 
     if (status === STATUSES.FINISH) {
