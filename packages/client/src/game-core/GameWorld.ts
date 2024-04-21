@@ -2,13 +2,7 @@ import { Enemy } from './Enemy'
 import { GameObject } from './GameObject'
 import { Platform } from './Platform'
 import { Player, PlayerState } from './Player'
-import {
-    CanvasHeight,
-    CanvasWidth,
-    limitsOfLoss,
-    MsInSec,
-    whiteColor,
-} from './constants'
+import { CanvasHeight, CanvasWidth, MsInSec, whiteColor } from './constants'
 import { Physics } from './physics/PhysicsComponent'
 import { LogicError } from '@game-core/errors/common'
 import { FinishGameHandler } from '@game-core/utils/CommonTypes'
@@ -20,11 +14,11 @@ export class GameWorld {
     private score = 0
     private enemies: Enemy[] = []
     private platforms: Platform[] = []
-    private platformGround: Platform
-    private player: Player
-    private physics = new Physics()
-    private canvas: HTMLCanvasElement
-    private context: CanvasRenderingContext2D
+    private platformGround: Platform | null
+    private player: Player | null
+    private physics: Physics | null = new Physics()
+    private canvas: HTMLCanvasElement | null
+    private context: CanvasRenderingContext2D | null
     private finishGameHandler: FinishGameHandler
     private jumpDistanceTraveled = 0
     private halfCanvasHeight = CanvasHeight / 2
@@ -51,7 +45,6 @@ export class GameWorld {
 
         this.player = new Player(this.platforms[0], this)
 
-        this.fillPlatforms()
         this.init()
     }
 
@@ -60,12 +53,18 @@ export class GameWorld {
         this.start()
     }
 
+    public get allPlatforms() {
+        return [this.platformGround, ...this.platforms].filter(
+            Boolean
+        ) as Platform[]
+    }
+
     resolvePlatformCollision(p: Player, callback: (p: Platform) => void) {
-        const allPlatforms = [this.platformGround, ...this.platforms]
-        this.physics.checkCollisions(p, allPlatforms, callback)
+        this.physics?.checkCollisions(p, this.allPlatforms, callback)
     }
 
     private start() {
+        this.stopGameLoop()
         this.lastLoopTime = performance.now()
         this.gameLoop()
     }
@@ -81,6 +80,9 @@ export class GameWorld {
     }
 
     private update(dt: number) {
+        if (!this.player) {
+            return
+        }
         this.gameTime += dt
 
         this.updateObjects(dt)
@@ -95,32 +97,42 @@ export class GameWorld {
     }
 
     private updateObjects(dt: number) {
+        if (!this.canvas || !this.player) {
+            return
+        }
         this.player.update(dt)
         this.player.checkBounds(this.canvas)
 
         this.score = this.player.getDistance()
 
-        this.physics.checkCollisions(
-            this.player,
-            [this.platformGround, ...this.platforms],
-            (p: Platform) => this.player.standOnPlatform(p)
+        this.resolvePlatformCollision(this.player, (p: Platform) =>
+            this.player?.standOnPlatform(p)
         )
 
+        this.enemies.forEach(x => x.update(dt))
+
+        this.checkLossLine()
+    }
+
+    private checkLossLine = () => {
+        if (!this.player) {
+            return
+        }
         const lossLine =
             this.player.fallPosition &&
             this.jumpDistanceTraveled + this.player.fallPosition > CanvasHeight
 
         if (lossLine && !this.player.onPlatform()) {
-            this.stopGameLoop()
-            this.reset()
             this.finishGame()
         }
-
-        this.enemies.forEach(x => x.update(dt))
     }
 
     private render() {
         this.clear()
+
+        if (!this.context || !this.player) {
+            return
+        }
 
         this.context.save()
 
@@ -138,14 +150,21 @@ export class GameWorld {
     }
 
     private clear() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        if (!this.canvas) {
+            return
+        }
+        this.context?.clearRect(0, 0, this.canvas.width, this.canvas.height)
     }
 
     private renderObjects(objects: GameObject[]) {
         objects.forEach(x => this.renderObject(x))
     }
 
-    private renderObject(obj: GameObject) {
+    private renderObject(obj: GameObject | null) {
+        if (!obj || !this.context) {
+            return
+        }
+
         this.context.save()
         const x = obj.pos[0]
         const y = obj.pos[1]
@@ -166,6 +185,10 @@ export class GameWorld {
 
         this.enemies = []
 
+        if (!this.platformGround || !this.canvas || !this.player) {
+            return
+        }
+
         const y = this.canvas.height - this.platformGround.height
         this.platformGround.pos = [0, y]
         const yPlat = y - this.player.height - 100
@@ -179,6 +202,9 @@ export class GameWorld {
     }
 
     private fillPlatforms() {
+        if (!this.canvas || !this.player) {
+            return
+        }
         const numberOfPlatforms = 100
         const platformWidth = 100
         const platformHeight = 20
@@ -204,6 +230,9 @@ export class GameWorld {
     }
 
     private renderScore() {
+        if (!this.context) {
+            return
+        }
         this.context.fillStyle = whiteColor
         this.context.font = '20px Arial'
 
@@ -214,7 +243,23 @@ export class GameWorld {
         )
     }
 
+    private cleanup = () => {
+        this.player = null
+        this.isGameOver = true
+        this.canvas = null
+        this.context = null
+        this.enemies = []
+        this.gameTime = 0
+        this.jumpDistanceTraveled = 0
+        this.physics = null
+        this.platformGround = null
+        this.platforms = []
+        this.score = 0
+    }
+
     private finishGame() {
+        this.stopGameLoop()
         this.finishGameHandler(this.score)
+        this.cleanup()
     }
 }
