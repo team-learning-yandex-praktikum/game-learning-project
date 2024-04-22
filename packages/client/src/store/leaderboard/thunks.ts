@@ -11,9 +11,7 @@ export const getLeaderboard = createAsyncThunk(
             limit: data.limit,
             cursor: data.cursor,
         })
-        const result = response.map((item, index) => ({
-            ...item.data,
-        }))
+        const result = response.map(item => item.data)
         return result
     }
 )
