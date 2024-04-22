@@ -11,13 +11,16 @@ export class LeaderBoardApi extends BaseApi {
     }
 
     saveRecord = async (leaderboardData: LeaderBoardDTO) => {
-        const { data } = await this.client.post<string>('', leaderboardData)
+        const { data } = await this.client.post<string>(
+            this.withUrl(''),
+            leaderboardData
+        )
         return data
     }
 
     getLeaderboard = async (leaderboardData: LeaderboardTableDTO) => {
         const { data } = await this.client.post<LeaderboardTableResponse[]>(
-            '/all',
+            this.withUrl('all'),
             leaderboardData
         )
         return data

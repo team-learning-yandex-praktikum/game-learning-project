@@ -32,7 +32,6 @@ const LeaderBoard: FC = () => {
         },
         [dispatch]
     )
-
     const fetchData = useCallback(async () => {
         if (!hasMoreData || isLoading) {
             return
@@ -49,7 +48,6 @@ const LeaderBoard: FC = () => {
             console.error(error)
         }
     }, [hasMoreData, isLoading, dispatch, cursor])
-
     useEffect(() => {
         setIsMounted(true)
     }, [])
@@ -65,7 +63,7 @@ const LeaderBoard: FC = () => {
         if (isMounted) {
             fetchData()
         }
-    }, [cursor, fetchData, isMounted])
+    }, [cursor, isMounted])
 
     return (
         <div className={styles.container}>
