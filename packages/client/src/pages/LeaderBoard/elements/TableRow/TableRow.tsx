@@ -13,13 +13,12 @@ import { SortRating } from '../../type'
 import clsx from 'clsx'
 import { teamName } from '@api/leaderBoard/constants'
 import { sortLeaderboardTable } from '@utils/sort/quickSort'
-import { useSelector } from 'react-redux'
 import { leaderboardActions, leaderboardSelectors } from '@store/leaderboard'
-import { useAppDispatch } from '@store/hooks'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
 import { LeaderboardTable } from '@api/leaderBoard/types'
 
 const TableRow: FC<TableRowProps> = ({ row, index }) => {
-    const leaderboardData = useSelector(leaderboardSelectors.selectData)
+    const leaderboardData = useAppSelector(leaderboardSelectors.selectData)
     const dispatch = useAppDispatch()
     const [sortConfig, setSortConfig] = useState<{ [key: string]: SortRating }>(
         {

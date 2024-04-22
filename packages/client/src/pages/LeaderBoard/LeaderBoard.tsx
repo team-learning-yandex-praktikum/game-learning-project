@@ -1,37 +1,39 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import Title from '@components/Title'
 import styles from './leaderBoard.module.css'
 import TableRow from './elements/TableRow'
 import { teamName } from '@api/leaderBoard/constants'
-import { useDispatch, useSelector } from 'react-redux'
 import {
     getLeaderboard,
     leaderboardActions,
     leaderboardSelectors,
 } from '@store/leaderboard'
-import { AppDispatch } from '@store'
-import { useAppSelector } from '@store/hooks'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
 
 const LeaderBoard: FC = () => {
-    const leaderboardData = useSelector(leaderboardSelectors.selectData)
-    const hasMoreData = useSelector(leaderboardSelectors.selectHasMoreDate)
+    const leaderboardData = useAppSelector(leaderboardSelectors.selectData)
+    const hasMoreData = useAppSelector(leaderboardSelectors.selectHasMoreDate)
     const cursor = useAppSelector(leaderboardSelectors.selectCursor)
     const loadStatus = useAppSelector(leaderboardSelectors.selectStatus)
     const isLoading = loadStatus === 'loading'
     const [isMounted, setIsMounted] = useState(false)
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
 
-    const scrollHandler = (e: Event) => {
-        if (
-            (e.target as Document).documentElement.scrollHeight -
-                ((e.target as Document).documentElement.scrollTop +
-                    window.innerHeight) <
-            100
-        ) {
-            dispatch(leaderboardActions.incrementCursor())
-        }
-    }
-    const fetchData = async () => {
+    const scrollHandler = useCallback(
+        (e: Event) => {
+            if (
+                (e.target as Document).documentElement.scrollHeight -
+                    ((e.target as Document).documentElement.scrollTop +
+                        window.innerHeight) <
+                100
+            ) {
+                dispatch(leaderboardActions.incrementCursor())
+            }
+        },
+        [dispatch]
+    )
+
+    const fetchData = useCallback(async () => {
         if (!hasMoreData || isLoading) {
             return
         }
@@ -46,7 +48,8 @@ const LeaderBoard: FC = () => {
         } catch (error) {
             console.error(error)
         }
-    }
+    }, [hasMoreData, isLoading, dispatch, cursor])
+
     useEffect(() => {
         setIsMounted(true)
     }, [])
@@ -56,13 +59,13 @@ const LeaderBoard: FC = () => {
         return function () {
             document.removeEventListener('scroll', scrollHandler)
         }
-    }, [])
+    }, [scrollHandler])
 
     useEffect(() => {
         if (isMounted) {
             fetchData()
         }
-    }, [cursor, isMounted])
+    }, [cursor, fetchData, isMounted])
 
     return (
         <div className={styles.container}>
