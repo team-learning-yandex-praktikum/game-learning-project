@@ -1,6 +1,6 @@
-import { PlayerInfo } from '../../type'
+import { LeaderboardTable } from '@api/leaderBoard/types'
 
 export type TableRowProps = {
-    row: PlayerInfo
+    row: LeaderboardTable
     index: number
 }

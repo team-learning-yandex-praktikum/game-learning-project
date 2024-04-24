@@ -2,9 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './user/userSlice'
 import { settingsReducer } from './settings/settingsSlice'
 import { sidebarReducer } from './sidebar/sidebarSlice'
-import { gameReducer } from './game'
+import { gameReducer } from '@store/game/gameSlice'
 import { getWindow } from '@utils/document'
 import { ssrReducer } from './ssr/ssrSlice'
+import { leaderboardReducer } from './leaderboard/leaderboardSlice'
 
 declare global {
     interface Window {
@@ -17,6 +18,7 @@ export const reducer = combineReducers({
     settings: settingsReducer,
     sidebar: sidebarReducer,
     game: gameReducer,
+    leaderboard: leaderboardReducer,
     ssr: ssrReducer,
 })
 
