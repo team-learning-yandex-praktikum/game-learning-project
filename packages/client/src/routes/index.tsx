@@ -1,8 +1,8 @@
 import * as Pages from '../pages'
 import { Routes } from './constants'
-import { RouteObject } from 'react-router'
+import { RouteConfigObject } from './types'
 
-export const routesConfig: RouteObject[] = [
+export const routesConfig: RouteConfigObject[] = [
     {
         path: Routes.Home,
         element: <Pages.Home />,
@@ -10,10 +10,12 @@ export const routesConfig: RouteObject[] = [
     {
         path: Routes.Login,
         element: <Pages.Login />,
+        isAuth: true,
     },
     {
         path: Routes.Registration,
         element: <Pages.Registration />,
+        isAuth: true,
     },
     {
         path: Routes.Profile,

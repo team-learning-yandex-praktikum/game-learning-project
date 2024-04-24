@@ -10,8 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-server/index.d.ts
-server/index.js
+server/**/*.d.ts
+server/**/*.js
 tsconfig.server.tsbuildinfo
 *.local
 

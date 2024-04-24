@@ -1,8 +1,11 @@
-import { useMatch } from 'react-router-dom'
-import { Routes } from '@routes/constants'
+import { useLocation } from 'react-router-dom'
+import { matchRoutes } from 'react-router'
+import { routesConfig } from '@routes'
 
 export const useIsAuthPage = () => {
-    const isLogin = useMatch(Routes.Login)
-    const isRegistration = useMatch(Routes.Registration)
-    return isLogin || isRegistration
+    const { pathname } = useLocation()
+    const isAuthPage = matchRoutes(routesConfig, pathname)?.some(
+        ({ route }) => route.isAuth
+    )
+    return isAuthPage
 }

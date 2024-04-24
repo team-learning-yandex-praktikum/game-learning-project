@@ -1,88 +1,90 @@
 import dotenv from 'dotenv'
-import express, { NextFunction, Request, Response } from 'express'
+import express, { Express, NextFunction, Request, Response } from 'express'
 import path from 'path'
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 import serialize from 'serialize-javascript'
 import cookieParser from 'cookie-parser'
+import { RenderAndTemplate } from './types'
 
 dotenv.config()
 
-const port = process.env.PORT || 3000
-const clientPath = path.join(__dirname, '..')
+const PORT = process.env.PORT || 3000
+const CLIENT_PATH = path.join(__dirname, '..')
 const isDev = process.env.NODE_ENV === 'development'
 
-type RenderResult = {
-    html: string
-    initialState: unknown
-}
-type RenderFn = (req: Request) => Promise<RenderResult>
-
-async function createServer() {
-    const app = express()
-
-    app.use(cookieParser())
-
-    let vite: ViteDevServer | undefined
-
-    if (isDev) {
-        vite = await createViteServer({
-            server: { middlewareMode: true },
-            root: clientPath,
-            appType: 'custom',
-        })
-
-        app.use(vite.middlewares)
-    } else {
+const getViteServer = async (app: Express) => {
+    if (!isDev) {
         app.use(
-            express.static(path.join(clientPath, 'dist/client'), {
+            express.static(path.join(CLIENT_PATH, 'dist/client'), {
                 index: false,
             })
         )
+
+        return undefined
     }
 
-    app.get('*', async (req: Request, res: Response, next: NextFunction) => {
+    const viteServer = await createViteServer({
+        server: { middlewareMode: true },
+        root: CLIENT_PATH,
+        appType: 'custom',
+    })
+
+    app.use(viteServer.middlewares)
+
+    return viteServer
+}
+
+const getRenderAndTemplate = async (
+    url: string,
+    vite?: ViteDevServer
+): Promise<RenderAndTemplate> => {
+    if (vite) {
+        const template = await fs.readFile(
+            path.resolve(CLIENT_PATH, 'index.html'),
+            'utf-8'
+        )
+        const transformedTemplate = await vite.transformIndexHtml(url, template)
+        const render = (
+            await vite.ssrLoadModule(
+                path.join(CLIENT_PATH, 'src/entry-server.tsx')
+            )
+        ).render
+
+        return { template: transformedTemplate, render }
+    }
+
+    const template = await fs.readFile(
+        path.join(CLIENT_PATH, 'dist/client/index.html'),
+        'utf-8'
+    )
+    const pathToServer = path.join(CLIENT_PATH, 'dist/server/entry-server.js')
+    const render = (await import(pathToServer)).render
+
+    return { template, render }
+}
+
+async function createServer() {
+    const app = express()
+    const vite: ViteDevServer | undefined = await getViteServer(app)
+
+    app.use(cookieParser())
+    app.get('/', async (req: Request, res: Response, next: NextFunction) => {
         const url = req.originalUrl
 
         try {
-            let render: RenderFn
-            let template: string
-
-            if (vite) {
-                template = await fs.readFile(
-                    path.resolve(clientPath, 'index.html'),
-                    'utf-8'
-                )
-
-                template = await vite.transformIndexHtml(url, template)
-
-                render = (
-                    await vite.ssrLoadModule(
-                        path.join(clientPath, 'src/entry-server.tsx')
-                    )
-                ).render
-            } else {
-                template = await fs.readFile(
-                    path.join(clientPath, 'dist/client/index.html'),
-                    'utf-8'
-                )
-
-                const pathToServer = path.join(
-                    clientPath,
-                    'dist/server/entry-server.js'
-                )
-
-                render = (await import(pathToServer)).render
-            }
-
+            const { render, template } = await getRenderAndTemplate(url, vite)
             const { html: appHtml, initialState } = await render(req)
+            const serializedInitialState = serialize(initialState, {
+                isJSON: true,
+            })
 
-            const html = template.replace('<!--ssr-outlet-->', appHtml).replace(
-                '<!--ssr-initial-state-->',
-                `<script>window.initialState = ${serialize(initialState, {
-                    isJSON: true,
-                })}</script>`
-            )
+            const html = template
+                .replace('<!--ssr-outlet-->', appHtml)
+                .replace(
+                    '<!--ssr-initial-state-->',
+                    `<script>window.initialState = ${serializedInitialState}</script>`
+                )
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
@@ -91,9 +93,15 @@ async function createServer() {
         }
     })
 
-    app.listen(port, () => {
-        console.log(`Client is listening on port: ${port}`)
+    return app
+}
+
+const startServer = async () => {
+    const app = await createServer()
+
+    app.listen(PORT, () => {
+        console.log(`Client is listening on port: ${PORT}`)
     })
 }
 
-createServer()
+startServer()
