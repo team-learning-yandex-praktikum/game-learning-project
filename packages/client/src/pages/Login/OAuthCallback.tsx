@@ -1,6 +1,7 @@
 import {
     ErrCodeParam,
     ErrDescParam,
+    ErrorNoState,
     ErrorState,
     OAuthApi,
     StateParam,
@@ -14,7 +15,7 @@ import { ErrorResponse } from '@types'
 import { checkState } from '@utils/authentication/oauth'
 import { hasKey, isEmptyStr } from '@utils/common/checks'
 import { getUrlQueryObj } from '@utils/url/helpers'
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 const logError = console.error
@@ -24,6 +25,17 @@ const OAuthCallback: FC = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const login = useCallback(async (code: string) => {
+        try {
+            await dispatch(loginWithYandex(code)).unwrap()
+            navigate(Routes.Home)
+        } catch (e) {
+            const err = e as ErrorResponse
+            const desc = err.response?.data?.reason ?? ''
+            setError(desc)
+        }
+    }, [])
 
     useEffect(() => {
         try {
@@ -37,31 +49,20 @@ const OAuthCallback: FC = () => {
                 return
             }
 
-            if (hasKey(StateParam, obj)) {
-                const state = obj.state
-                if (!checkState(state)) {
-                    const err = `Ошибка авторизации: ${ErrorState}`
-                    setError(err)
-                    return
-                }
+            if (!hasKey(StateParam, obj)) {
+                const err = `Ошибка авторизации: ${ErrorNoState}`
+                setError(err)
+                return
             }
 
-            const codeForToken = obj.code
-            const req: OauthSignInRequest = {
-                code: codeForToken,
-                redirect_uri: OAuthApi.redirectUri,
+            const state = obj[StateParam]
+            if (!checkState(state)) {
+                const err = `Ошибка авторизации: ${ErrorState}`
+                setError(err)
+                return
             }
 
-            dispatch(loginWithYandex(req))
-                .unwrap()
-                .then(() => {
-                    navigate(Routes.Home)
-                })
-                .catch(e => {
-                    const err = e as ErrorResponse
-                    const desc = err.response?.data?.reason ?? ''
-                    setError(desc)
-                })
+            login(obj.code)
         } catch (e) {
             logError(e)
         } finally {
