@@ -2,15 +2,14 @@ import CrazyTitle from '@components/CrazyTitle'
 import { RestartIcon } from '@assets/icons'
 import RoundButton from '@components/RoundButton'
 import { gameActions, gameSelectors } from '@store/game'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from '@store/hooks'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
 import style from './gameOver.module.css'
 import Fullscreen from '@components/Fullscreen'
 
 const GameOver = () => {
     const dispatch = useAppDispatch()
 
-    const score = useSelector(gameSelectors.selectScore)
+    const score = useAppSelector(gameSelectors.selectScore)
 
     const handleChangeStartGame = () => {
         dispatch(gameActions.startGame())

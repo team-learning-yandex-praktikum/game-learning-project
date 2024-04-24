@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import { gameActions, gameSelectors } from '@store/game'
 import { useCallback, useEffect, useRef } from 'react'
 import { GameWorld } from '@game-core/GameWorld'
@@ -28,18 +27,18 @@ const PlayGame = () => {
         )
     }, [])
 
-    const status = useSelector(gameSelectors.selectStatus)
+    const status = useAppSelector(gameSelectors.selectStatus)
 
     const worldRef = useRef<GameWorld | null>(null)
     const containerRef = useRef<HTMLDivElement>(null)
 
-    const initWorld = () => {
+    const initWorld = useCallback(() => {
         const root = containerRef.current
 
-        if (!worldRef.current && root && root.childElementCount === 0) {
+        if (!worldRef.current && root?.childElementCount === 0) {
             worldRef.current = new GameWorld(root, finishGameHandler)
         }
-    }
+    }, [finishGameHandler])
 
     useEffect(() => {
         if (status === STATUSES.GAME) {
@@ -47,11 +46,9 @@ const PlayGame = () => {
         }
 
         return () => {
-            if (worldRef.current) {
-                worldRef.current = null
-            }
+            worldRef.current = null
         }
-    }, [status])
+    }, [initWorld, status])
 
     return (
         <>
