@@ -17,8 +17,8 @@ const TestUrl = `http://localhost:${Port}`
 export const ErrCodeParam = 'error'
 export const ErrDescParam = 'error_description'
 export const StateParam = 'state'
-export const ErrorState =
-    'параметр "Строка состояния" не совпадает с переданным на сервер авторизации'
+export const ErrorNoState = `параметр ${StateParam} отсутствует`
+export const ErrorState = `параметр ${StateParam} не совпадает с переданным на сервер авторизации`
 
 export class OAuthApi extends BaseApi {
     static readonly redirectUri = `${TestUrl}${Routes.OAuth}`
@@ -48,7 +48,11 @@ export class OAuthApi extends BaseApi {
         return data
     }
 
-    async exchangeCodeForToken(req: OauthSignInRequest) {
+    async exchangeCodeForToken(codeForToken: string) {
+        const req: OauthSignInRequest = {
+            code: codeForToken,
+            redirect_uri: OAuthApi.redirectUri,
+        }
         const { data } = await this.client.post<string>('yandex', req)
         return data
     }
