@@ -11,6 +11,10 @@ export const routesConfig = [
         element: <Pages.Login />,
     },
     {
+        path: Routes.OAuth,
+        element: <Pages.OAuth />,
+    },
+    {
         path: Routes.Registration,
         element: <Pages.Registration />,
     },
