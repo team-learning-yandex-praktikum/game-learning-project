@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { BASE_API } from '@api/baseApi/constants'
+import { SERVER_URL } from './constants'
 
 export const axiosClient = axios.create({
-    baseURL: BASE_API,
+    baseURL: SERVER_URL,
     withCredentials: true,
     timeout: 5000,
 })

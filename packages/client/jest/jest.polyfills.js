@@ -20,6 +20,9 @@ Object.defineProperties(globalThis, {
 
 const { Blob, File } = require('node:buffer')
 const { fetch, Headers, FormData, Request, Response } = require('undici')
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 Object.defineProperties(globalThis, {
     fetch: { value: fetch, writable: true },
@@ -29,4 +32,9 @@ Object.defineProperties(globalThis, {
     FormData: { value: FormData },
     Request: { value: Request },
     Response: { value: Response },
+})
+
+Object.defineProperties(global, {
+    __SERVER_URL__: { value: process.env.SERVER_URL },
+    __EXTERNAL_SERVER_PATH__: { value: process.env.EXTERNAL_SERVER_PATH },
 })

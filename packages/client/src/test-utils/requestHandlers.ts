@@ -1,8 +1,8 @@
 import { http, HttpResponse } from 'msw'
 import { joinURL } from '@utils/url/joinURL'
-import { BASE_API } from '@api/baseApi/constants'
+import { EXTERNAL_SERVER_PATH, SERVER_URL } from '@api/baseApi/constants'
 import { UserDTO } from '@api/auth/types'
-import { transformData } from '@utils'
+import { transformData } from '@utils/data'
 import { UpdatingProfileDTO } from '@api/user/types'
 
 export const userInfoStub: UserDTO = {
@@ -16,24 +16,25 @@ export const userInfoStub: UserDTO = {
     phone: '79999999999',
 }
 
+const baseServerUrl = joinURL(SERVER_URL, EXTERNAL_SERVER_PATH)
 export const requestHandlers = {
-    signup: http.post(joinURL(BASE_API, 'auth/signup'), () =>
+    signup: http.post(joinURL(baseServerUrl, 'auth/signup'), () =>
         HttpResponse.text(String(userInfoStub.id))
     ),
-    signin: http.post(joinURL(BASE_API, 'auth/signin'), () =>
+    signin: http.post(joinURL(baseServerUrl, 'auth/signin'), () =>
         HttpResponse.text('OK')
     ),
-    me: http.get(joinURL(BASE_API, 'auth/user'), () =>
+    me: http.get(joinURL(baseServerUrl, 'auth/user'), () =>
         HttpResponse.json(userInfoStub)
     ),
-    logout: http.post(joinURL(BASE_API, 'auth/logout'), () =>
+    logout: http.post(joinURL(baseServerUrl, 'auth/logout'), () =>
         HttpResponse.text('OK')
     ),
-    updatePassword: http.put(joinURL(BASE_API, 'user/password'), () =>
+    updatePassword: http.put(joinURL(baseServerUrl, 'user/password'), () =>
         HttpResponse.text('OK')
     ),
     updateProfile: http.put(
-        joinURL(BASE_API, 'user/profile'),
+        joinURL(baseServerUrl, 'user/profile'),
         async ({ request }) => {
             const body = (await request.json()) as UpdatingProfileDTO
             return HttpResponse.json(

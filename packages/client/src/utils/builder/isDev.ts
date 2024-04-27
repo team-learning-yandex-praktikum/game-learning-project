@@ -1,3 +1,1 @@
-import * as process from 'node:process'
-
-export const isDev = () => process.env.NODE_ENV === 'development'
+export const isDev = () => __NODE_ENV__ === 'development'
