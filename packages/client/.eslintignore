@@ -15,3 +15,6 @@ jest.config.js
 jest.polyfills.js
 jest.setup.js
 __mocks__
+
+server
+!server/index.ts
