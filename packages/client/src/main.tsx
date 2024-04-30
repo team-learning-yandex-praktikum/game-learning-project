@@ -39,11 +39,9 @@ initServiceWorkers()
 
 ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </BrowserRouter>
 )

@@ -36,7 +36,12 @@ module.exports = {
         'no-use-before-define': 0,
         'object-curly-spacing': 0,
         '@typescript-eslint/object-curly-spacing': [2, 'always'],
-        '@typescript-eslint/no-use-before-define': 2,
+        '@typescript-eslint/no-use-before-define': ["error", {
+            "functions": false,
+            "classes": true,
+            "variables": true,
+            "allowNamedExports": false
+        }],
         '@typescript-eslint/prefer-ts-expect-error': 2,
         quotes: 0,
         '@typescript-eslint/type-annotation-spacing': 2,
