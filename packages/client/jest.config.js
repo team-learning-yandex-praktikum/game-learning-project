@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require('dotenv')
 
 dotenv.config()
 
@@ -10,6 +10,9 @@ module.exports = {
     testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
     globals: {
         __SERVER_PORT__: process.env.SERVER_PORT,
+        __SERVER_URL__: process.env.SERVER_URL,
+        __EXTERNAL_SERVER_PATH__: process.env.EXTERNAL_SERVER_PATH,
+        __NODE_ENV__: true,
     },
     setupFiles: [`${setupDir}/jest.polyfills.js`, `${setupDir}/jest.setup.js`],
     testEnvironmentOptions: {

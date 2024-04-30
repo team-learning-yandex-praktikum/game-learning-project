@@ -7,12 +7,18 @@ import path from 'node:path'
 dotenv.config()
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
     server: {
         port: Number(process.env.CLIENT_PORT) || 3000,
     },
     define: {
         __SERVER_PORT__: process.env.SERVER_PORT,
+        __EXTERNAL_SERVER_PATH__: JSON.stringify(
+            process.env.EXTERNAL_SERVER_PATH
+        ),
+        __SERVER_URL__: JSON.stringify(process.env.SERVER_URL),
+        // ts-jest не воспринимает import.meta.env.DEV
+        __NODE_ENV__: JSON.stringify(mode),
     },
     plugins: [svgr(), react()],
     resolve: {
@@ -36,4 +42,4 @@ export default defineConfig({
     ssr: {
         format: 'cjs',
     },
-})
+}))
