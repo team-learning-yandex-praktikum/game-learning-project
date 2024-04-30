@@ -37,37 +37,36 @@ const OAuthCallback: FC = () => {
         }
     }, [])
 
-    useEffect(() => {
-        try {
-            const queryObj = getUrlQueryObj()
+    const getCodeThenLogin = useCallback(async () => {
+        const queryObj = getUrlQueryObj()
 
-            if (hasKey(ERRCODE_PARAM, queryObj)) {
-                const errCode = queryObj[ERRCODE_PARAM]
-                const errDesc = queryObj[ERRDESC_PARAM]
-                const err = `Ошибка авторизации: ${errDesc} (код ошибки - ${errCode})`
-                setError(err)
-                return
-            }
-
-            if (!hasKey(STATE_PARAM, queryObj)) {
-                const err = `Ошибка авторизации: ${ERROR_NOSTATE}`
-                setError(err)
-                return
-            }
-
-            const state = queryObj[STATE_PARAM]
-            if (!checkState(state)) {
-                const err = `Ошибка авторизации: ${ERROR_STATE}`
-                setError(err)
-                return
-            }
-
-            login(queryObj.code)
-        } catch (e) {
-            logError(e)
-        } finally {
-            oAuthApi.cleanup()
+        if (hasKey(ERRCODE_PARAM, queryObj)) {
+            const errCode = queryObj[ERRCODE_PARAM]
+            const errDesc = queryObj[ERRDESC_PARAM]
+            const err = `Ошибка авторизации: ${errDesc} (код ошибки - ${errCode})`
+            setError(err)
+            return
         }
+
+        if (!hasKey(STATE_PARAM, queryObj)) {
+            const err = `Ошибка авторизации: ${ERROR_NOSTATE}`
+            setError(err)
+            return
+        }
+
+        const state = queryObj[STATE_PARAM]
+        if (!checkState(state)) {
+            const err = `Ошибка авторизации: ${ERROR_STATE}`
+            setError(err)
+            return
+        }
+
+        await login(queryObj.code)
+        oAuthApi.cleanup()
+    }, [])
+
+    useEffect(() => {
+        getCodeThenLogin()
     }, [])
 
     return isEmptyStr(error) ? (

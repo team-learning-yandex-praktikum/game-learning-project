@@ -1,15 +1,8 @@
 import { openInCurrent, openInPopup } from '@utils/ui/popup'
 import { UrlProducer, UrlType } from '@utils/url/helpers'
-import {
-    ButtonHTMLAttributes,
-    FC,
-    ReactNode,
-    useCallback,
-    useMemo,
-    useRef,
-} from 'react'
+import { ButtonHTMLAttributes, FC, ReactNode, useCallback } from 'react'
 import { clsx } from 'clsx'
-import styles from './styles.module.css'
+import styles from './redirectButton.module.css'
 
 type Url = UrlType | UrlProducer
 

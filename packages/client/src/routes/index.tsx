@@ -18,10 +18,6 @@ export const routesConfig: RouteConfigObject[] = [
         isAuth: true,
     },
     {
-        path: Routes.OAuth,
-        element: <Pages.OAuth />,
-    },
-    {
         path: Routes.Registration,
         element: <Pages.Registration />,
         isAuth: true,
