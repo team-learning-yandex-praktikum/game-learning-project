@@ -5,22 +5,22 @@ const ValidChars = AlphaU + AlphaL + Digits
 
 const StateKey = 'oauth2-state-key'
 
-function toStr(arr: Uint8Array) {
-    const a = Array.from<number>(arr)
-    return String.fromCharCode.apply(null, a)
+function toStringFromUint8(arr: Uint8Array) {
+    const arrayNumbers = Array.from<number>(arr)
+    return String.fromCharCode.apply(null, arrayNumbers)
+}
+
+function numToCodepoint(n: number) {
+    const pos = n % ValidChars.length
+    return ValidChars.codePointAt(pos) ?? 0
 }
 
 export function generateRandomStateStr() {
     const arr = new Uint8Array(40)
     window.crypto.getRandomValues(arr)
 
-    function cp(n: number) {
-        const pos = n % ValidChars.length
-        return ValidChars.codePointAt(pos) ?? 0
-    }
-
-    const cps = arr.map(cp)
-    const res = toStr(cps)
+    const codePoints = arr.map(numToCodepoint)
+    const res = toStringFromUint8(codePoints)
 
     return res
 }

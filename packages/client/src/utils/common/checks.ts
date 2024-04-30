@@ -9,5 +9,5 @@ export function isEmptyStr(s: string) {
 }
 
 export function hasKey(key: string | number, obj: object) {
-    return !obj ? false : key in obj
+    return !obj ? false : Object.hasOwn(obj, key)
 }

@@ -26,8 +26,6 @@ const RedirectButton: FC<Props> = ({
     inPopup = false,
     ...props
 }) => {
-    const popupRef = useRef()
-
     const handleClick = useCallback(() => {
         if (inPopup) {
             openInPopup(url)
@@ -36,8 +34,6 @@ const RedirectButton: FC<Props> = ({
         }
     }, [inPopup, url])
 
-    const lblComp = useMemo(() => <span>{label}</span>, [label])
-
     return (
         <button
             type="button"
@@ -45,7 +41,7 @@ const RedirectButton: FC<Props> = ({
             {...props}
             className={clsx(styles.button)}
         >
-            {lblComp}
+            <span>{label}</span>
         </button>
     )
 }

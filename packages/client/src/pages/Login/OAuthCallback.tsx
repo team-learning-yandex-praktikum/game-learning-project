@@ -1,10 +1,10 @@
 import {
-    ErrCodeParam,
-    ErrDescParam,
-    ErrorNoState,
-    ErrorState,
+    ERRCODE_PARAM,
+    ERRDESC_PARAM,
+    ERROR_NOSTATE,
+    ERROR_STATE,
     OAuthApi,
-    StateParam,
+    STATE_PARAM,
     oAuthApi,
 } from '@api/oAuth'
 import { OauthSignInRequest } from '@api/oAuth/types'
@@ -39,30 +39,30 @@ const OAuthCallback: FC = () => {
 
     useEffect(() => {
         try {
-            const obj = getUrlQueryObj()
+            const queryObj = getUrlQueryObj()
 
-            if (hasKey(ErrCodeParam, obj)) {
-                const errCode = obj[ErrCodeParam]
-                const errDesc = obj[ErrDescParam]
+            if (hasKey(ERRCODE_PARAM, queryObj)) {
+                const errCode = queryObj[ERRCODE_PARAM]
+                const errDesc = queryObj[ERRDESC_PARAM]
                 const err = `Ошибка авторизации: ${errDesc} (код ошибки - ${errCode})`
                 setError(err)
                 return
             }
 
-            if (!hasKey(StateParam, obj)) {
-                const err = `Ошибка авторизации: ${ErrorNoState}`
+            if (!hasKey(STATE_PARAM, queryObj)) {
+                const err = `Ошибка авторизации: ${ERROR_NOSTATE}`
                 setError(err)
                 return
             }
 
-            const state = obj[StateParam]
+            const state = queryObj[STATE_PARAM]
             if (!checkState(state)) {
-                const err = `Ошибка авторизации: ${ErrorState}`
+                const err = `Ошибка авторизации: ${ERROR_STATE}`
                 setError(err)
                 return
             }
 
-            login(obj.code)
+            login(queryObj.code)
         } catch (e) {
             logError(e)
         } finally {

@@ -6,6 +6,6 @@ export type OauthSignInRequest = {
     redirect_uri: string
 }
 
-export type ClientID = {
+export type ClientIdDTO = {
     service_id: string
 }
