@@ -1,8 +1,10 @@
 import { dbConnect } from './init'
 import dotenv from 'dotenv'
-import express, { type Express } from 'express'
+import express, { Express } from 'express'
+import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import cors from 'cors'
+import { createRouter } from './routes'
 
 dotenv.config()
 
@@ -26,12 +28,23 @@ const applyProxy = (app: Express) => {
     )
 }
 
-export const startApp = async () => {
-    await dbConnect()
+const configureApp = () => {
     const app = express()
+    const router = createRouter()
+
+    app.disable('x-powered-by')
     app.use(cors())
+    app.use(cookieParser())
+    app.use(router)
 
     applyProxy(app)
+
+    return app
+}
+
+export const startApp = async () => {
+    await dbConnect()
+    const app = configureApp()
 
     app.listen(PORT, () => {
         console.log(`  ➜ 🎸 Server is listening on port: ${PORT}`)

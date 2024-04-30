@@ -1,4 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { applyModels } from '../models'
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env
 
@@ -12,10 +13,12 @@ const sequelizeOptions: SequelizeOptions = {
 }
 const sequelize = new Sequelize(sequelizeOptions)
 
+applyModels(sequelize)
+
 export const dbConnect = async (): Promise<null> => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync()
+        await sequelize.sync({ force: true }) // todo Убрать force после готовности бэка
         console.log('Connection has been established successfully.')
     } catch (error) {
         console.error('Unable to connect to the database:', error)
