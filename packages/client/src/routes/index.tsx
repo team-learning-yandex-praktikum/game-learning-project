@@ -15,6 +15,7 @@ export const routesConfig: RouteConfigObject[] = [
     {
         path: Routes.OAuth,
         element: <Pages.OAuth />,
+        isAuth: true,
     },
     {
         path: Routes.OAuth,

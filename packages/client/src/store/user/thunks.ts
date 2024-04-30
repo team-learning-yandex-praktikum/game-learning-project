@@ -73,15 +73,6 @@ export const loginWithYandex = createAsyncThunk(
     }
 )
 
-export const loginWithYandex = createAsyncThunk(
-    'user/loginWithYandex',
-    async (code: string, { dispatch }) => {
-        const response = await oAuthApi.exchangeCodeForToken(code)
-        dispatch(fetchUserData())
-        return response
-    }
-)
-
 export const registration = createAsyncThunk(
     'user/registration',
     async (data: RequestRegistrationData, { dispatch }) => {

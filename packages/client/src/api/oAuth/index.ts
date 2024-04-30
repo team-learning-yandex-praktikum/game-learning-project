@@ -58,7 +58,6 @@ export class OAuthApi extends BaseApi {
     }
 
     async urlYandex(abort: AbortSignal) {
-        // const id = await this.getServiceId(abort)
         const id = {
             service_id: this.clientID,
         }
