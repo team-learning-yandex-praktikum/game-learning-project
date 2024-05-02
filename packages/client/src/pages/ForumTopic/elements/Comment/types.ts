@@ -1,5 +1,5 @@
 export interface CommentProps {
-    author: string
-    date: string
+    createdBy: string
+    createdAt: string
     content: string
 }

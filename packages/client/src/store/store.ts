@@ -6,6 +6,8 @@ import { gameReducer } from '@store/game/gameSlice'
 import { getWindow } from '@utils/document'
 import { ssrReducer } from './ssr/ssrSlice'
 import { leaderboardReducer } from './leaderboard/leaderboardSlice'
+import { forumReducer } from '@store/forum/forumSlice'
+import { topicReducer } from '@store/topic/forumSlice'
 
 declare global {
     interface Window {
@@ -20,6 +22,8 @@ export const reducer = combineReducers({
     game: gameReducer,
     leaderboard: leaderboardReducer,
     ssr: ssrReducer,
+    forum: forumReducer,
+    topic: topicReducer,
 })
 
 export const createStore = () => {
