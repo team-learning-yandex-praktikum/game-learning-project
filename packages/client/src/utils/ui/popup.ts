@@ -1,6 +1,7 @@
 import { exists } from '@game-core/utils/CommonFunc'
 import { Nullable } from '@game-core/utils/CommonTypes'
-import { UrlProducer, UrlType, isUrlType } from '@utils/url/helpers'
+import { isUrlType, UrlProducer, UrlType } from '@utils/url/helpers'
+import { getWindow } from '@utils/document'
 
 let activePopup: Nullable<Window> = null
 const Height = 700
@@ -10,6 +11,9 @@ const PopupView =
     'toolbar=no,scrollbars=no' + ',location=no,statusbar=no,menubar=no'
 
 function calcCenter(): [number, number] {
+    if (!getWindow()) {
+        return [0, 0]
+    }
     const midW = window.outerWidth / 2
     const midH = window.outerHeight / 2
     const left = midW + window.screenX - Width / 2
