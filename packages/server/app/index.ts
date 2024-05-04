@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import express, { Express } from 'express'
 import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
-import cors from 'cors'
 import { createRouter } from './routes'
 
 dotenv.config()
@@ -33,7 +32,7 @@ const configureApp = () => {
     const router = createRouter()
 
     app.disable('x-powered-by')
-    app.use(cors())
+    // app.use(cors()) // todo Не работает авторизация, потом глянуть в чем проблема
     app.use(cookieParser())
     app.use(router)
 
