@@ -1,5 +1,6 @@
 import {
     AllowNull,
+    AutoIncrement,
     Column,
     DataType,
     HasMany,
@@ -10,13 +11,17 @@ import {
 } from 'sequelize-typescript'
 import type { Optional } from 'sequelize'
 import { Comment } from './comment.model'
-import { ERRORS } from '../error/constants'
+import {
+    TOPIC_DESCRIPTION_LIMITS,
+    TOPIC_TITLE_LIMITS,
+    USER_LOGIN_LIMITS,
+} from '../validation/constants'
 
 export interface TopicAttributes {
     id: number
     title: string
     description: string
-    userId: number
+    createdBy: string
 }
 export type TopicCreationAttributes = Optional<
     TopicAttributes,
@@ -27,21 +32,24 @@ export type TopicCreationAttributes = Optional<
     tableName: 'topics',
 })
 export class Topic extends Model<TopicAttributes, TopicCreationAttributes> {
+    @AutoIncrement
     @PrimaryKey
     @Column
     declare id: number
 
+    @Length({ max: TOPIC_TITLE_LIMITS.max })
     @AllowNull(false)
-    @Column(DataType.STRING(255))
+    @Column(DataType.STRING(TOPIC_TITLE_LIMITS.max))
     declare title: string
 
-    @Length({ max: 1000, msg: ERRORS.maxLength })
+    @Length({ max: TOPIC_DESCRIPTION_LIMITS.max })
     @Column(DataType.TEXT)
     declare description: string
 
+    @Length({ max: USER_LOGIN_LIMITS.max })
     @AllowNull(false)
-    @Column(DataType.INTEGER)
-    declare userId: number
+    @Column(DataType.STRING(USER_LOGIN_LIMITS.max))
+    declare createdBy: string
 
     @HasMany(() => Comment, 'topicId')
     declare comments: Comment[]

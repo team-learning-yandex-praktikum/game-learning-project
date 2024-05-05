@@ -32,6 +32,7 @@ const configureApp = () => {
     const router = createRouter()
 
     app.disable('x-powered-by')
+    app.use(express.json())
     // app.use(cors()) // todo Не работает авторизация, потом глянуть в чем проблема
     app.use(cookieParser())
     app.use(router)
