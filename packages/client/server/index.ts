@@ -69,7 +69,7 @@ async function createServer() {
     const vite: ViteDevServer | undefined = await getViteServer(app)
 
     app.use(cookieParser())
-    app.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    app.get('*', async (req: Request, res: Response, next: NextFunction) => {
         const url = req.originalUrl
 
         try {
