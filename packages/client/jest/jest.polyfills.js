@@ -37,4 +37,7 @@ Object.defineProperties(globalThis, {
 Object.defineProperties(global, {
     __SERVER_URL__: { value: process.env.SERVER_URL },
     __EXTERNAL_SERVER_PATH__: { value: process.env.EXTERNAL_SERVER_PATH },
+    __EXTERNAL_SERVER_URL__: { value: process.env.EXTERNAL_SERVER_URL },
+    __OUTH_YANDEX_URL__: { value: process.env.OUTH_YANDEX_URL },
+    __CLIENT_URL__: { value: process.env.CLIENT_URL },
 })

@@ -1,5 +1,4 @@
 import { useId } from 'react'
-import { Link } from 'react-router-dom'
 import Title from '@components/Title'
 import TextField from '@components/TextField'
 import Button from '@components/Button'
@@ -13,10 +12,10 @@ const Form = <Values extends FieldValues = FieldValues>({
     onSubmit,
     disabled: externalDisabled = false,
     defaultValues,
+    actionArray,
     TitleProps,
     SubmitButtonProps,
     CancelButtonProps,
-    LinkProps,
 }: FormProps<Values>) => {
     const {
         register,
@@ -53,14 +52,15 @@ const Form = <Values extends FieldValues = FieldValues>({
                     />
                 ))}
             </form>
-            {(SubmitButtonProps || CancelButtonProps || LinkProps) && (
+            {(SubmitButtonProps ||
+                CancelButtonProps ||
+                Boolean(actionArray?.length)) && (
                 <div className={styles.actions}>
                     {SubmitButtonProps && (
                         <Button
                             {...SubmitButtonProps}
                             type={'submit'}
                             form={FORM_ID}
-                            className={styles.button}
                             disabled={SubmitButtonProps.disabled ?? !isValid}
                             onClick={e => SubmitButtonProps?.onClick?.(e)}
                         />
@@ -73,12 +73,9 @@ const Form = <Values extends FieldValues = FieldValues>({
                                 reset()
                                 CancelButtonProps?.onClick?.(e)
                             }}
-                            className={styles.button}
                         />
                     )}
-                    {LinkProps && (
-                        <Link {...LinkProps} className={styles.link} />
-                    )}
+                    {actionArray?.map(actionNode => actionNode)}
                 </div>
             )}
         </div>

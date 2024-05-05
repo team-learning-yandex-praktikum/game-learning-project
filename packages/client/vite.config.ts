@@ -16,7 +16,12 @@ export default defineConfig(({ mode }) => ({
         __EXTERNAL_SERVER_PATH__: JSON.stringify(
             process.env.EXTERNAL_SERVER_PATH
         ),
+        __EXTERNAL_SERVER_URL__: JSON.stringify(
+            process.env.EXTERNAL_SERVER_URL
+        ),
         __SERVER_URL__: JSON.stringify(process.env.SERVER_URL),
+        __OUTH_YANDEX_URL__: JSON.stringify(process.env.OUTH_YANDEX_URL),
+        __CLIENT_URL__: JSON.stringify(process.env.CLIENT_URL),
         // ts-jest не воспринимает import.meta.env.DEV
         __NODE_ENV__: JSON.stringify(mode),
     },

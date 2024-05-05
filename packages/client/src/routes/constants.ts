@@ -1,7 +1,6 @@
 export enum Routes {
     Home = '/',
     Login = '/login',
-    OAuth = '/oauth-callback',
     Registration = '/registration',
     Profile = '/profile',
     LeaderBoard = '/leader-board',
@@ -9,4 +8,5 @@ export enum Routes {
     ForumTopic = '/forum/:id',
     Game = '/game',
     NotFound = '*',
+    Error = '/error',
 }

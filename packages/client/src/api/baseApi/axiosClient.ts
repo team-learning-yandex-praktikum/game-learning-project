@@ -1,11 +1,13 @@
-import axios from 'axios'
+import axios, { CreateAxiosDefaults } from 'axios'
 import { SERVER_URL } from './constants'
 
-export const axiosClient = axios.create({
+export const defaultAxiosConfig: CreateAxiosDefaults = {
     baseURL: SERVER_URL,
     withCredentials: true,
-    timeout: 5000,
-})
+    timeout: 10000,
+}
+
+export const axiosClient = axios.create(defaultAxiosConfig)
 
 export const setCookies = (cookies?: string) => {
     axiosClient.interceptors.request.use(config => {

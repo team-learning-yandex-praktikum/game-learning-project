@@ -13,11 +13,6 @@ export const routesConfig: RouteConfigObject[] = [
         isAuth: true,
     },
     {
-        path: Routes.OAuth,
-        element: <Pages.OAuth />,
-        isAuth: true,
-    },
-    {
         path: Routes.Registration,
         element: <Pages.Registration />,
         isAuth: true,
@@ -44,6 +39,10 @@ export const routesConfig: RouteConfigObject[] = [
     {
         path: Routes.NotFound,
         element: <Pages.ErrorPage code={404} />,
+    },
+    {
+        path: Routes.Error,
+        element: <Pages.ErrorPage code={500} />,
     },
 ]
 

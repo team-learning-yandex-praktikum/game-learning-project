@@ -2,14 +2,6 @@
 
 exports[`Login correctly rendered 1`] = `
 <DocumentFragment>
-  <button
-    class=""
-    type="button"
-  >
-    <span>
-      Войти с помощью Яндекс
-    </span>
-  </button>
   <div>
     <h2
       class=""
@@ -70,6 +62,14 @@ exports[`Login correctly rendered 1`] = `
       >
         Войти
       </button>
+      <a>
+        <button
+          class=""
+          type="button"
+        >
+          Я.ID
+        </button>
+      </a>
       <a
         href="/registration"
       >
