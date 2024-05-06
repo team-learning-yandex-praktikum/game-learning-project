@@ -1,5 +1,6 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { applyModels } from '../models'
+import type { SequelizeScopeError } from 'sequelize'
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env
 
@@ -21,7 +22,10 @@ export const dbConnect = async (): Promise<null> => {
         await sequelize.sync({ force: true }) // todo Убрать force после готовности бэка
         console.log('Connection has been established successfully.')
     } catch (error) {
-        console.error('Unable to connect to the database:', error)
+        console.error(
+            'Unable to connect to the database:',
+            (error as SequelizeScopeError).message
+        )
     }
 
     return null
