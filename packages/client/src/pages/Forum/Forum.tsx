@@ -2,7 +2,7 @@ import NewTopic from './elements/NewTopic'
 import Topics from './elements/Topics'
 import styles from './forum.module.css'
 import { useSidebarSections } from '@utils/hooks/useSidebarSections'
-import { ReactNode } from 'react'
+import { memo, ReactNode } from 'react'
 import { ForumSection, forumSectionTranslations } from './sections'
 
 const sectionToComponent: Record<string, ReactNode> = {
@@ -25,4 +25,4 @@ const Forum = () => {
     )
 }
 
-export default Forum
+export default memo(Forum)

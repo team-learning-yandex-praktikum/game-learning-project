@@ -3,17 +3,30 @@ import styles from './inputLine.module.css'
 import TextField from '@components/TextField'
 import { SendIcon, SmileIcon } from '@assets/icons'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { InputLineFieldValues } from './types'
+import { InputLineFieldValues, InputLineProps } from './types'
+import { useAppDispatch } from '@store/hooks'
+import { createComment } from '@store/topic/thunk'
 
-const InputLine: FC = () => {
+const InputLine: FC<InputLineProps> = ({ id }) => {
     const {
         register,
         handleSubmit,
         formState: { isValid },
+        reset,
     } = useForm<InputLineFieldValues>()
 
+    const dispatch = useAppDispatch()
+
+    const create = useCallback(
+        ({ comment }: { comment: string }) => {
+            dispatch(createComment({ topicId: id, comment, parentId: id }))
+        },
+        [dispatch]
+    )
+
     const onSubmit: SubmitHandler<InputLineFieldValues> = useCallback(data => {
-        console.log(data)
+        create(data)
+        reset()
     }, [])
 
     return (
