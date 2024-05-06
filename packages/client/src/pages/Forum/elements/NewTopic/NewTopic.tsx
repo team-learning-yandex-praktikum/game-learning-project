@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { useCallback } from 'react'
 import Title from '@components/Title'
 import Button from '@components/Button'
 import TextField from '@components/TextField'
@@ -6,18 +6,32 @@ import styles from './newTopic.module.css'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NewTopicFieldValues } from './types'
 import { NEW_TOPIC_FIELDS_CONFIG } from './fieldsConfig'
+import { useAppDispatch } from '@store/hooks'
+import { createTopic } from '@store/topic/thunk'
+import { CreateTopicDTO } from '@api/forum/types'
 
-const NewTopic: FC = () => {
+const NewTopic = () => {
     const formId = 'newTopic'
 
     const {
         formState: { errors, isValid },
         register,
         handleSubmit,
+        reset,
     } = useForm<NewTopicFieldValues>({ mode: 'onTouched' })
 
+    const dispatch = useAppDispatch()
+
+    const create = useCallback(
+        (data: CreateTopicDTO) => {
+            dispatch(createTopic(data))
+        },
+        [dispatch]
+    )
+
     const onSubmit: SubmitHandler<NewTopicFieldValues> = useCallback(data => {
-        console.log(data)
+        create(data)
+        reset()
     }, [])
 
     return (
@@ -31,9 +45,9 @@ const NewTopic: FC = () => {
                 <TextField
                     label={'Заголовок'}
                     placeholder={'Введите название'}
-                    error={errors.name?.message}
+                    error={errors.title?.message}
                     multiline
-                    {...register('name', NEW_TOPIC_FIELDS_CONFIG.name)}
+                    {...register('title', NEW_TOPIC_FIELDS_CONFIG.title)}
                 />
                 <TextField
                     label={'Описание'}
