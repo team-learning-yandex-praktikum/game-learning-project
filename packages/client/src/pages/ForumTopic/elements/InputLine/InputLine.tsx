@@ -5,9 +5,9 @@ import { SendIcon, SmileIcon } from '@assets/icons'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { InputLineFieldValues, InputLineProps } from './types'
 import { useAppDispatch } from '@store/hooks'
-import { createComment } from '@store/topic/thunk'
+import { createComment, getTopic } from '@store/topic/thunk'
 
-const InputLine: FC<InputLineProps> = ({ id }) => {
+const InputLine: FC<InputLineProps> = ({ id, parentInfo, closeAnswer }) => {
     const {
         register,
         handleSubmit,
@@ -15,23 +15,47 @@ const InputLine: FC<InputLineProps> = ({ id }) => {
         reset,
     } = useForm<InputLineFieldValues>()
 
+    const parentId = parentInfo ? parentInfo.id : null
     const dispatch = useAppDispatch()
 
     const create = useCallback(
         ({ comment }: { comment: string }) => {
-            dispatch(createComment({ topicId: id, comment, parentId: id }))
+            dispatch(createComment({ topicId: Number(id), comment, parentId }))
         },
-        [dispatch]
+        [dispatch, parentId]
     )
 
-    const onSubmit: SubmitHandler<InputLineFieldValues> = useCallback(data => {
-        create(data)
-        reset()
-    }, [])
+    const onSubmit: SubmitHandler<InputLineFieldValues> = useCallback(
+        data => {
+            create(data)
+            reset()
+            dispatch(getTopic(id))
+            closeAnswer()
+        },
+        [parentId]
+    )
 
     return (
         <form className={styles.root} onSubmit={handleSubmit(onSubmit)}>
             <SmileIcon className={styles.emojiButton} />
+            {parentId && parentInfo ? (
+                <div className={styles.parent}>
+                    <div className={styles.parentInfo}>
+                        <span className={styles.author}>
+                            {parentInfo.createdBy}
+                        </span>
+                        <div className={styles.parentText}>
+                            {parentInfo.content}
+                        </div>
+                    </div>
+                    <button
+                        className={styles.closeButton}
+                        onClick={closeAnswer}
+                    >
+                        &#10006;
+                    </button>
+                </div>
+            ) : null}
             <TextField
                 disableErrorText
                 className={styles.input}
