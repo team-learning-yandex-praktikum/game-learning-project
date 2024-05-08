@@ -2,30 +2,35 @@ import { useSidebarMode } from '@utils'
 import Comment from './elements/Comment'
 import InputLine from './elements/InputLine'
 import styles from './forumTopic.module.css'
-import { useAppDispatch, useAppSelector } from '@store/hooks'
+import { useAppSelector } from '@store/hooks'
 import Loader from '@components/Loader'
 import Empty from '@components/Empty'
 import { useParams } from 'react-router'
-import { useEffect } from 'react'
-import { getTopic } from '@store/topic/thunk'
+import { useState } from 'react'
 import { topicSelectors } from '@store/topic'
+import CommentWithParent from '@pages/ForumTopic/elements/CommentWithParent'
+import { TopicComments } from '@store/topic/types'
 
 const ForumTopic = () => {
     const topicData = useAppSelector(topicSelectors.selectTopicData)
-
+    const allComments = topicData?.comments
     const loadStatus = useAppSelector(topicSelectors.selectStatus)
     const isLoading = loadStatus === 'loading'
 
-    const dispatch = useAppDispatch()
+    const [parentCommentInfo, setParentCommentInfo] =
+        useState<TopicComments | null>(null)
+
     const { id: topicId } = useParams()
 
-    useEffect(() => {
-        if (topicId) {
-            dispatch(getTopic(topicId))
-        }
-    }, [dispatch, topicId])
-
     useSidebarMode('return')
+
+    const onClickAnswer = (comment: TopicComments) => {
+        setParentCommentInfo(comment)
+    }
+
+    const closeAnswer = () => {
+        setParentCommentInfo(null)
+    }
 
     if (!topicData?.comments.length) {
         return <Empty />
@@ -57,12 +62,37 @@ const ForumTopic = () => {
                 {isLoading ? (
                     <Loader />
                 ) : (
-                    topicData?.comments?.map((comment, index) => (
-                        <Comment key={index} {...comment} />
-                    ))
+                    topicData?.comments?.map(comment => {
+                        if (comment.parentId) {
+                            const parentComment = allComments?.find(
+                                el => el.id === comment.parentId
+                            )
+                            return parentComment ? (
+                                <CommentWithParent
+                                    key={comment.id}
+                                    parentComment={parentComment}
+                                    childrenComment={comment}
+                                />
+                            ) : null
+                        }
+                        return (
+                            <Comment
+                                key={comment.id}
+                                onClickAnswer={onClickAnswer}
+                                comment={comment}
+                                showButton
+                            />
+                        )
+                    })
                 )}
             </main>
-            {topicId && <InputLine id={topicId} />}
+            {topicId && (
+                <InputLine
+                    id={topicId}
+                    parentInfo={parentCommentInfo}
+                    closeAnswer={closeAnswer}
+                />
+            )}
         </div>
     )
 }

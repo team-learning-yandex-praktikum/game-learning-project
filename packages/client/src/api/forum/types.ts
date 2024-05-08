@@ -11,8 +11,8 @@ export interface CreateTopicDTO {
 
 export interface CreateCommentDTO {
     comment: string
-    topicId: string
-    parentId: string | null
+    topicId: number
+    parentId: number | null
 }
 
 export interface CreateResponse {

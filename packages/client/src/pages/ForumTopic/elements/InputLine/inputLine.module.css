@@ -42,3 +42,35 @@
     opacity: 0.4;
   }
 }
+
+.parent {
+  position: absolute;
+  top: -30px;
+  width: 75%;
+  left: 79px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.parentInfo {
+  width: 90%;
+}
+
+.parentText {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.author {
+  color: var(--color-accent-main);
+}
+
+.closeButton {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: #000;
+}

@@ -7,6 +7,7 @@
 
 .meta {
   display: flex;
+  justify-content: space-between;
   gap: 40px;
 }
 
@@ -16,4 +17,22 @@
 
 .date {
   color: var(--color-side);
+}
+
+.reply {
+  background-color: var(--color-side);
+  font-size: var(--font-size-xs);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0 10px;
+  max-height: 23px;
+  cursor: pointer;
+}
+
+.reply:hover {
+  transform: scale(1.1);
+}
+
+.reply:active {
+  transform: scale(1);
 }
