@@ -4,6 +4,7 @@ import express, { Express } from 'express'
 import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { createRouter } from './routes'
+import { uploadEmojiToDB } from './init/upload/uploadEmoji'
 
 dotenv.config()
 
@@ -44,6 +45,8 @@ const configureApp = () => {
 
 export const startApp = async () => {
     await dbConnect()
+    await uploadEmojiToDB()
+
     const app = configureApp()
 
     app.listen(PORT, () => {

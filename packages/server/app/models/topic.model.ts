@@ -16,6 +16,7 @@ import {
     TOPIC_TITLE_LIMITS,
     USER_LOGIN_LIMITS,
 } from '../validation/constants'
+import { Reaction } from './reaction.model'
 
 export interface TopicAttributes {
     id: number
@@ -53,4 +54,7 @@ export class Topic extends Model<TopicAttributes, TopicCreationAttributes> {
 
     @HasMany(() => Comment, 'topicId')
     declare comments: Comment[]
+
+    @HasMany(() => Reaction, 'topicId')
+    declare reactions: Reaction[]
 }
