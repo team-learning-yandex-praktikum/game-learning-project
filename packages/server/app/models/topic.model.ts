@@ -49,7 +49,10 @@ export class Topic extends Model<TopicAttributes, TopicCreationAttributes> {
 
     @Length({ max: USER_LOGIN_LIMITS.max })
     @AllowNull(false)
-    @Column(DataType.STRING(USER_LOGIN_LIMITS.max))
+    @Column({
+        type: DataType.STRING(USER_LOGIN_LIMITS.max),
+        field: 'created_by',
+    })
     declare createdBy: string
 
     @HasMany(() => Comment, 'topicId')

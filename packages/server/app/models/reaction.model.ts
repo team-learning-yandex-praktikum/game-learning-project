@@ -32,10 +32,7 @@ export class Reaction extends Model<
 > {
     @AutoIncrement
     @PrimaryKey
-    @Column({
-        type: DataType.INTEGER,
-        field: 'id',
-    })
+    @Column
     declare id: number
 
     @ForeignKey(() => Topic)
@@ -50,7 +47,7 @@ export class Reaction extends Model<
     @AllowNull(false)
     @Column({
         type: DataType.INTEGER,
-        field: 'reaction_user_id',
+        field: 'user_id',
     })
     declare userId: number
 

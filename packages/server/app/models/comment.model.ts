@@ -40,11 +40,11 @@ export class Comment extends Model<
 
     @ForeignKey(() => Topic)
     @AllowNull(false)
-    @Column(DataType.INTEGER)
+    @Column({ type: DataType.INTEGER, field: 'topic_id' })
     declare topicId: number
 
     @ForeignKey(() => Comment)
-    @Column(DataType.INTEGER)
+    @Column({ type: DataType.INTEGER, field: 'parent_id' })
     declare parentId: number
 
     @Length({ max: COMMENT_LIMITS.max })
@@ -54,7 +54,10 @@ export class Comment extends Model<
 
     @Length({ max: USER_LOGIN_LIMITS.max })
     @AllowNull(false)
-    @Column(DataType.STRING(USER_LOGIN_LIMITS.max))
+    @Column({
+        type: DataType.STRING(USER_LOGIN_LIMITS.max),
+        field: 'created_by',
+    })
     declare createdBy: string
 
     @HasMany(() => Comment, 'parentId')

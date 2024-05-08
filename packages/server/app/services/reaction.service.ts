@@ -8,7 +8,7 @@ import type { BaseService } from './base.service'
 import { groupBy } from '../utils/ArrayFunc'
 import { Emoji } from '../models/emoji.model'
 
-export type CreateRequest = ReactionCreationAttributes
+export type ReactionCreateRequest = ReactionCreationAttributes
 
 class ReactionService implements BaseService {
     private repository = Reaction
@@ -16,11 +16,11 @@ class ReactionService implements BaseService {
     private readonly timestampField = 'createdAt'
     private readonly attrGet = ['id', 'emojiId', 'topicId', 'userId']
 
-    public async create(req: CreateRequest) {
+    public async create(req: ReactionCreateRequest) {
         return this.repository.create(req)
     }
 
-    public async addOrUpdate(req: CreateRequest) {
+    public async addOrUpdate(req: ReactionCreateRequest) {
         const [found, created] = await this.repository.findOrCreate({
             where: {
                 topicId: req.topicId,

@@ -20,7 +20,7 @@ export type CookieCreationAttributes = CookieAttributes
 export class Cookie extends Model<CookieAttributes, CookieCreationAttributes> {
     @Unique
     @AllowNull(false)
-    @Column
+    @Column({ field: 'user_id' })
     declare userId: number
 
     @Unique

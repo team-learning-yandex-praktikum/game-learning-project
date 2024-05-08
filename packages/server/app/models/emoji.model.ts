@@ -28,10 +28,7 @@ export type EmojiCreationAttributes = Optional<EmojiAttributes, 'id'>
 export class Emoji extends Model<EmojiAttributes, EmojiCreationAttributes> {
     @AutoIncrement
     @PrimaryKey
-    @Column({
-        type: DataType.INTEGER,
-        field: 'id',
-    })
+    @Column
     declare id: number
 
     @AllowNull(false)
