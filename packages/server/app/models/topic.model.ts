@@ -16,6 +16,7 @@ import {
     TOPIC_TITLE_LIMITS,
     USER_LOGIN_LIMITS,
 } from '../validation/constants'
+import { Reaction } from './reaction.model'
 
 export interface TopicAttributes {
     id: number
@@ -48,9 +49,15 @@ export class Topic extends Model<TopicAttributes, TopicCreationAttributes> {
 
     @Length({ max: USER_LOGIN_LIMITS.max })
     @AllowNull(false)
-    @Column(DataType.STRING(USER_LOGIN_LIMITS.max))
+    @Column({
+        type: DataType.STRING(USER_LOGIN_LIMITS.max),
+        field: 'created_by',
+    })
     declare createdBy: string
 
     @HasMany(() => Comment, 'topicId')
     declare comments: Comment[]
+
+    @HasMany(() => Reaction, 'topicId')
+    declare reactions: Reaction[]
 }
