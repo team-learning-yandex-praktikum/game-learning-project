@@ -10,7 +10,7 @@ import {
 
 export class ForumApi extends BaseApi {
     constructor() {
-        super('forum', false)
+        super('topics', false)
     }
 
     getTopics = async (params: TopicsGetParams) => {

@@ -7,6 +7,7 @@ export interface TopicsGetParams {
 export interface CreateTopicDTO {
     title: string
     description: string
+    createdBy: string
 }
 
 export interface CreateCommentDTO {
