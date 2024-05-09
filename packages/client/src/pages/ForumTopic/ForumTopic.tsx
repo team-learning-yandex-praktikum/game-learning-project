@@ -2,16 +2,17 @@ import { useSidebarMode } from '@utils'
 import Comment from './elements/Comment'
 import InputLine from './elements/InputLine'
 import styles from './forumTopic.module.css'
-import { useAppSelector } from '@store/hooks'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
 import Loader from '@components/Loader'
-import Empty from '@components/Empty'
 import { useParams } from 'react-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { topicSelectors } from '@store/topic'
 import CommentWithParent from '@pages/ForumTopic/elements/CommentWithParent'
 import { TopicComments } from '@store/topic/types'
+import { getTopic } from '@store/topic/thunk'
 
 const ForumTopic = () => {
+    const dispatch = useAppDispatch()
     const topicData = useAppSelector(topicSelectors.selectTopicData)
     const allComments = topicData?.comments
     const loadStatus = useAppSelector(topicSelectors.selectStatus)
@@ -22,6 +23,13 @@ const ForumTopic = () => {
 
     const { id: topicId } = useParams()
 
+    useEffect(() => {
+        if (!topicId) {
+            return
+        }
+        dispatch(getTopic(topicId))
+    }, [dispatch, topicId])
+
     useSidebarMode('return')
 
     const onClickAnswer = (comment: TopicComments) => {
@@ -30,10 +38,6 @@ const ForumTopic = () => {
 
     const closeAnswer = () => {
         setParentCommentInfo(null)
-    }
-
-    if (!topicData?.comments.length) {
-        return <Empty />
     }
 
     return (
