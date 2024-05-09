@@ -4,6 +4,7 @@ import express, { Express } from 'express'
 import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { createRouter } from './routes'
+import cors, { type CorsOptions } from 'cors'
 
 dotenv.config()
 
@@ -27,17 +28,27 @@ const applyProxy = (app: Express) => {
     )
 }
 
+const applyCors = (app: Express) => {
+    const { CLIENT_URL = 'http://localhost:3000' } = process.env
+
+    const corsOptions: CorsOptions = {
+        credentials: true,
+        origin: CLIENT_URL,
+    }
+
+    app.use(cors(corsOptions))
+}
+
 const configureApp = () => {
     const app = express()
     const router = createRouter()
 
     app.disable('x-powered-by')
+    applyProxy(app)
+    applyCors(app)
     app.use(express.json())
-    // app.use(cors()) // todo Не работает авторизация, потом глянуть в чем проблема
     app.use(cookieParser())
     app.use(router)
-
-    applyProxy(app)
 
     return app
 }

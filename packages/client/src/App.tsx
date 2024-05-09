@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import Sidebar from '@components/Sidebar'
 import { routesConfig } from '@routes'
@@ -15,17 +14,6 @@ function App() {
     const themeMode = useAppSelector(settingsSelectors.selectThemeMode)
 
     useCheckAuthentication()
-
-    useEffect(() => {
-        const fetchServerData = async () => {
-            const url = `http://localhost:${__SERVER_PORT__}`
-            const response = await fetch(url)
-            const data = await response.json()
-            console.log(data)
-        }
-
-        fetchServerData()
-    }, [])
 
     return (
         <div className="app" data-theme={themeMode}>

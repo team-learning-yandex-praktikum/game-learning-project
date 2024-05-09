@@ -7,8 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { NewTopicFieldValues } from './types'
 import { NEW_TOPIC_FIELDS_CONFIG } from './fieldsConfig'
 import { useAppDispatch } from '@store/hooks'
-import { createTopic } from '@store/topic/thunk'
-import { CreateTopicDTO } from '@api/forum/types'
+import { createTopic, CreateTopicData } from '@store/topic/thunk'
 
 const NewTopic = () => {
     const formId = 'newTopic'
@@ -23,7 +22,7 @@ const NewTopic = () => {
     const dispatch = useAppDispatch()
 
     const create = useCallback(
-        (data: CreateTopicDTO) => {
+        (data: CreateTopicData) => {
             dispatch(createTopic(data))
         },
         [dispatch]
