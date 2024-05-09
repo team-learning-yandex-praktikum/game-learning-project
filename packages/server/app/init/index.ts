@@ -19,7 +19,7 @@ applyModels(sequelize)
 export const dbConnect = async (): Promise<null> => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync({ force: true }) // todo Убрать force после готовности бэка
+        await sequelize.sync()
         console.log('Connection has been established successfully.')
     } catch (error) {
         console.error(

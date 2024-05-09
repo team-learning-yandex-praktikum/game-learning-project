@@ -163,6 +163,14 @@ exports[`Registration correctly rendered 1`] = `
       >
         Сохранить
       </button>
+      <a>
+        <button
+          class=""
+          type="button"
+        >
+          Я.ID
+        </button>
+      </a>
       <a
         href="/login"
       >

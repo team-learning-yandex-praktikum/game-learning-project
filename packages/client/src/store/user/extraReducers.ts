@@ -7,6 +7,7 @@ import {
     fetchUserData,
     login,
     logout,
+    oAuthLogin,
     registration,
     updatePassword,
     updateUserAvatar,
@@ -100,6 +101,12 @@ class UserAsyncCases {
         return this
     }
 
+    oAuthLogin = () => {
+        this.addCommonCase(oAuthLogin)
+
+        return this
+    }
+
     registration = () => {
         this.addCommonCase(registration)
 
@@ -128,4 +135,5 @@ export const getExtraReducers = (
         .logout()
         .login()
         .registration()
+        .oAuthLogin()
 }

@@ -3,8 +3,7 @@ import { authApi, resourcesApi, userApi } from '@api'
 import { transformData } from '@utils/data'
 import { LoginDTO, RegistrationDTO, UserDTO } from '@api/auth/types'
 import { RequestRegistrationData, User } from './types'
-import { OauthSignInRequest } from '@api/oAuth/types'
-import { oAuthApi } from '@api/oAuth'
+import { oAuthManager } from '@utils/authentication/oauth'
 
 export const fetchUserAvatar = createAsyncThunk(
     'user/fetchAvatar',
@@ -64,11 +63,12 @@ export const login = createAsyncThunk(
     }
 )
 
-export const loginWithYandex = createAsyncThunk(
+export const oAuthLogin = createAsyncThunk(
     'user/loginWithYandex',
     async (code: string, { dispatch }) => {
-        const response = await oAuthApi.exchangeCodeForToken(code)
+        const response = await oAuthManager.getTokenByCode(code)
         dispatch(fetchUserData())
+        oAuthManager.cleanup()
         return response
     }
 )

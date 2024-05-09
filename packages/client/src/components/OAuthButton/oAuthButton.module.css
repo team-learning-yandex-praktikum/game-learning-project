@@ -1,0 +1,10 @@
+.button {
+  && {
+    background-color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-text);
+      opacity: 0.8;
+    }
+  }
+}
