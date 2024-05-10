@@ -1,12 +1,13 @@
 import { useRoutes } from 'react-router-dom'
 import Sidebar from '@components/Sidebar'
+import { StatusCodes } from 'http-status-codes'
 import { routesConfig } from '@routes'
 import { useCheckAuthentication, useIsAuthPage } from '@utils'
-import './App.css'
 import withErrorBoundary from '@utils/hocs/withErrorBoundary'
-import Fallback from '@utils/hocs/withErrorBoundary/Fallback'
 import { useAppSelector } from '@store/hooks'
 import { settingsSelectors } from '@store/settings'
+import ErrorPage from '@pages/ErrorPage'
+import './App.css'
 
 function App() {
     const renderRouter = useRoutes(routesConfig)
@@ -23,4 +24,6 @@ function App() {
     )
 }
 
-export default withErrorBoundary({ fallback: <Fallback /> })(App)
+export default withErrorBoundary({
+    fallback: <ErrorPage code={StatusCodes.INTERNAL_SERVER_ERROR} />,
+})(App)
