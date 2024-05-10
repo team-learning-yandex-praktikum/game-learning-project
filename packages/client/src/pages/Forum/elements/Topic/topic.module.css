@@ -16,6 +16,16 @@
   }
 }
 
+.root:hover .emojiButton {
+  display: block;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .title {
   composes: font-base-l from global;
   font-weight: 600;
@@ -37,4 +47,16 @@
 
 .date {
   color: var(--color-side);
+}
+
+.emojiContainer {
+  position: relative;
+}
+
+.emojiButton {
+  display: none;
+  color: var(--color-side);
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
 }

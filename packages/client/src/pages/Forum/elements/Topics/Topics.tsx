@@ -8,17 +8,30 @@ import { forumSelectors } from '@store/forum'
 
 import Loader from '@components/Loader'
 import Topic from '@pages/Forum/elements/Topic'
-import { getTopics } from '@store/forum/thunk'
+import { getEmoji, getReactions, getTopics } from '@store/forum/thunk'
 import Empty from '@components/Empty'
+import { Topics as TopicsType } from '@store/forum/types'
 
 const Topics: FC = () => {
     const topicsData = useAppSelector(forumSelectors.selectTopicsData)
+    const topicEmoji = useAppSelector(forumSelectors.selectTopicEmoji)
     const loadStatus = useAppSelector(forumSelectors.selectStatus)
     const isLoading = loadStatus === 'loading'
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getTopics({ limit: 20 }))
+        dispatch(getTopics({ limit: 20 })).then(data => {
+            const topicIds = (data?.payload as TopicsType[]).map(
+                topic => topic.id
+            )
+            if (topicIds && topicIds.length > 0) {
+                dispatch(getReactions(topicIds))
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        dispatch(getEmoji())
     }, [])
 
     if (!topicsData.length) {
@@ -37,7 +50,15 @@ const Topics: FC = () => {
                 {isLoading ? (
                     <Loader />
                 ) : (
-                    topicsData.map(topic => <Topic key={topic.id} {...topic} />)
+                    topicsData.map(topic => (
+                        <Topic
+                            key={topic.id}
+                            {...topic}
+                            emoji={
+                                topicEmoji ? topicEmoji[topic.id] : undefined
+                            }
+                        />
+                    ))
                 )}
             </main>
         </div>

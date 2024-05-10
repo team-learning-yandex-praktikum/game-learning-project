@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { forumApi } from '@api'
 import { CreateTopicDTO } from '@api/forum/types'
 import { RootState } from '@store'
+import { addReactionParams } from '@api/reaction/types'
+import { reactionApi } from '@api/reaction'
 
 export const getTopic = createAsyncThunk('forum/getTopic', forumApi.getTopic)
 
@@ -25,4 +27,11 @@ export const createTopic = createAsyncThunk(
 export const createComment = createAsyncThunk(
     'forum/createComment',
     forumApi.createComment
+)
+
+export const addReaction = createAsyncThunk(
+    'reaction/addReaction',
+    async (data: addReactionParams) => {
+        reactionApi.addReaction(data)
+    }
 )

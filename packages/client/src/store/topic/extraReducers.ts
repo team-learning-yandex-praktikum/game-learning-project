@@ -2,7 +2,7 @@ import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
 import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
 import { LoadStatus } from '@store/enums'
 import { TopicState } from './types'
-import { getTopic, createTopic, createComment } from './thunk'
+import { getTopic, createTopic, createComment, addReaction } from './thunk'
 
 class TopicAsyncCases {
     readonly builder: ActionReducerMapBuilder<TopicState>
@@ -59,6 +59,17 @@ class TopicAsyncCases {
 
         return this
     }
+
+    addReaction = () => {
+        this.addCommonCase(addReaction).addCase(
+            addReaction.fulfilled,
+            state => {
+                state.status = LoadStatus.complete
+            }
+        )
+
+        return this
+    }
 }
 
 export const getExtraReducers = (
@@ -68,4 +79,5 @@ export const getExtraReducers = (
         .fetchingTopic()
         .creationTopic()
         .creationComment()
+        .addReaction()
 }

@@ -5,11 +5,18 @@ import { getExtraReducers } from './extraReducers'
 export const forumSlice = createSlice({
     name: 'forum',
     initialState: forumInitialState,
-    reducers: {},
+    reducers: {
+        updateTopicEmoji: (state, action) => {
+            state.topicEmoji = action.payload
+        },
+    },
     selectors: {
         selectStatus: state => state.status,
         selectTopicsData: state => state.topicsData,
         selectError: state => state.error,
+        selectTopicEmoji: state => state.topicEmoji,
+        selectEmojis: state => state.emojis,
+        selectixEmojis: state => state.ixEmojis,
     },
     extraReducers: getExtraReducers,
 })
