@@ -22,11 +22,9 @@ export function reactionRoutes(router: Router) {
 
     reactionRouter.post(
         '/',
-        body('topicIdArray').exists().withMessage(ERRORS.empty),
+        body('topicIds').exists().withMessage(ERRORS.empty),
         ReactionController.getByManyTopics
     )
-
-    reactionRouter.get('/emoji', ReactionController.getAvailableEmoticons)
 
     router.use('/reaction', reactionRouter)
 }

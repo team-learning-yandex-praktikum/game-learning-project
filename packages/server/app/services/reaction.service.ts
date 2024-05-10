@@ -6,7 +6,6 @@ import {
 } from '../models/reaction.model'
 import type { BaseService } from './base.service'
 import { groupBy } from '../utils/ArrayFunc'
-import { Emoji } from '../models/emoji.model'
 
 export type ReactionCreateRequest = ReactionCreationAttributes
 
@@ -48,7 +47,7 @@ class ReactionService implements BaseService {
         return reactions.map(toDto)
     }
 
-    public async getByTopics(topicIdArray: number[]) {
+    public async getByTopics(topicIdArray: string[]) {
         const reactions = await this.repository.findAll({
             where: {
                 topicId: { [Op.in]: topicIdArray },
@@ -57,34 +56,12 @@ class ReactionService implements BaseService {
             order: [[this.timestampField, 'DESC']],
         })
         const arrayDto = reactions.map(toDto)
-        return groupBy(arrayDto, dto => dto.topicId)
+        return Object.fromEntries(groupBy(arrayDto, dto => dto.topicId))
     }
 
     public async getById(id: ReactionAttributes['id']) {
         return this.repository.findByPk(id)
     }
-
-    public async getEmoticons(category?: string): Promise<EmojiDto[]> {
-        const records = await (category
-            ? Emoji.findAll({
-                  where: { category: category },
-              })
-            : Emoji.findAll())
-
-        return records.map(r => ({
-            id: r.id,
-            char: r.char,
-            code: r.code,
-            category: r.category,
-        }))
-    }
-}
-
-export type EmojiDto = {
-    id: number
-    char: string
-    code: string
-    category: string
 }
 
 export type ReactionDto = {
