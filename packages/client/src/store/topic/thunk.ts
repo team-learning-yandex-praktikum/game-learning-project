@@ -36,17 +36,10 @@ export const addReaction = createAsyncThunk(
         const topicEmoji = (getState() as RootState).forum.topicEmoji
         const { userId, topicId, emojiId } = data
         const response = await reactionApi.addReaction(data)
-        if (
-            topicEmoji &&
-            topicEmoji[topicId]?.find(el => el.userId === userId)
-        ) {
-            const updatedTopicEmoji = topicEmoji[topicId].map(el => {
-                if (el.userId === userId) {
-                    return { ...el, emojiId: emojiId }
-                } else {
-                    return el
-                }
-            })
+        if (topicEmoji?.[topicId]?.find(el => el.userId === userId)) {
+            const updatedTopicEmoji = topicEmoji[topicId].map(el =>
+                el.userId === userId ? { ...el, emojiId: emojiId } : el
+            )
 
             const newTopicEmoji = {
                 ...topicEmoji,
@@ -59,10 +52,9 @@ export const addReaction = createAsyncThunk(
                 emojiId: emojiId,
                 topicId: topicId,
             }
-            const updatedTopicEmoji =
-                topicEmoji && topicEmoji[topicId]
-                    ? [...topicEmoji[topicId], newReaction]
-                    : [newReaction]
+            const updatedTopicEmoji = topicEmoji?.[topicId]
+                ? [...topicEmoji[topicId], newReaction]
+                : [newReaction]
             const newTopicEmoji = {
                 ...topicEmoji,
                 [topicId]: updatedTopicEmoji,
