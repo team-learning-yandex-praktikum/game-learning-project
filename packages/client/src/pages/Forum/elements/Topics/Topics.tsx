@@ -16,7 +16,7 @@ const Topics: FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getTopics())
+        dispatch(getTopics({ limit: 20 }))
     }, [])
 
     if (!topicsData.length) {
