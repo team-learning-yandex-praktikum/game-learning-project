@@ -11,5 +11,5 @@ export interface ForumState {
     status: LoadStatus
     error?: string | null
     emojis?: EmojiDTO[]
-    ixEmojis?: Record<number, EmojiDTO>
+    emojisByTopic?: Record<number, EmojiDTO>
 }

@@ -45,7 +45,7 @@ class ForumAsyncCases {
             (state, action) => {
                 state.status = LoadStatus.complete
                 state.emojis = action.payload
-                state.ixEmojis = _.keyBy(action.payload, 'id')
+                state.emojisByTopic = _.keyBy(action.payload, 'id')
             }
         )
 

@@ -16,7 +16,7 @@ const Topic: FC<Topics> = ({
     emoji,
 }) => {
     const [showEmojiList, setShowEmojiList] = useState(false)
-    const topicEmoji = useAppSelector(forumSelectors.selectixEmojis)
+    const topicEmoji = useAppSelector(forumSelectors.selectEmojisByTopic)
     const handleEmojiClick = useCallback(
         (event: React.MouseEvent<HTMLElement>) => {
             event.preventDefault()
@@ -51,9 +51,9 @@ const Topic: FC<Topics> = ({
                 <span className={styles.author}>{createdBy}</span>
                 <span className={styles.date}>{createdAt}</span>
             </div>
-            {emoji?.length && (
+            {Boolean(emoji?.length) && (
                 <div className={styles.selectedEmoji}>
-                    {emoji.map((reaction, index) => (
+                    {emoji?.map((reaction, index) => (
                         <span key={index}>
                             {topicEmoji && topicEmoji[reaction.emojiId]?.char}
                         </span>

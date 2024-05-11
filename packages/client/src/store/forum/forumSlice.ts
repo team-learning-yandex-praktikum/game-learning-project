@@ -16,7 +16,7 @@ export const forumSlice = createSlice({
         selectError: state => state.error,
         selectTopicEmoji: state => state.topicEmoji,
         selectEmojis: state => state.emojis,
-        selectixEmojis: state => state.ixEmojis,
+        selectEmojisByTopic: state => state.emojisByTopic,
     },
     extraReducers: getExtraReducers,
 })

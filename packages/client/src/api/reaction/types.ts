@@ -6,7 +6,7 @@ export interface ReactionDTO {
 }
 
 export interface addReactionParams {
-    topicId?: number
-    userId?: number
+    topicId: number
+    userId: number
     emojiId: number
 }

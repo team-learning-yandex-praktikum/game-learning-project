@@ -1,16 +1,12 @@
 import { FC, memo, useEffect } from 'react'
 import SearchInput from '@pages/Forum/elements/SearchInput'
-
 import styles from './topics.module.css'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
-
 import { forumSelectors } from '@store/forum'
-
 import Loader from '@components/Loader'
 import Topic from '@pages/Forum/elements/Topic'
-import { getEmoji, getReactions, getTopics } from '@store/forum/thunk'
+import { getTopics } from '@store/forum/thunk'
 import Empty from '@components/Empty'
-import { Topics as TopicsType } from '@store/forum/types'
 
 const Topics: FC = () => {
     const topicsData = useAppSelector(forumSelectors.selectTopicsData)
@@ -20,18 +16,7 @@ const Topics: FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getTopics({ limit: 20 })).then(data => {
-            const topicIds = (data?.payload as TopicsType[]).map(
-                topic => topic.id
-            )
-            if (topicIds && topicIds.length > 0) {
-                dispatch(getReactions(topicIds))
-            }
-        })
-    }, [])
-
-    useEffect(() => {
-        dispatch(getEmoji())
+        dispatch(getTopics())
     }, [])
 
     if (!topicsData.length) {
@@ -54,9 +39,7 @@ const Topics: FC = () => {
                         <Topic
                             key={topic.id}
                             {...topic}
-                            emoji={
-                                topicEmoji ? topicEmoji[topic.id] : undefined
-                            }
+                            emoji={topicEmoji?.[topic.id]}
                         />
                     ))
                 )}
