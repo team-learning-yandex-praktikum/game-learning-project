@@ -13,7 +13,7 @@ class CommentService implements BaseService {
     public create = (creationData: CommentCreateRequest) =>
         this.repository.create(creationData)
 
-    public findByParams = async ({
+    public findByParams = ({
         limit = 20,
         offset = 0,
         topicId,
