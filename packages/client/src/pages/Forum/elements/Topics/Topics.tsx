@@ -1,11 +1,8 @@
 import { FC, memo, useEffect } from 'react'
 import SearchInput from '@pages/Forum/elements/SearchInput'
-
 import styles from './topics.module.css'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
-
 import { forumSelectors } from '@store/forum'
-
 import Loader from '@components/Loader'
 import Topic from '@pages/Forum/elements/Topic'
 import { getTopics } from '@store/forum/thunk'
@@ -13,6 +10,7 @@ import Empty from '@components/Empty'
 
 const Topics: FC = () => {
     const topicsData = useAppSelector(forumSelectors.selectTopicsData)
+    const topicEmoji = useAppSelector(forumSelectors.selectTopicEmoji)
     const loadStatus = useAppSelector(forumSelectors.selectStatus)
     const isLoading = loadStatus === 'loading'
     const dispatch = useAppDispatch()
@@ -37,7 +35,13 @@ const Topics: FC = () => {
                 {isLoading ? (
                     <Loader />
                 ) : (
-                    topicsData.map(topic => <Topic key={topic.id} {...topic} />)
+                    topicsData.map(topic => (
+                        <Topic
+                            key={topic.id}
+                            {...topic}
+                            emoji={topicEmoji?.[topic.id]}
+                        />
+                    ))
                 )}
             </main>
         </div>

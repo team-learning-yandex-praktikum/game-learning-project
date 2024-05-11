@@ -2,7 +2,8 @@ import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
 import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
 import { LoadStatus } from '@store/enums'
 import { ForumState } from './types'
-import { getTopics } from './thunk'
+import { getEmoji, getReactions, getTopics } from './thunk'
+import _ from 'lodash'
 
 class ForumAsyncCases {
     readonly builder: ActionReducerMapBuilder<ForumState>
@@ -37,10 +38,38 @@ class ForumAsyncCases {
 
         return this
     }
+
+    fetchingEmojis = () => {
+        this.addCommonCase(getEmoji).addCase(
+            getEmoji.fulfilled,
+            (state, action) => {
+                state.status = LoadStatus.complete
+                state.emojis = action.payload
+                state.emojisByTopic = _.keyBy(action.payload, 'id')
+            }
+        )
+
+        return this
+    }
+
+    fetchingReactions = () => {
+        this.addCommonCase(getReactions).addCase(
+            getReactions.fulfilled,
+            (state, action) => {
+                state.status = LoadStatus.complete
+                state.topicEmoji = action.payload
+            }
+        )
+
+        return this
+    }
 }
 
 export const getExtraReducers = (
     builder: ActionReducerMapBuilder<ForumState>
 ) => {
-    new ForumAsyncCases(builder).fetchingTopics()
+    new ForumAsyncCases(builder)
+        .fetchingTopics()
+        .fetchingEmojis()
+        .fetchingReactions()
 }

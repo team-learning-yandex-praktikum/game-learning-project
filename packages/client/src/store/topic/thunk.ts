@@ -2,6 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { forumApi } from '@api'
 import { CreateTopicDTO } from '@api/forum/types'
 import { RootState } from '@store'
+import { addReactionParams } from '@api/reaction/types'
+import { reactionApi } from '@api/reaction'
+import { forumActions } from '@store/forum'
 
 export const getTopic = createAsyncThunk('forum/getTopic', forumApi.getTopic)
 
@@ -25,4 +28,39 @@ export const createTopic = createAsyncThunk(
 export const createComment = createAsyncThunk(
     'forum/createComment',
     forumApi.createComment
+)
+
+export const addReaction = createAsyncThunk(
+    'reaction/addReaction',
+    async (data: addReactionParams, { dispatch, getState }) => {
+        const topicEmoji = (getState() as RootState).forum.topicEmoji
+        const { userId, topicId, emojiId } = data
+        const response = await reactionApi.addReaction(data)
+        if (topicEmoji?.[topicId]?.find(el => el.userId === userId)) {
+            const updatedTopicEmoji = topicEmoji[topicId].map(el =>
+                el.userId === userId ? { ...el, emojiId: emojiId } : el
+            )
+
+            const newTopicEmoji = {
+                ...topicEmoji,
+                [topicId]: updatedTopicEmoji,
+            }
+            dispatch(forumActions.updateTopicEmoji(newTopicEmoji))
+        } else {
+            const newReaction: addReactionParams = {
+                userId: userId,
+                emojiId: emojiId,
+                topicId: topicId,
+            }
+            const updatedTopicEmoji = topicEmoji?.[topicId]
+                ? [...topicEmoji[topicId], newReaction]
+                : [newReaction]
+            const newTopicEmoji = {
+                ...topicEmoji,
+                [topicId]: updatedTopicEmoji,
+            }
+            dispatch(forumActions.updateTopicEmoji(newTopicEmoji))
+        }
+        return response
+    }
 )
