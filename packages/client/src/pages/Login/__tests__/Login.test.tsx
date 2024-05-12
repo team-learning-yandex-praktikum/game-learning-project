@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { withProviders } from '../../../test-utils/render'
 import { setupServer } from 'msw/node'
 import { store } from '@store'
-import { LoadStatus } from '@store/enums'
+import { LoadStatus } from '@utils/store/enums'
 import {
     requestHandlers,
     userInfoStub,

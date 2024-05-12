@@ -1,6 +1,4 @@
-import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
-import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
-import { LoadStatus } from '@store/enums'
+import { ActionReducerMapBuilder } from '@reduxjs/toolkit'
 import { UserState } from './types'
 import {
     fetchUserAvatar,
@@ -13,29 +11,10 @@ import {
     updateUserAvatar,
     updateUserData,
 } from './thunks'
+import { BaseAsyncCases } from '@utils/store/extraReducers'
+import { LoadStatus } from '@utils/store/enums'
 
-class UserAsyncCases {
-    readonly builder: ActionReducerMapBuilder<UserState>
-
-    constructor(builder: ActionReducerMapBuilder<UserState>) {
-        this.builder = builder
-    }
-
-    private addCommonCase = <R, A>(
-        thunk: AsyncThunk<R, A, AsyncThunkConfig>
-    ) => {
-        this.builder
-            .addCase(thunk.pending, state => {
-                state.status = LoadStatus.loading
-            })
-            .addCase(thunk.rejected, (state, action) => {
-                state.status = LoadStatus.failed
-                state.error = action.error.message
-            })
-
-        return this.builder
-    }
-
+class UserAsyncCases extends BaseAsyncCases<UserState> {
     fetchingUser = () => {
         this.addCommonCase(fetchUserData).addCase(
             fetchUserData.fulfilled,

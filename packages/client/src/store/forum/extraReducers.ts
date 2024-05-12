@@ -1,32 +1,11 @@
-import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
-import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
-import { LoadStatus } from '@store/enums'
+import { ActionReducerMapBuilder } from '@reduxjs/toolkit'
+import { LoadStatus } from '@utils/store/enums'
 import { ForumState } from './types'
 import { getEmoji, getReactions, getTopics } from './thunk'
-import _ from 'lodash'
+import { keyBy } from 'lodash'
+import { BaseAsyncCases } from '@utils/store/extraReducers'
 
-class ForumAsyncCases {
-    readonly builder: ActionReducerMapBuilder<ForumState>
-
-    constructor(builder: ActionReducerMapBuilder<ForumState>) {
-        this.builder = builder
-    }
-
-    private addCommonCase = <R, A>(
-        thunk: AsyncThunk<R, A, AsyncThunkConfig>
-    ) => {
-        this.builder
-            .addCase(thunk.pending, state => {
-                state.status = LoadStatus.loading
-            })
-            .addCase(thunk.rejected, (state, action) => {
-                state.status = LoadStatus.failed
-                state.error = action.error.message
-            })
-
-        return this.builder
-    }
-
+class ForumAsyncCases extends BaseAsyncCases<ForumState> {
     fetchingTopics = () => {
         this.addCommonCase(getTopics).addCase(
             getTopics.fulfilled,
@@ -45,7 +24,7 @@ class ForumAsyncCases {
             (state, action) => {
                 state.status = LoadStatus.complete
                 state.emojis = action.payload
-                state.emojisByTopic = _.keyBy(action.payload, 'id')
+                state.emojisByTopic = keyBy(action.payload, 'id')
             }
         )
 

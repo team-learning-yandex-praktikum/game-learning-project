@@ -11,7 +11,7 @@ import { fieldsConfig, transformData } from '@utils'
 import userEvent from '@testing-library/user-event'
 import { store } from '@store'
 import { userActions } from '@store/user'
-import { LoadStatus } from '@store/enums'
+import { LoadStatus } from '@utils/store/enums'
 
 const server = setupServer(requestHandlers.updateProfile)
 

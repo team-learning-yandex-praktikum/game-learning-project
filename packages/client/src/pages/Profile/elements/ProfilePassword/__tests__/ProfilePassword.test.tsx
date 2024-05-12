@@ -8,7 +8,7 @@ import { fieldsConfig } from '@utils'
 import userEvent from '@testing-library/user-event'
 import { ERRORS } from '@utils/validation/errors'
 import { store } from '@store'
-import { LoadStatus } from '@store/enums'
+import { LoadStatus } from '@utils/store/enums'
 
 const server = setupServer(requestHandlers.updatePassword)
 

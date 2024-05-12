@@ -4,6 +4,7 @@ import { transformData } from '@utils/data'
 import { LoginDTO, RegistrationDTO, UserDTO } from '@api/auth/types'
 import { RequestRegistrationData, User } from './types'
 import { oAuthManager } from '@utils/authentication/oauth'
+import { fetchThemes } from '@store/theme/thunks'
 
 export const fetchUserAvatar = createAsyncThunk(
     'user/fetchAvatar',
@@ -21,6 +22,7 @@ export const fetchUserData = createAsyncThunk(
     async (_, { dispatch }) => {
         const response = await authApi.me()
         dispatch(fetchUserAvatar(response.avatar))
+        dispatch(fetchThemes())
 
         return transformData.from.dto<User>(response)
     }

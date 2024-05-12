@@ -21,13 +21,16 @@ class ThemeService {
     }
 
     public findAll = ({ limit, offset }: ThemeFindAllRequest) =>
-        this.repository.findOne({
+        this.repository.findAll({
             limit,
             offset,
         })
 
     public findById = (id: ThemeAttributes['id']) =>
         this.repository.findByPk(id)
+
+    public findByTheme = (theme: ThemeAttributes['theme']) =>
+        this.repository.findOne({ where: { theme } })
 }
 
 export const themeService = new ThemeService()

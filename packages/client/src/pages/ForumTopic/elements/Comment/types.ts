@@ -1,7 +1,7 @@
-import { TopicComments } from '@store/topic/types'
+import { TopicComment } from '@store/topic/types'
 
 export interface CommentProps {
-    comment: TopicComments
-    onClickAnswer?: (comment: TopicComments) => void
+    comment: TopicComment
+    onClickAnswer?: (comment: TopicComment) => void
     showButton?: boolean
 }

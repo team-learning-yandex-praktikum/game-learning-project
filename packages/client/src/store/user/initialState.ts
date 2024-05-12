@@ -1,5 +1,5 @@
 import { UserState } from './types'
-import { LoadStatus } from '@store/enums'
+import { LoadStatus } from '@utils/store/enums'
 
 export const userInitialState: UserState = {
     data: {},

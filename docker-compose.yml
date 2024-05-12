@@ -44,7 +44,6 @@ services:
             POSTGRES_USER: "${DB_USER}"
             POSTGRES_PASSWORD: "${DB_PASSWORD}"
             POSTGRES_NAME: "${DB_NAME}"
-            POSTGRES_HOST: "${DB_HOST}"
         healthcheck:
             test: ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'"]
             interval: 10s
