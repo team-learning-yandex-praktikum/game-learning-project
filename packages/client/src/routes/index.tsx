@@ -1,6 +1,7 @@
 import * as Pages from '../pages'
 import { Routes } from './constants'
 import { RouteConfigObject } from './types'
+import { StatusCodes } from 'http-status-codes'
 
 export const routesConfig: RouteConfigObject[] = [
     {
@@ -38,11 +39,11 @@ export const routesConfig: RouteConfigObject[] = [
     },
     {
         path: Routes.NotFound,
-        element: <Pages.ErrorPage code={404} />,
+        element: <Pages.ErrorPage code={StatusCodes.NOT_FOUND} />,
     },
     {
         path: Routes.Error,
-        element: <Pages.ErrorPage code={500} />,
+        element: <Pages.ErrorPage code={StatusCodes.INTERNAL_SERVER_ERROR} />,
     },
 ]
 
