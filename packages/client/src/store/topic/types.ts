@@ -5,7 +5,7 @@ import { BaseState } from '@utils/store/types'
 export interface TopicComment {
     id: number
     topicId: number
-    content: string
+    comment: string
     createdBy: string
     createdAt: string
     parentId: number | null

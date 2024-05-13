@@ -4,19 +4,21 @@ import InputLine from './elements/InputLine'
 import styles from './forumTopic.module.css'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import Loader from '@components/Loader'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { topicSelectors } from '@store/topic'
 import CommentWithParent from '@pages/ForumTopic/elements/CommentWithParent'
 import { TopicComment } from '@store/topic/types'
 import { getTopic } from '@store/topic/thunk'
+import { transformDate } from '@utils/data/transformDate'
 
 const ForumTopic = () => {
     const dispatch = useAppDispatch()
     const topicData = useAppSelector(topicSelectors.selectTopicData)
-    const allComments = topicData?.comments
+    const allComments = useAppSelector(topicSelectors.selectComments)
     const loadStatus = useAppSelector(topicSelectors.selectStatus)
     const isLoading = loadStatus === 'loading'
+    const navigate = useNavigate()
 
     const [parentCommentInfo, setParentCommentInfo] =
         useState<TopicComment | null>(null)
@@ -40,6 +42,10 @@ const ForumTopic = () => {
         setParentCommentInfo(null)
     }
 
+    if (!topicData) {
+        return <Loader />
+    }
+
     return (
         <div className={styles.root}>
             <header className={styles.header}>
@@ -49,10 +55,10 @@ const ForumTopic = () => {
                             {topicData?.createdBy}
                         </span>
                         <span className={styles.date}>
-                            {topicData?.createdAt}
+                            {transformDate.from.server(topicData.createdAt)}
                         </span>
                     </div>
-                    <div className={styles.title}>{topicData?.title}</div>
+                    <div className={styles.title}>{topicData.title}</div>
                     {topicData?.description && (
                         <div className={styles.description}>
                             {topicData.description}
@@ -66,7 +72,7 @@ const ForumTopic = () => {
                 {isLoading ? (
                     <Loader />
                 ) : (
-                    topicData?.comments?.map(comment => {
+                    topicData.comments?.map(comment => {
                         if (comment.parentId) {
                             const parentComment = allComments?.find(
                                 el => el.id === comment.parentId

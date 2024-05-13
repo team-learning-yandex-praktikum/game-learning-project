@@ -45,7 +45,7 @@ const InputLine: FC<InputLineProps> = ({ id, parentInfo, closeAnswer }) => {
                             {parentInfo.createdBy}
                         </span>
                         <div className={styles.parentText}>
-                            {parentInfo.content}
+                            {parentInfo.comment}
                         </div>
                     </div>
                     <button

@@ -6,6 +6,7 @@ import { SmileIcon } from '@assets/icons'
 import EmojiList from '@pages/ForumTopic/elements/EmojiList'
 import { useAppSelector } from '@store/hooks'
 import { forumSelectors } from '@store/forum'
+import { transformDate } from '@utils/data/transformDate'
 
 const Topic: FC<Topics> = ({
     id,
@@ -49,7 +50,9 @@ const Topic: FC<Topics> = ({
             )}
             <div className={styles.meta}>
                 <span className={styles.author}>{createdBy}</span>
-                <span className={styles.date}>{createdAt}</span>
+                <span className={styles.date}>
+                    {transformDate.from.server(createdAt)}
+                </span>
             </div>
             {Boolean(emoji?.length) && (
                 <div className={styles.selectedEmoji}>

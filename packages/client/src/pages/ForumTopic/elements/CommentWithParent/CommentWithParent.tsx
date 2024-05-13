@@ -11,13 +11,13 @@ const CommentWithParent: FC<CommentWithParentProps> = ({
     <div>
         <div className={styles.parent}>
             <span className={styles.author}>{parentComment.createdBy}</span>
-            <div className={styles.parentText}>{parentComment.content}</div>
+            <div className={styles.parentText}>{parentComment.comment}</div>
         </div>
         <div className={styles.children}>
             <Comment
                 key={childrenComment.id}
                 comment={childrenComment}
-                showButton
+                showButton={false}
             />
         </div>
     </div>
