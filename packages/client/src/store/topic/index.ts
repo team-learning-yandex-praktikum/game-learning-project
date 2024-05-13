@@ -1,1 +1,1 @@
-export { topicSlice, topicActions, topicSelectors } from './forumSlice'
+export { topicSlice, topicActions, topicSelectors } from './topicSlice'

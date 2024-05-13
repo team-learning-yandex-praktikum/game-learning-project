@@ -1,8 +1,8 @@
 import { EmojiDTO } from '@api/emoji/types'
 import { ReactionDTO } from '@api/reaction/types'
-import { LoadStatus } from '@store/enums'
+import { BaseState } from '@utils/store/types'
 
-export interface TopicComments {
+export interface TopicComment {
     id: number
     topicId: number
     content: string
@@ -17,14 +17,12 @@ export interface Topic {
     createdBy: string
     createdAt: string
     updatedAt: string
-    comments: TopicComments[]
+    comments: TopicComment[]
     description?: string
     emoji?: ReactionDTO[]
 }
 
-export interface TopicState {
-    status: LoadStatus
+export interface TopicState extends BaseState {
     topicData?: Topic
     topicEmoji?: EmojiDTO
-    error?: string | null
 }

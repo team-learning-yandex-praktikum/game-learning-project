@@ -1,5 +1,5 @@
 import { ForumState } from './types'
-import { LoadStatus } from '@store/enums'
+import { LoadStatus } from '@utils/store/enums'
 
 export const forumInitialState: ForumState = {
     topicsData: [],

@@ -8,7 +8,7 @@ import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { topicSelectors } from '@store/topic'
 import CommentWithParent from '@pages/ForumTopic/elements/CommentWithParent'
-import { TopicComments } from '@store/topic/types'
+import { TopicComment } from '@store/topic/types'
 import { getTopic } from '@store/topic/thunk'
 
 const ForumTopic = () => {
@@ -19,7 +19,7 @@ const ForumTopic = () => {
     const isLoading = loadStatus === 'loading'
 
     const [parentCommentInfo, setParentCommentInfo] =
-        useState<TopicComments | null>(null)
+        useState<TopicComment | null>(null)
 
     const { id: topicId } = useParams()
 
@@ -32,7 +32,7 @@ const ForumTopic = () => {
 
     useSidebarMode('return')
 
-    const onClickAnswer = (comment: TopicComments) => {
+    const onClickAnswer = (comment: TopicComment) => {
         setParentCommentInfo(comment)
     }
 

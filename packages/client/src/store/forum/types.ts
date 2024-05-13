@@ -1,15 +1,13 @@
 import { EmojiDTO } from '@api/emoji/types'
 import { ReactionDTO } from '@api/reaction/types'
-import { LoadStatus } from '@store/enums'
 import { Topic } from '@store/topic/types'
+import { BaseState } from '@utils/store/types'
 
 export type Topics = Omit<Topic, 'comments'>
 
-export interface ForumState {
+export interface ForumState extends BaseState {
     topicsData: Topics[]
     topicEmoji?: Record<number, ReactionDTO[]>
-    status: LoadStatus
-    error?: string | null
     emojis?: EmojiDTO[]
     emojisByTopic?: Record<number, EmojiDTO>
 }

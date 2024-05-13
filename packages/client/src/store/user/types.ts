@@ -1,5 +1,5 @@
 import { UserDTO } from '@api/auth/types'
-import { LoadStatus } from '@store/enums'
+import { BaseState } from '@utils/store/types'
 
 type SnakeCaseUserKeys = 'display_name' | 'first_name' | 'second_name'
 
@@ -10,10 +10,8 @@ export interface User extends Omit<UserDTO, SnakeCaseUserKeys> {
     avatarImage?: string
 }
 
-export interface UserState {
+export interface UserState extends BaseState {
     data: Partial<User>
-    status: LoadStatus
-    error?: string | null
 }
 
 export type RequestRegistrationData = Omit<User, 'avatarImage' | 'avatar'>

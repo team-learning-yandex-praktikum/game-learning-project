@@ -1,9 +1,9 @@
-import { TopicComments } from '@store/topic/types'
+import { TopicComment } from '@store/topic/types'
 
 export type InputLineFieldValues = Record<'comment', string>
 
 export interface InputLineProps {
     id: string
-    parentInfo: TopicComments | null
+    parentInfo: TopicComment | null
     closeAnswer: () => void
 }

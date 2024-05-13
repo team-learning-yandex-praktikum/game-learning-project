@@ -1,31 +1,10 @@
-import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
-import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
-import { LoadStatus } from '@store/enums'
+import { ActionReducerMapBuilder } from '@reduxjs/toolkit'
+import { LoadStatus } from '@utils/store/enums'
 import { LeaderboardState } from './types'
 import { getLeaderboard, saveRecord } from './thunks'
+import { BaseAsyncCases } from '@utils/store/extraReducers'
 
-class LeaderboardAsyncCases {
-    readonly builder: ActionReducerMapBuilder<LeaderboardState>
-
-    constructor(builder: ActionReducerMapBuilder<LeaderboardState>) {
-        this.builder = builder
-    }
-
-    private addCommonCase = <R, A>(
-        thunk: AsyncThunk<R, A, AsyncThunkConfig>
-    ) => {
-        this.builder
-            .addCase(thunk.pending, state => {
-                state.status = LoadStatus.loading
-            })
-            .addCase(thunk.rejected, (state, action) => {
-                state.status = LoadStatus.failed
-                state.error = action.error.message
-            })
-
-        return this.builder
-    }
-
+class LeaderboardAsyncCases extends BaseAsyncCases<LeaderboardState> {
     fetchingLeaderboard = () => {
         this.addCommonCase(getLeaderboard).addCase(
             getLeaderboard.fulfilled,

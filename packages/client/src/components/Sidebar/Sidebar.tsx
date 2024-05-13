@@ -8,9 +8,10 @@ import styles from './sidebar.module.css'
 import { changeVisibilityLinkContainer } from './helpers'
 import { sidebarConfig } from './config'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
-import { settingsSelectors, settingsActions } from '@store/settings'
+import { settingsSelectors } from '@store/settings'
 import { SidebarMode } from '@store/sidebar/types'
 import { sidebarSelectors } from '@store/sidebar'
+import { toggleUserTheme } from '@store/settings/thunks'
 
 const Sidebar: FC = () => {
     const themeMode = useAppSelector(settingsSelectors.selectThemeMode)
@@ -23,7 +24,7 @@ const Sidebar: FC = () => {
     const dispatch = useAppDispatch()
 
     const handleChangeTheme = useCallback(() => {
-        dispatch(settingsActions.toggleThemeMode())
+        dispatch(toggleUserTheme())
     }, [dispatch])
 
     const [innerSidebarMode, setSidebarMode] =

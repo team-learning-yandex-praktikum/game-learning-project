@@ -6,7 +6,7 @@ import { withProviders } from '../../../../../test-utils/render'
 import userEvent from '@testing-library/user-event'
 import { requestHandlers } from '../../../../../test-utils/requestHandlers'
 import { store } from '@store'
-import { LoadStatus } from '@store/enums'
+import { LoadStatus } from '@utils/store/enums'
 
 const server = setupServer(requestHandlers.logout)
 

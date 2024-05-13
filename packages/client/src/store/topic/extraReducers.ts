@@ -1,31 +1,10 @@
-import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
-import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk'
-import { LoadStatus } from '@store/enums'
+import { ActionReducerMapBuilder } from '@reduxjs/toolkit'
 import { TopicState } from './types'
-import { getTopic, createTopic, createComment, addReaction } from './thunk'
+import { addReaction, createComment, createTopic, getTopic } from './thunk'
+import { BaseAsyncCases } from '@utils/store/extraReducers'
+import { LoadStatus } from '@utils/store/enums'
 
-class TopicAsyncCases {
-    readonly builder: ActionReducerMapBuilder<TopicState>
-
-    constructor(builder: ActionReducerMapBuilder<TopicState>) {
-        this.builder = builder
-    }
-
-    private addCommonCase = <R, A>(
-        thunk: AsyncThunk<R, A, AsyncThunkConfig>
-    ) => {
-        this.builder
-            .addCase(thunk.pending, state => {
-                state.status = LoadStatus.loading
-            })
-            .addCase(thunk.rejected, (state, action) => {
-                state.status = LoadStatus.failed
-                state.error = action.error.message
-            })
-
-        return this.builder
-    }
-
+class TopicAsyncCases extends BaseAsyncCases<TopicState> {
     fetchingTopic = () => {
         this.addCommonCase(getTopic).addCase(
             getTopic.fulfilled,

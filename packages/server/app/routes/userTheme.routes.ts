@@ -19,7 +19,7 @@ export const userThemeRoutes = (router: Router) => {
     )
     userThemeRouter.post(
         USER_THEME_ROUTES.create,
-        body('themeId').exists().withMessage(ERRORS.empty),
+        body('theme').exists().withMessage(ERRORS.empty),
         body('ownerId').exists().withMessage(ERRORS.empty),
         UserThemeController.create
     )

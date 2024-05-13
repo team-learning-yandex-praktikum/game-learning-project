@@ -16,14 +16,21 @@ export class UserThemeController {
         }
 
         const { body } = request
-        const theme = await themeService.findById(body.themeId)
+        const theme = await themeService.findByTheme(body.theme)
 
         if (!theme) {
-            response.status(404).json({ error: 'Theme is not found' })
+            response
+                .status(404)
+                .json({ reason: `Theme "${body.theme}" is not found` })
             return
         }
 
-        const userTheme = await userThemeService.findOrCreate(body)
+        const creationBody = {
+            themeId: theme.id,
+            ownerId: body.ownerId,
+        }
+
+        const userTheme = await userThemeService.findOrCreate(creationBody)
 
         const responseData = {
             ...userTheme.toJSON(),
@@ -46,14 +53,14 @@ export class UserThemeController {
         const userTheme = await userThemeService.findByParams(query)
 
         if (!userTheme) {
-            response.status(404).send(ERRORS.notFound)
+            response.status(404).send({ reason: ERRORS.notFound })
             return
         }
 
         const theme = await themeService.findById(userTheme.themeId)
         if (!theme) {
             response.status(404).json({
-                error: `Theme with id ${userTheme.themeId} is not found`,
+                reason: `Theme with id ${userTheme.themeId} is not found`,
             })
             return
         }

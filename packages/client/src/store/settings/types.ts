@@ -1,12 +1,10 @@
-import { LoadStatus } from '@store/enums'
 import { ThemeMode } from '@styles'
+import { BaseState } from '@utils/store/types'
 
 export interface Settings {
-    themeMode: ThemeMode
+    themeMode: string | ThemeMode
 }
 
-export interface SettingsState {
+export interface SettingsState extends BaseState {
     data: Settings
-    status: LoadStatus
-    error?: string | null
 }

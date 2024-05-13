@@ -1,10 +1,8 @@
 import { LeaderboardTable } from '@api/leaderBoard/types'
-import { LoadStatus } from '@store/enums'
+import { BaseState } from '@utils/store/types'
 
-export interface LeaderboardState {
+export interface LeaderboardState extends BaseState {
     data: LeaderboardTable[]
     hasMoreData: boolean
     cursor: number
-    status: LoadStatus
-    error?: string | null
 }
