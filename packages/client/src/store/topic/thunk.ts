@@ -1,14 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { forumApi } from '@api'
-import { CreateTopicDTO } from '@api/forum/types'
+import { topicsApi } from '@api'
+import { CreateTopicDTO } from '@api/topics/types'
 import { RootState } from '@store'
 import { addReactionParams } from '@api/reaction/types'
 import { reactionApi } from '@api/reaction'
 import { forumActions } from '@store/forum'
+import { commentsApi } from '@api/comments'
+import { CreateCommentDTO } from '@api/comments/types'
 
-export const getTopic = createAsyncThunk('forum/getTopic', forumApi.getTopic)
+export const getTopic = createAsyncThunk('forum/getTopic', topicsApi.getTopic)
 
 export type CreateTopicData = Omit<CreateTopicDTO, 'createdBy'>
+export type CreateCommentData = Omit<CreateCommentDTO, 'createdBy'>
 
 export const createTopic = createAsyncThunk(
     'forum/createTopic',
@@ -21,13 +24,28 @@ export const createTopic = createAsyncThunk(
             ...creationData,
             createdBy: login,
         }
-        await forumApi.createTopic(requestData)
+        await topicsApi.createTopic(requestData)
     }
 )
 
 export const createComment = createAsyncThunk(
     'forum/createComment',
-    forumApi.createComment
+    async (creationData: CreateCommentData, { dispatch, getState }) => {
+        const login = (getState() as RootState).user.data.login
+
+        if (!login) {
+            throw new Error('User login is not exist')
+        }
+
+        const response = await commentsApi.createComment({
+            ...creationData,
+            createdBy: login,
+        })
+
+        dispatch(getTopic(String(creationData.topicId)))
+
+        return response
+    }
 )
 
 export const addReaction = createAsyncThunk(

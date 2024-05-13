@@ -10,6 +10,7 @@ export const topicSlice = createSlice({
         selectStatus: state => state.status,
         selectTopicData: state => state.topicData,
         selectError: state => state.error,
+        selectComments: state => state.topicData?.comments,
     },
     extraReducers: getExtraReducers,
 })

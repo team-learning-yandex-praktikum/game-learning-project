@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { forumInitialState } from './initialState'
 import { getExtraReducers } from './extraReducers'
+import { LoadStatus } from '@utils/store/enums'
 
 export const forumSlice = createSlice({
     name: 'forum',
@@ -8,6 +9,9 @@ export const forumSlice = createSlice({
     reducers: {
         updateTopicEmoji: (state, action) => {
             state.topicEmoji = action.payload
+        },
+        startLoading: state => {
+            state.status = LoadStatus.loading
         },
     },
     selectors: {

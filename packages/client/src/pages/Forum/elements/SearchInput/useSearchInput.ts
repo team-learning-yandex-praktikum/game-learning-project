@@ -1,7 +1,8 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useMemo, useState } from 'react'
 import { debounce } from 'lodash'
 import { useAppDispatch } from '@store/hooks'
 import { getTopics } from '@store/forum/thunk'
+import { forumActions } from '@store/forum'
 
 const useSearchInput = () => {
     const dispatch = useAppDispatch()
@@ -9,21 +10,28 @@ const useSearchInput = () => {
 
     const delayedDispatch = useCallback(
         debounce((value: string) => {
-            dispatch(getTopics({ limit: 20, search: value }))
+            dispatch(getTopics({ limit: 20, title: value }))
         }, 1000),
         [dispatch]
     )
 
-    const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target
-        setSearchValue(value)
-        delayedDispatch(value)
-    }
+    const handleSearchInputChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            const { value } = e.target
+            setSearchValue(value)
+            dispatch(forumActions.startLoading())
+            delayedDispatch(value)
+        },
+        [delayedDispatch, dispatch]
+    )
 
-    return {
-        searchValue,
-        handleSearchInputChange,
-    }
+    return useMemo(
+        () => ({
+            searchValue,
+            handleSearchInputChange,
+        }),
+        [handleSearchInputChange, searchValue]
+    )
 }
 
 export default useSearchInput

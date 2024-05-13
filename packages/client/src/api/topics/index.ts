@@ -1,14 +1,9 @@
 import { BaseApi } from '@api/baseApi'
 import { Topics } from '@store/forum/types'
 import { Topic } from '@store/topic/types'
-import {
-    CreateCommentDTO,
-    CreateResponse,
-    CreateTopicDTO,
-    TopicsGetParams,
-} from './types'
+import { CreateTopicDTO, TopicsGetParams } from './types'
 
-export class ForumApi extends BaseApi {
+export class TopicsApi extends BaseApi {
     constructor() {
         super('topics', false)
     }
@@ -26,20 +21,12 @@ export class ForumApi extends BaseApi {
     }
 
     createTopic = async (topicData: CreateTopicDTO) => {
-        const { data } = await this.client.post<CreateResponse>(
+        const { data } = await this.client.post<string>(
             this.withUrl(),
             topicData
         )
         return data
     }
-
-    createComment = async (commentData: CreateCommentDTO) => {
-        const { data } = await this.client.post<CreateResponse>(
-            this.withUrl('comment'),
-            commentData
-        )
-        return data
-    }
 }
 
-export const forumApi = new ForumApi()
+export const topicsApi = new TopicsApi()
