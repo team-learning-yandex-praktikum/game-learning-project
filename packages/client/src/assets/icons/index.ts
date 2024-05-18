@@ -17,6 +17,7 @@ import SendIcon from './send.svg?react'
 import RestartIcon from './restart.svg?react'
 import OnFullscreenIcon from './onFullscreen.svg?react'
 import OffFullscreenIcon from './offFullscreen.svg?react'
+import PlayLargeIcon from './playLarge.svg?react'
 
 export {
     HomeIcon,
@@ -38,4 +39,5 @@ export {
     RestartIcon,
     OnFullscreenIcon,
     OffFullscreenIcon,
+    PlayLargeIcon,
 }

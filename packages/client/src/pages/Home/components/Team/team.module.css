@@ -1,7 +1,8 @@
 .containerTeam {
-  composes: containerHome containerSectionHome from global;
   background-color: var(--color-background-team);
+  padding-bottom: 0 !important;
   margin-top: -30px;
+  z-index: 3;
 }
 
 .title {
@@ -15,7 +16,8 @@
   display: flex;
   justify-content: space-between;
   margin-top: 60px;
-  color: var(--color-white);
+  color: white;
+  margin-bottom: 100px;
 }
 
 .members {
@@ -33,4 +35,18 @@
 
 .avatar img {
   width: 200px;
+}
+
+.footer {
+  color: var(--color-background);
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:global(.app[data-theme='dark']) {
+  .footer {
+    color: var(--color-text);
+  }
 }

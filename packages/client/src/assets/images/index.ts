@@ -1,6 +1,6 @@
-import FlyImage from './playFly.png'
-import JumpImage from './playJump.png'
-import StartImage from './playStart.png'
+import GameOverImage from './gameOver.png'
+import GameDemoImage from './gameDemo.png'
+import GamePosterImage from './gamePoster.png'
 import AvatarImage from './avatar.png'
 
-export { FlyImage, JumpImage, StartImage, AvatarImage }
+export { GameOverImage, GameDemoImage, GamePosterImage, AvatarImage }
