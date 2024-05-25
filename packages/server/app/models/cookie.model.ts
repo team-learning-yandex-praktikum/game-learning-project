@@ -1,8 +1,11 @@
 import {
     AllowNull,
+    AutoIncrement,
     Column,
     DataType,
+    Index,
     Model,
+    PrimaryKey,
     Table,
     Unique,
 } from 'sequelize-typescript'
@@ -18,11 +21,17 @@ export type CookieCreationAttributes = CookieAttributes
     tableName: 'cookies',
 })
 export class Cookie extends Model<CookieAttributes, CookieCreationAttributes> {
+    @AutoIncrement
+    @PrimaryKey
+    @Column
+    declare id: number
+
     @Unique
     @AllowNull(false)
     @Column({ field: 'user_id' })
     declare userId: number
 
+    @Index
     @Unique
     @AllowNull(false)
     @Column(DataType.TEXT)

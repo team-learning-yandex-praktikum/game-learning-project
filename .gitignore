@@ -9,5 +9,3 @@ tmp
 **/coverage
 **/pgdata/**
 **/pgadmin-data/**
-
-!**/.gitkeep
