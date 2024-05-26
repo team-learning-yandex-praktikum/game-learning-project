@@ -1,5 +1,5 @@
-import { exists } from '@game-core/utils/CommonFunc'
-import { Nullable } from '@game-core/utils/CommonTypes'
+import { exists } from '@game-core/utils/functions'
+import { Nullable } from '@game-core/utils/types'
 import { isUrlType, UrlProducer, UrlType } from '@utils/url/helpers'
 import { getWindow } from '@utils/document'
 

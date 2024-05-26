@@ -1,7 +1,7 @@
 import { GameObject } from './GameObject'
 import { Sprite } from './utils/Sprite'
 import { CloudImg } from '@assets/images/game'
-import { Size } from './utils/GameTypes'
+import { Size } from './utils/gameTypes'
 
 type PlatformType = 'ground' | 'cloud'
 
@@ -21,7 +21,7 @@ export class Platform extends GameObject {
 
     public render(ctx: CanvasRenderingContext2D) {
         if (this.type === 'cloud') {
-            super.render(ctx)
+            this.renderDisappear(() => super.render(ctx))
             return
         }
 

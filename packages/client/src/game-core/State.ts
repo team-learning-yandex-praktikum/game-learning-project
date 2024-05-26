@@ -1,6 +1,6 @@
 import { GameObject } from './GameObject'
 import { InputHandler } from './input/InputHandler'
-import { Nullable } from './utils/CommonTypes'
+import { Nullable } from './utils/types'
 
 export interface State<T extends GameObject> {
     handleInput(input: InputHandler, obj: T): Nullable<State<T>>

@@ -1,10 +1,10 @@
+import { LeftDirection, RightDirection } from '@game-core/constants'
 import { Player } from '../Player'
 import { Standing } from './Standing'
 import { InputHandler } from '../input/InputHandler'
 import { PlayerState, pressedJump } from './commonUtils'
-import { Falling } from '@game-core/PlayerStates/Falling'
-import { Jumping } from '@game-core/PlayerStates/Jumping'
-import { LeftDirection, RightDirection } from '@game-core/constants'
+import { Falling } from './Falling'
+import { Jumping } from './Jumping'
 
 export type Direction = 'LeftDirection' | 'RightDirection'
 

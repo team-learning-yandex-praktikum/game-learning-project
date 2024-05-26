@@ -1,10 +1,11 @@
 import { LeftDirection, RightDirection } from '@game-core/constants'
 import { Player } from '../Player'
 import { InputHandler } from '../input/InputHandler'
-import { Nullable } from '../utils/CommonTypes'
+import { Nullable } from '../utils/types'
 import { PlayerState, pressedJump } from './commonUtils'
-import { Jumping } from '@game-core/PlayerStates/Jumping'
-import { Walking } from '@game-core/PlayerStates/Walking'
+import { Jumping } from './Jumping'
+import { Walking } from './Walking'
+import { Falling } from './Falling'
 
 export class Standing implements PlayerState {
     handleInput(input: InputHandler, p: Player): Nullable<PlayerState> {
@@ -25,5 +26,10 @@ export class Standing implements PlayerState {
 
     update(dt: number, p: Player) {
         p.stand(dt)
+        p.checkFallingFromPlatform(() => {
+            const state = new Falling()
+            state.enterAction(p)
+            return state
+        })
     }
 }

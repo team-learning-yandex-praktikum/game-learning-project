@@ -1,5 +1,5 @@
 import { LogicError } from '../errors/common'
-import { Callback, ImgResource } from './CommonTypes'
+import { Callback, ImgResource } from './types'
 
 class ResourcesLoader {
     private resourceCache: Map<string, ImgResource>

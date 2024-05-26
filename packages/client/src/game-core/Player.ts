@@ -6,7 +6,7 @@ import { Standing } from './PlayerStates/Standing'
 import { State } from './State'
 import { CanvasHeight, Gravity } from './constants'
 import { InputHandler } from './input/InputHandler'
-import { exists } from './utils/CommonFunc'
+import { exists } from './utils/functions'
 import { Sprite } from './utils/Sprite'
 import { Vector2d } from './utils/math'
 import {
@@ -46,7 +46,7 @@ export class Player extends GameObject {
     private world: World
     public fallPosition: number | null
     private distanceTraveled = 0
-    public posYOfHighestPlatform = CanvasHeight
+    private highestPlatform?: Platform
 
     constructor(plat: Platform, world: World) {
         super()
@@ -96,10 +96,11 @@ export class Player extends GameObject {
                 return
             }
 
+            p.startDisappear()
             this.currState = newState()
 
-            if (this.posYOfHighestPlatform > p.pos[1]) {
-                this.posYOfHighestPlatform = p.pos[1]
+            if ((this.highestPlatform?.pos[1] ?? CanvasHeight) > p.pos[1]) {
+                this.highestPlatform = p
             }
         })
     }
@@ -126,6 +127,9 @@ export class Player extends GameObject {
     }
 
     onPlatform() {
+        if (this.platform.isDisappeared) {
+            return false
+        }
         const left = this.pos[0]
         const right = this.pos[0] + this.width
         const pleft = this.platform.pos[0]
@@ -238,8 +242,10 @@ export class Player extends GameObject {
     }
 
     public calculateJumpDistance(deltaTime: number): number {
+        const platformPosY = this.highestPlatform?.pos[1] ?? CanvasHeight
+        const platformHeight = this.highestPlatform?.height ?? 0
         const platformNotReached =
-            this.pos[1] > this.posYOfHighestPlatform - this.height
+            this.pos[1] > platformPosY - this.height + platformHeight
         if (platformNotReached) {
             return 0
         }
