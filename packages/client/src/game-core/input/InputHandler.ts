@@ -1,5 +1,5 @@
-import { Indexed } from '../utils/CommonTypes'
-import { Keys, getKeyByCode } from './utils'
+import { Indexed } from '../utils/types'
+import { getKeyByCode, Keys } from './utils'
 
 export class InputHandler {
     private pressedKeys: Indexed<boolean> = {}
@@ -19,7 +19,7 @@ export class InputHandler {
         })
 
         if (typeof window !== 'undefined') {
-            window.addEventListener('blur', e => {
+            window.addEventListener('blur', () => {
                 this.pressedKeys = {}
                 this.stopJumpSound()
             })
@@ -35,21 +35,19 @@ export class InputHandler {
     }
 
     isDown(key: string) {
-        return this.pressedKeys[key.toUpperCase()] === true
+        return this.pressedKeys[key.toUpperCase()]
     }
 
     isUp(key: string) {
-        return this.pressedKeys[key.toUpperCase()] === false
+        return !this.pressedKeys[key.toUpperCase()]
     }
 
     isSeveralDown(...k: Keys[]) {
-        return k.every(key => this.pressedKeys[key] === true)
+        return k.every(key => this.pressedKeys[key])
     }
 
     releasedAll() {
-        return Object.values(this.pressedKeys).every(
-            pressedKey => pressedKey === false
-        )
+        return Object.values(this.pressedKeys).every(pressedKey => !pressedKey)
     }
 
     get pressedRight() {

@@ -7,6 +7,7 @@ import Fullscreen from '@components/Fullscreen'
 import { userSelectors } from '@store/user'
 import { teamName } from '@api/leaderBoard/constants'
 import { saveRecord } from '@store/leaderboard'
+import styles from './playGame.module.css'
 
 const PlayGame = () => {
     const userData = useAppSelector(userSelectors.selectData)
@@ -52,7 +53,7 @@ const PlayGame = () => {
 
     return (
         <>
-            <div ref={containerRef} />
+            <div className={styles.root} ref={containerRef} />
             <Fullscreen />
         </>
     )

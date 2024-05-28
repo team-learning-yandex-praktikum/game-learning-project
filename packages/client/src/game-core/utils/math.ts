@@ -1,4 +1,4 @@
-import { Tuple } from './CommonTypes'
+import { Tuple } from './types'
 
 export class Vector<Dim extends number> {
     constructor(protected list: Tuple<number, Dim>) {}
