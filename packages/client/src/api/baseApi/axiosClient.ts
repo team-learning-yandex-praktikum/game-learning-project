@@ -5,6 +5,9 @@ export const defaultAxiosConfig: CreateAxiosDefaults = {
     baseURL: SERVER_URL,
     withCredentials: true,
     timeout: 10000,
+    headers: {
+        'Cache-control': 'No-cache',
+    },
 }
 
 export const axiosClient = axios.create(defaultAxiosConfig)

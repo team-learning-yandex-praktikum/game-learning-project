@@ -10,8 +10,21 @@ export type CookieCreateRequest = CookieCreationAttributes
 class CookieService implements BaseService {
     private repository = Cookie
 
-    public create = (creationData: CookieCreateRequest) =>
-        this.repository.create(creationData)
+    public create = async (creationData: CookieCreateRequest) => {
+        const [found, isCreated] = await this.repository.findOrCreate({
+            where: {
+                userId: creationData.userId,
+            },
+            defaults: creationData,
+        })
+
+        if (!isCreated && found.cookie !== creationData.cookie) {
+            found.cookie = creationData.cookie
+            await found.save()
+        }
+
+        return found
+    }
 
     public findByCookie = (cookie: CookieAttributes['cookie']) =>
         this.repository.findOne({

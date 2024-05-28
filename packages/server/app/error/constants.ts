@@ -3,6 +3,7 @@ export const ERRORS = {
     length: 'Length is incorrect',
     empty: 'Value is empty',
     notFound: 'Not found',
+    cookieNotValid: 'Cookie is not valid',
 }
 
 export const getLengthError = (max: number, min?: number) => {

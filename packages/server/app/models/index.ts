@@ -5,7 +5,16 @@ import { Reaction } from './reaction.model'
 import { Emoji } from './emoji.model'
 import { Theme } from './theme.model'
 import { UserTheme } from './userTheme.model'
+import { Cookie } from './cookie.model'
 
 export const applyModels = (sequelize: Sequelize) => {
-    sequelize.addModels([Topic, Comment, Reaction, Emoji, Theme, UserTheme])
+    sequelize.addModels([
+        Topic,
+        Comment,
+        Reaction,
+        Emoji,
+        Theme,
+        UserTheme,
+        Cookie,
+    ])
 }

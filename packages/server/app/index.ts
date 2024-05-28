@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { createRouter } from './routes'
 import cors, { type CorsOptions } from 'cors'
+import { proxyResponseInterceptor } from './middlewares/proxy.interceptor'
+import { authMiddleware } from './middlewares/auth.middleware'
 
 dotenv.config()
 
@@ -24,6 +26,10 @@ const applyProxy = (app: Express) => {
             target: EXTERNAL_SERVER_URL,
             changeOrigin: true,
             cookieDomainRewrite: hostname,
+            selfHandleResponse: true,
+            on: {
+                proxyRes: proxyResponseInterceptor,
+            },
         })
     )
 }
@@ -44,10 +50,11 @@ const configureApp = () => {
     const router = createRouter()
 
     app.disable('x-powered-by')
+    app.use(cookieParser())
     applyProxy(app)
     applyCors(app)
+    app.use(authMiddleware)
     app.use(express.json())
-    app.use(cookieParser())
     app.use(router)
 
     return app
