@@ -5,7 +5,7 @@ import Button from '@components/Button'
 import styles from './form.module.css'
 import { FormProps } from './types'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import sanitizeHtml from 'sanitize-html'
+import sanitizeHtml, { IOptions } from 'sanitize-html'
 
 const Form = <Values extends FieldValues = FieldValues>({
     title,
@@ -35,7 +35,10 @@ const Form = <Values extends FieldValues = FieldValues>({
             string
         >
         Object.entries(data).forEach(([key, value]) => {
-            sanitizedData[key as keyof Values] = sanitizeHtml(value)
+            sanitizedData[key as keyof Values] = sanitizeHtml(
+                value,
+                {} as IOptions
+            )
         })
         onSubmit(sanitizedData as Values)
     }
