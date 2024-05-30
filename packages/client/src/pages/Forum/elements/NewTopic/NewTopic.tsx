@@ -4,10 +4,11 @@ import Button from '@components/Button'
 import TextField from '@components/TextField'
 import styles from './newTopic.module.css'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { NewTopicFieldValues } from './types'
+import { NewTopicFieldValues, NewTopicFields } from './types'
 import { NEW_TOPIC_FIELDS_CONFIG } from './fieldsConfig'
 import { useAppDispatch } from '@store/hooks'
 import { createTopic, CreateTopicData } from '@store/topic/thunk'
+import sanitizeHtml from 'sanitize-html'
 
 const NewTopic = () => {
     const formId = 'newTopic'
@@ -28,10 +29,17 @@ const NewTopic = () => {
         [dispatch]
     )
 
-    const onSubmit: SubmitHandler<NewTopicFieldValues> = useCallback(data => {
-        create(data)
-        reset()
-    }, [])
+    const onSubmit: SubmitHandler<NewTopicFieldValues> = useCallback(
+        (data: NewTopicFieldValues) => {
+            const sanitizedData: CreateTopicData = {} as CreateTopicData
+            Object.entries(data).forEach(([key, value]) => {
+                sanitizedData[key as NewTopicFields] = sanitizeHtml(value)
+            })
+            create(sanitizedData)
+            reset()
+        },
+        []
+    )
 
     return (
         <div className={styles.container}>

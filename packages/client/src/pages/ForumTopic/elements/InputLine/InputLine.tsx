@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { InputLineFieldValues, InputLineProps } from './types'
 import { useAppDispatch } from '@store/hooks'
 import { createComment, getTopic } from '@store/topic/thunk'
+import sanitizeHtml from 'sanitize-html'
 
 const InputLine: FC<InputLineProps> = ({ id, parentInfo, closeAnswer }) => {
     const {
@@ -27,7 +28,12 @@ const InputLine: FC<InputLineProps> = ({ id, parentInfo, closeAnswer }) => {
 
     const onSubmit: SubmitHandler<InputLineFieldValues> = useCallback(
         data => {
-            create(data)
+            const sanitizedData: InputLineFieldValues =
+                {} as InputLineFieldValues
+            Object.entries(data).forEach(([key, value]) => {
+                sanitizedData[key as 'comment'] = sanitizeHtml(value)
+            })
+            create(sanitizedData)
             reset()
             dispatch(getTopic(id))
             closeAnswer()
