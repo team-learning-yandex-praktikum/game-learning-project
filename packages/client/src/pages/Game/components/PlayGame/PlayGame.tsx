@@ -47,7 +47,9 @@ const PlayGame = () => {
         }
 
         return () => {
-            worldRef.current = null
+            if (worldRef.current) {
+                worldRef.current = null
+            }
         }
     }, [initWorld, status])
 
