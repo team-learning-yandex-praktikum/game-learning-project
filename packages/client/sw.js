@@ -6,7 +6,8 @@ self.addEventListener('message', event => {
             (item, pos) => event.data.payload.indexOf(item) === pos
         )
         event.waitUntil(
-            caches.open(CACHE_NAME)
+            caches
+                .open(CACHE_NAME)
                 .then(cache => {
                     console.log('Opened cache')
                     return cache.addAll(urlsToCache)
@@ -21,38 +22,41 @@ self.addEventListener('message', event => {
 
 self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys().then(cacheNames => Promise.all(
-            cacheNames.map(key => {
-                if (key !== CACHE_NAME) {
-                    return caches.delete(key)
-                }
-                return null
-            })
-        ))
+        caches.keys().then(cacheNames =>
+            Promise.all(
+                cacheNames.map(key => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key)
+                    }
+                    return null
+                })
+            )
+        )
     )
 })
 
+const tryNetwork = (req, timeout) =>
+    new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(reject, timeout)
 
-const tryNetwork = (req, timeout) => new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(reject, timeout)
-
-    fetch(req)
-        .then(res => {
-            clearTimeout(timeoutId)
-            const responseClone = res.clone()
-            if (req.url.startsWith('http')) {
-                caches.open(CACHE_NAME)
-                    .then(cache => cache.put(req, responseClone))
-            }
-            resolve(res)
-        })
-        .catch(reject)
-});
-
+        fetch(req)
+            .then(res => {
+                clearTimeout(timeoutId)
+                const responseClone = res.clone()
+                if (req.url.startsWith('http') && req.method === 'GET') {
+                    caches
+                        .open(CACHE_NAME)
+                        .then(cache => cache.put(req, responseClone))
+                }
+                resolve(res)
+            })
+            .catch(reject)
+    })
 
 const getFromCache = req => {
     console.log('Network is off so getting from cache...')
-    return caches.open(CACHE_NAME)
+    return caches
+        .open(CACHE_NAME)
         .then(cache => cache.match(req))
         .then(result => result || Promise.reject('no-match'))
 }

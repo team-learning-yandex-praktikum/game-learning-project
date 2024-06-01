@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => ({
         __EXTERNAL_SERVER_PATH__: JSON.stringify(
             process.env.EXTERNAL_SERVER_PATH
         ),
+        __SERVER_PATH__: JSON.stringify(process.env.SERVER_PATH),
         __EXTERNAL_SERVER_URL__: JSON.stringify(
             process.env.EXTERNAL_SERVER_URL
         ),
