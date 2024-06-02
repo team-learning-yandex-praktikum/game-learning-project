@@ -257,11 +257,13 @@ export class GameWorld {
             const prevY = currentPlatform
                 ? this.platforms[currentPlatform - 1].pos[1]
                 : verticalGap
+
             const leftEdge = limitNumberByMin(prevX - limit)
             const rightEdge = limitNumberByMax(
                 prevX + limit,
                 this.canvas.width - platformWidth
             )
+
             const randomX = getRandomInt(leftEdge, rightEdge)
             const randomY = currentPlatform
                 ? prevY - verticalGap
