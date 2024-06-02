@@ -38,7 +38,6 @@ const Form = <Values extends FieldValues = FieldValues>({
             sanitizedData[key as keyof Values] = sanitizeHtml(value)
         })
         onSubmit(sanitizedData as Values)
-        reset()
     }
 
     const FORM_ID = useId()
