@@ -7,10 +7,12 @@ import { createRouter } from './routes'
 import cors, { type CorsOptions } from 'cors'
 import { proxyResponseInterceptor } from './middlewares/proxy.interceptor'
 import { authMiddleware } from './middlewares/auth.middleware'
+import { joinURL } from './utils/joinURL'
 
 dotenv.config()
 
 const PORT = Number(process.env.SERVER_PORT) || 3001
+const ROOT_PATH = process.env.SERVER_PATH ?? '/api'
 
 const applyProxy = (app: Express) => {
     const {
@@ -18,14 +20,16 @@ const applyProxy = (app: Express) => {
         SERVER_URL = `http://localhost:${PORT}`,
         EXTERNAL_SERVER_PATH = '/ya',
     } = process.env
-    const { hostname } = new URL(SERVER_URL)
+    const serverUrl = new URL(SERVER_URL)
+    serverUrl.port = String(PORT)
+    const route = joinURL(ROOT_PATH, EXTERNAL_SERVER_PATH)
 
     app.use(
-        EXTERNAL_SERVER_PATH,
+        route,
         createProxyMiddleware({
             target: EXTERNAL_SERVER_URL,
             changeOrigin: true,
-            cookieDomainRewrite: hostname,
+            cookieDomainRewrite: serverUrl.hostname,
             selfHandleResponse: true,
             on: {
                 proxyRes: proxyResponseInterceptor,
@@ -55,7 +59,7 @@ const configureApp = () => {
     applyCors(app)
     app.use(authMiddleware)
     app.use(express.json())
-    app.use(router)
+    app.use(ROOT_PATH, router)
 
     return app
 }
